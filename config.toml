@@ -62,8 +62,8 @@ stats_id = "0003006863"                   # 숙泊여행統計調査 통계표 I
 enabled = true                            # 검색어 트렌드 (한국 목적지)
 
 [pinterest]
-domain_verify = ""                        # 핀터레스트 소유권 확인 태그 값 (7-1단계에서 채움)
-site_url = ""
+domain_verify = "ac42b87d9a63aec35e82ffe2c95aef9a"   # 핀터레스트 소유권 확인 태그 값
+site_url = "https://localtripasia.github.io/"
 
 [instagram]
 api_host = "graph.instagram.com"
