@@ -1,0 +1,75 @@
+# localtrip.asia — 게시 설정. 값을 바꾸고 커밋하면 다음 실행부터 적용돼요.
+
+[account]
+handle = "localtrip.asia"                                  # 인스타 아이디 (@ 빼고)
+brand_name = "Local Trip"                                  # 링크 페이지 제목
+tagline = "Where locals go right now — Korea & Japan"       # 링크 페이지 한 줄 소개
+timezone = "Asia/Seoul"                                     # 날짜 기준 시간대
+
+# 주제별 한 달 목표 횟수. gap = 같은 주제가 다시 나오기까지 최소 며칠.
+# day가 있으면 그 요일에 고정(예: weekly는 매주 목요일).
+[series]
+city101   = { per_month = 8, gap = 3 }    # 도시 101 (왜 가야 하나·언제·가는 법·할 것 3가지·숙소 예산 3단계)
+area      = { per_month = 4, gap = 6 }    # 어디에 숙소 잡을까 (동네 비교)
+hotel     = { per_month = 4, gap = 6 }    # 호텔 픽 (조건별 추천)
+transport = { per_month = 3, gap = 8 }    # 교통·준비물 (JR패스, 코레일패스, 티머니·스이카, eSIM)
+route     = { per_month = 2, gap = 12 }   # 코스 (3일·5일, 한일 연결 코스)
+season    = { per_month = 2, gap = 12 }   # 계절·축제
+words     = { per_month = 1, gap = 20 }   # 현지 말·에티켓
+weekly    = { per_month = 4, day = "thu" } # 이번 주 현지인이 가는 곳 (네이버 + 일본 숙박통계), 매주 목요일
+recap     = { per_month = 1, gap = 20 }   # 지난달 결산
+
+[reels]
+mode = "auto"                             # auto / manual / off
+days = ["tue", "thu", "sat"]              # 릴스 올리는 요일
+seconds_per_slide = 4.2
+audio_name = "Local Trip · original sound"
+
+[schedule]
+posts_per_day = 1                         # 첫 한 달은 1개. 자료가 쌓이면 2로.
+repeat_after_days = 150                   # 정보 글을 다 쓰면, 올린 지 이 날짜가 지난 것부터 다시 올려요
+
+# 호텔 픽은 예산 3단계(budget / mid / splurge)로 하나씩. 가격은 카드에 넣지 않고
+# 예산 등급 + 리뷰 점수만 표시해요 (실제 가격은 링크에서 확인).
+[hotels]
+budget_tiers = ["budget", "mid", "splurge"]
+review_source = "Agoda"
+
+# 아고다 제휴 Long Tail Search API. 가입 전에는 일반 링크로 게시돼요.
+# https://partners.agoda.com/Content/Documents/AffiliateLiteApi/Affiliate_Lite_API_V2.0.pdf
+[agoda]
+enabled = true
+site_id = ""                              # 제휴 승인 후 발급되는 Site ID
+link_template = "https://www.agoda.com/partners/partnersearch.aspx?pcs=1&cid={site_id}&hid={hotel_id}"
+
+# 트립닷컴 제휴 딥링크 (호텔 비교 버튼 + 렌터카)
+[tripcom]
+enabled = true
+link_template = "{url}"                   # 제휴 승인 후 딥링크 도구에서 만든 모양으로 교체
+
+# 클룩 제휴 (Involve Asia 경유) — 투어·패스·eSIM·공항 이동
+[klook]
+enabled = true
+link_template = "{url}"
+
+# 일본 지역별 인기: 라쿠텐 랭킹 API는 약관상 쓸 수 없어서(순위 화면에서 타사 링크 금지,
+# 데이터 공개 저장소 저장 금지, 지역별 순위 미제공) 대신 일본 관광청 숙박여행통계(e-Stat)를 써요.
+[estat]
+app_id = ""                               # e-Stat API 앱 ID (무료)
+stats_id = "0003006863"                   # 숙泊여행統計調査 통계표 ID (research.py에서 실제 표 ID로 재확인)
+
+[naver]
+enabled = true                            # 검색어 트렌드 (한국 목적지)
+
+[pinterest]
+domain_verify = ""                        # 핀터레스트 소유권 확인 태그 값 (7-1단계에서 채움)
+site_url = ""
+
+[instagram]
+api_host = "graph.instagram.com"
+api_version = "v24.0"
+
+[copy]
+hashtags_common = ["#travelkorea", "#traveljapan", "#koreatraveltips", "#japantraveltips", "#asiatravel"]
+hashtags_hotel = ["#wheretostay", "#hoteltips", "#budgettravel"]
+hashtags_route = ["#travelitinerary", "#koreajapan"]

@@ -1,0 +1,26 @@
+# 코스 자료 (3일·5일 코스, 한일 연결 코스). 출처 2개 이상 필수.
+#
+# key       상태 저장용 고유 키
+# title     카드 제목
+# days      코스 일수
+# summary   한 문단 소개
+# stops     도시/지역 순서 (리스트, 각 항목에 며칠 머무는지 적어요)
+# sources   출처 링크 2개 이상
+#
+# ⚠️ 예시 1개만 채워뒀어요. 나머지 5개는 5단계에서 채워요.
+
+[[route]]
+key = "busan-fukuoka-ferry"
+title = "Busan ↔ Fukuoka: the 3-hour ferry"
+days = 5
+summary = "The Busan–Fukuoka ferry (JR Beetle / Camellia Line) crosses the Korea Strait in under 3.5 hours, making a Korea+Japan trip possible without flying twice. Good for travelers short on time who still want both countries."
+stops = [
+  "Busan — 2 nights (Haeundae or Nampo-dong)",
+  "Ferry crossing — same-day, ~3–3.5 hours",
+  "Fukuoka — 2 nights (Hakata or Tenjin)",
+  "Optional day trip — Yanagawa or Dazaifu from Fukuoka",
+]
+sources = [
+  "https://www.kobee.co.kr/",
+  "https://www.jrbeetle.com/",
+]

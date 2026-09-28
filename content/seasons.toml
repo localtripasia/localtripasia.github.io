@@ -1,0 +1,17 @@
+# 계절·축제 자료. 출처 2개 이상 필수.
+#
+# key      상태 저장용 고유 키
+# title    카드 제목
+# months   대략적인 시기 (해마다 조금씩 달라진다는 점을 카드에 표시)
+# note     한 문단 설명
+# sources  출처 링크 2개 이상 — 개화 예보 등은 공식 예보 사이트를 출처로
+
+[[season]]
+key = "cherry-blossom"
+title = "Cherry blossom season"
+months = "Late March – early April in most of Korea and central Japan (varies by region and year; check the forecast closer to the date)"
+note = "Seoul (Yeouido, Jinhae) and Tokyo (Meguro River, Ueno) both peak around the same week most years, but forecasts shift year to year — check the official forecast about 2–3 weeks out before booking around it."
+sources = [
+  "https://english.visitkorea.or.kr/",
+  "https://www.jma.go.jp/bosai/kaikatempo/",
+]

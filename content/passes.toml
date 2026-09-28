@@ -1,0 +1,21 @@
+# 교통·준비물 자료. 출처 2개 이상 필수.
+#
+# key        상태 저장용 고유 키
+# title      카드 제목
+# country    Korea | Japan
+# covers     이 패스/도구가 커버하는 범위
+# worth_it   언제 쓸모 있고 언제 아닌지 (한 문단)
+# sources    출처 링크 2개 이상 — 가격은 자주 바뀌므로 공식 페이지를 출처로 남겨요
+#
+# ⚠️ 예시 1개만 채워뒀어요. 나머지 7개(코레일패스, 티머니/스이카, eSIM, JR패스 지역판, 공항철도 등)는 5단계에서 채워요.
+
+[[pass]]
+key = "jr-pass"
+title = "The JR Pass: still worth it?"
+country = "Japan"
+covers = "Unlimited rides on JR trains nationwide (excluding the fastest Nozomi/Mizuho Shinkansen), for 7/14/21 days."
+worth_it = "Japan Rail raised the price in Oct 2023, so it now mostly pays off for long point-to-point trips (e.g. Tokyo–Osaka–Hiroshima round trip). For a single-region trip, a regional JR pass or individual tickets are usually cheaper — check the fare calculator before buying."
+sources = [
+  "https://www.japanrailpass.net/",
+  "https://www.jreast.co.jp/e/",
+]

@@ -1,0 +1,58 @@
+# 도시 101 자료 (+ 호텔 픽의 예시 숙소). 출처 2개 이상 필수 — 테스트가 자동으로 검사해요.
+#
+# key            상태 저장용 고유 키 (영문 소문자, 하이픈)
+# name, country  도시 이름 / 나라 (영어)
+# why            왜 가야 하나 (한 문단)
+# when           언제 가면 좋나
+# getting_there  가는 법 (공항/기차역 → 시내)
+# things         할 것 3가지 (리스트)
+# example_hotels 아고다 API 연동 전 임시 예시 숙소 3개 (budget/mid/splurge) — 링크 없이 표시돼요.
+#                아고다 승인 후에는 data/agoda_catalog.json에서 실제 숙소로 자동 교체돼요.
+# sources        출처 링크 2개 이상
+#
+# ⚠️ 이 파일에는 예시로 서울·도쿄 2곳만 채워뒀어요. 나머지 18곳(부산·제주·강릉·경주·전주·여수·속초·대구·안동,
+# 오사카·교토·후쿠오카·삿포로·오키나와·가나자와·히로시마·나고야·하코네)은 5단계(자료 만들기)에서 같은 형식으로 채워요.
+
+[[city]]
+key = "seoul"
+name = "Seoul"
+country = "Korea"
+why = "Korea's capital and the country's main international gateway — most first-time visitors start here, and it's the easiest base for day trips."
+when = "Spring (Apr) and autumn (Oct–Nov) have the mildest, driest weather. Summer (Jul–Aug) is hot and humid with a monsoon season; winter (Dec–Feb) is cold and dry."
+getting_there = "Incheon Airport (ICN) or Gimpo (GMP). From ICN, the AREX express train reaches Seoul Station in about 45 minutes."
+things = [
+  "Walk Bukchon Hanok Village early, before the tour groups arrive",
+  "Eat your way through Gwangjang Market's street-food stalls",
+  "Ride the cable car or hike up to N Seoul Tower for a skyline view",
+]
+example_hotels = [
+  { tier = "budget", name = "A guesthouse near Dongdaemun or Sinchon", note = "close to subway lines, easy for a first trip" },
+  { tier = "mid", name = "A mid-range hotel in Myeongdong or Jongno", note = "walkable to major sights" },
+  { tier = "splurge", name = "A hotel in Gangnam or near Han River", note = "for river or skyline views" },
+]
+sources = [
+  "https://english.visitkorea.or.kr/",
+  "https://www.data.go.kr/data/15101753/openapi.do",
+]
+
+[[city]]
+key = "tokyo"
+name = "Tokyo"
+country = "Japan"
+why = "Japan's capital and its biggest transit hub — nearly every itinerary that includes Japan starts or ends here."
+when = "Spring (late Mar–Apr) for cherry blossoms and autumn (Nov) for foliage are the most popular; both can be crowded and pricier."
+getting_there = "Narita (NRT) or Haneda (HND) airport. From Haneda, the Tokyo Monorail or Keikyu Line reaches central Tokyo in under 30 minutes."
+things = [
+  "Cross Shibuya Scramble at least once, then duck into a side-street coffee shop",
+  "Wander Yanaka, an old neighborhood that survived the war and postwar rebuilding",
+  "Catch the early-morning tuna auction viewing at Toyosu Market",
+]
+example_hotels = [
+  { tier = "budget", name = "A capsule or business hotel near Ueno or Asakusa", note = "close to the Narita Express / Skyliner" },
+  { tier = "mid", name = "A hotel in Shinjuku or Shibuya", note = "central, well connected by train" },
+  { tier = "splurge", name = "A hotel overlooking Tokyo Bay or Shinjuku's skyline", note = "for a view room" },
+]
+sources = [
+  "https://www.japan.travel/en/",
+  "https://www.e-stat.go.jp/en",
+]

@@ -1,0 +1,23 @@
+# 동네 비교 자료 ("어디에 숙소 잡을까" 시리즈). 출처 2개 이상 필수.
+#
+# key      상태 저장용 고유 키
+# city     content/cities.toml 의 city key
+# title    카드 제목 (예: "Myeongdong vs. Hongdae vs. Seongsu")
+# picks    비교할 동네 2~4개, 각각 name + note (한 줄 특징)
+# sources  출처 링크 2개 이상
+#
+# ⚠️ 예시 1개(서울)만 채워뒀어요. 나머지 9개는 5단계에서 채워요.
+
+[[area]]
+key = "seoul-myeongdong-hongdae-seongsu"
+city = "seoul"
+title = "Myeongdong vs. Hongdae vs. Seongsu"
+picks = [
+  { name = "Myeongdong", note = "Shopping and easy airport transit; touristy and busy at night" },
+  { name = "Hongdae", note = "Nightlife and street performers; loud, especially on weekends" },
+  { name = "Seongsu", note = "Cafes and design studios in old warehouses; quieter, best for a slower trip" },
+]
+sources = [
+  "https://english.visitkorea.or.kr/",
+  "https://www.seoul.go.kr/",
+]

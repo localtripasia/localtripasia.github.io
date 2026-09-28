@@ -1,0 +1,13 @@
+# 네이버 검색어 트렌드에서 볼 목적지 키워드 (한국어). content/cities.toml 의 한국 도시 key와 맞춰요.
+# ⚠️ 예시로 서울·부산만 채워뒀어요. 나머지 한국 8곳은 5단계에서 채워요 (일본 도시는 검색어 API가 없어서
+# 여기 넣지 않고, 대신 e-Stat 숙박통계로 봐요 — bot/sources/estat.py 참고).
+
+[[term]]
+id = "seoul"
+name = "Seoul"
+keywords = ["서울 여행", "서울 호텔"]
+
+[[term]]
+id = "busan"
+name = "Busan"
+keywords = ["부산 여행", "부산 호텔"]

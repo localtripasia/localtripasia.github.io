@@ -1,0 +1,17 @@
+# 현지 말·에티켓 자료 (식당·온천·지하철에서 쓰는 말). 한국어·일본어 모두 다뤄요.
+#
+# key      상태 저장용 고유 키
+# title    카드 제목
+# language Korean | Japanese
+# phrases  { local, romanized, meaning } 목록
+
+[[set]]
+key = "restaurant-korean"
+title = "At a restaurant (Korean)"
+language = "Korean"
+phrases = [
+  { local = "이거 주세요", romanized = "igeo juseyo", meaning = "This one, please" },
+  { local = "맛있어요", romanized = "masisseoyo", meaning = "It's delicious" },
+  { local = "계산해 주세요", romanized = "gyesanhae juseyo", meaning = "Check, please" },
+  { local = "너무 매워요", romanized = "neomu maewoyo", meaning = "It's too spicy" },
+]
