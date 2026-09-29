@@ -42,10 +42,13 @@ enabled = true
 site_id = ""                              # 제휴 승인 후 발급되는 Site ID
 link_template = "https://www.agoda.com/partners/partnersearch.aspx?pcs=1&cid={site_id}&hid={hotel_id}"
 
-# 트립닷컴 제휴 딥링크 (호텔 비교 버튼 + 렌터카)
+# 트립닷컴 제휴 (승인됨 2026-09-29). 아래 세 값은 링크에 그대로 공개되는 번호라 비밀이 아니에요.
 [tripcom]
 enabled = true
-link_template = "{url}"                   # 제휴 승인 후 딥링크 도구에서 만든 모양으로 교체
+alliance_id = "10791404"
+sid = "332513490"
+sub3 = "D20019365"
+hotels_url = "https://www.trip.com/hotels/"
 
 # 클룩 제휴 (Involve Asia 경유) — 투어·패스·eSIM·공항 이동
 [klook]

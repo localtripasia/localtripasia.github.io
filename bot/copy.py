@@ -32,7 +32,7 @@ def _agoda_button(cfg, city_key: str, city_name: str, hotel: dict | None = None)
 
 
 def _tripcom_button(cfg) -> dict:
-    return {"label": "Trip.com", "url": "https://www.trip.com/", "class": "teal"}
+    return {"label": "Trip.com", "url": cfg.tripcom_link(), "class": "teal"}
 
 
 def _klook_button(cfg) -> dict:

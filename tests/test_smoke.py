@@ -62,6 +62,13 @@ class SmokeTest(unittest.TestCase):
         if second is not None:  # only one city in the library right now is a valid outcome too
             self.assertNotEqual(first.key, second.key)
 
+    def test_tripcom_link_carries_the_affiliate_ids(self):
+        link = self.cfg.tripcom_link()
+        self.assertIn("Allianceid=10791404", link)
+        self.assertIn("SID=332513490", link)
+        self.assertTrue(link.startswith("https://www.trip.com/hotels/?"))
+        self.assertIn("&", self.cfg.tripcom_link("https://www.trip.com/hotels/?a=1"))
+
 
 if __name__ == "__main__":
     unittest.main()

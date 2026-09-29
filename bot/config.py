@@ -74,6 +74,17 @@ class Config:
     def tripcom(self) -> dict:
         return self.raw.get("tripcom", {})
 
+    def tripcom_link(self, url: str | None = None, sub1: str = "") -> str:
+        """Trip.com affiliate deep link. Falls back to the plain URL until alliance_id is set."""
+        from urllib.parse import urlencode
+        t = self.tripcom
+        url = url or t.get("hotels_url", "https://www.trip.com/hotels/")
+        if not t.get("alliance_id"):
+            return url
+        q = urlencode({"Allianceid": t["alliance_id"], "SID": t.get("sid", ""), "trip_sub1": sub1,
+                       "trip_sub3": t.get("sub3", "")})
+        return f"{url}{'&' if '?' in url else '?'}{q}"
+
     @property
     def klook(self) -> dict:
         return self.raw.get("klook", {})
