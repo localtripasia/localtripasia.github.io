@@ -58,48 +58,130 @@ def _base(bg: str) -> tuple[Image.Image, ImageDraw.ImageDraw]:
     return im, ImageDraw.Draw(im)
 
 
-def _footer(d: ImageDraw.ImageDraw, brand: str, number: int, accent: str, ink: str) -> None:
+def _footer(d: ImageDraw.ImageDraw, brand: str, number: int, accent: str, ink: str, page: str = "") -> None:
     f = _font("DMSans-SemiBold.ttf", 30)
-    d.text((PAD, H - 74), brand.upper(), font=f, fill=ink)
-    tag = f"No.{number:03d}"
+    d.text((PAD, H - 84), brand.upper(), font=f, fill=ink)
+    tag = f"No.{number:03d}" + (f"  ·  {page}" if page else "")
     tw = d.textlength(tag, font=f)
-    d.text((W - PAD - tw, H - 74), tag, font=f, fill=accent)
+    d.text((W - PAD - tw, H - 84), tag, font=f, fill=accent)
 
 
-def _cover(topic, number: int, brand: str) -> Image.Image:
+def _route_motif(d: ImageDraw.ImageDraw, x: int, y: int, w: int, ink: str) -> None:
+    """Two dots joined by a dotted arc — the logo's route motif."""
+    h = int(w * 0.42)
+    step, dash = 16, 8
+    a = 180
+    while a < 360:
+        d.arc((x, y - h, x + w, y + h), a, min(a + dash, 360), fill=ink, width=8)
+        a += step
+    d.ellipse((x - 26, y - 26, x + 26, y + 26), fill=TEAL)
+    d.ellipse((x + w - 26, y - 26, x + w + 26, y + 26), fill=RED)
+
+
+def _subtitle(topic) -> str:
+    d = topic.data
+    if topic.kind in ("city101", "hotel"):
+        return {"Korea": "SOUTH KOREA", "Japan": "JAPAN"}.get(d.get("country", ""), d.get("country", "").upper())
+    if topic.kind == "route":
+        return f"{d.get('days', '')} DAYS".strip()
+    if topic.kind == "transport":
+        return d.get("country", "").upper()
+    if topic.kind == "words":
+        return d.get("language", "").upper()
+    return ""
+
+
+def _cover(topic, number: int, brand: str, total: int = 0) -> Image.Image:
     accent = KIND_ACCENT.get(topic.kind, TEAL)
     im, d = _base(NAVY)
     label = KIND_LABEL.get(topic.kind, topic.kind.upper())
-    d.text((PAD, 110), label, font=_font("DMSans-SemiBold.ttf", 34), fill=accent)
-    d.line((PAD, 160, PAD + 90, 160), fill=accent, width=6)
-    title_font = _font("DMSerifDisplay-Regular.ttf", 84 if len(topic.title) < 22 else 64)
-    lines = _wrap(d, topic.title, title_font, W - PAD * 2)
-    y = 420 - (len(lines) - 1) * 48
+    d.text((PAD, 120), label, font=_font("DMSans-SemiBold.ttf", 40), fill=accent)
+    d.line((PAD, 178, PAD + 110, 178), fill=accent, width=7)
+    sub = _subtitle(topic)
+    for size in (190, 160, 130, 108, 92, 80):
+        title_font = _font("DMSerifDisplay-Regular.ttf", size)
+        lines = _wrap(d, topic.title, title_font, W - PAD * 2)
+        if len(lines) * size * 1.08 <= 560:
+            break
+    line_h = int(size * 1.08)
+    y = 330
     for line in lines:
         d.text((PAD, y), line, font=title_font, fill=CREAM)
-        y += 96
+        y += line_h
+    if sub:
+        d.text((PAD, y + 26), sub, font=_font("DMSans-SemiBold.ttf", 44), fill=accent)
+    _route_motif(d, PAD + 30, 1010, W - PAD * 2 - 60, CREAM)
+    d.text((PAD, H - 250), "Swipe  \u2192", font=_font("DMSans-Medium.ttf", 38), fill=CREAM)
     _footer(d, brand, number, accent, CREAM)
     return im
 
 
+def _split_label(raw: str) -> tuple[str, str]:
+    for sep in (": ", " \u2014 "):
+        if sep in raw:
+            head, tail = raw.split(sep, 1)
+            if len(head) <= 16 and len(head.split()) <= 2:
+                return head, tail
+    return "", raw
+
+
+def _layout(d, items: list[str], bullet: bool, avail: int):
+    """Largest font size (<= 54) at which every item fits in `avail` px of height."""
+    for size in ((54, 50, 46, 42, 38, 34) if bullet else (72, 64, 58, 54, 50, 46, 42, 38, 34)):
+        font = _font("DMSans-Regular.ttf", size)
+        bold = _font("DMSans-Bold.ttf", int(size * 0.62))
+        indent = 96 if bullet else 0
+        rows, total = [], 0
+        for raw in items:
+            label, text = _split_label(raw) if bullet else ("", raw)
+            lines = _wrap(d, text, font, W - PAD * 2 - indent)
+            h = len(lines) * int(size * 1.34) + (int(size * 0.7) if label else 0)
+            rows.append((label, lines, h))
+            total += h + int(size * 0.7)
+        if total <= avail:
+            return size, font, bold, rows
+    return size, font, bold, rows
+
+
 def _content_slide(heading: str, body_lines: list[str], number: int, brand: str, accent: str,
-                    bullet: bool = True) -> Image.Image:
+                    bullet: bool = True, page: str = "") -> Image.Image:
     im, d = _base(CREAM)
-    d.text((PAD, 96), heading.upper(), font=_font("DMSans-SemiBold.ttf", 32), fill=accent)
-    d.line((PAD, 144, PAD + 90, 144), fill=accent, width=5)
-    body_font = _font("DMSans-Regular.ttf", 38)
-    y = 210
-    for raw in body_lines:
-        prefix = "•  " if bullet else ""
-        wrapped = _wrap(d, (prefix + raw), body_font, W - PAD * 2)
-        for i, line in enumerate(wrapped):
-            indent = PAD if i == 0 else PAD + 30
-            d.text((indent, y), line, font=body_font, fill=INK_ON_CREAM)
-            y += 50
-        y += 26
-        if y > H - 160:
-            break
-    _footer(d, brand, number, accent, INK_ON_CREAM)
+    d.text((PAD, 110), heading.upper(), font=_font("DMSans-SemiBold.ttf", 40), fill=accent)
+    d.line((PAD, 168, PAD + 110, 168), fill=accent, width=7)
+    items = [str(x) for x in body_lines if str(x).strip()]
+    size, font, bold, rows = _layout(d, items, bullet, H - 250 - 250)
+    y = 250
+    for n, (label, lines, h) in enumerate(rows, start=1):
+        x = PAD
+        if bullet:
+            cy = y + int(size * 0.62)
+            d.ellipse((PAD, cy - 30, PAD + 60, cy + 30), fill=accent)
+            d.text((PAD + 30, cy), str(n), font=_font("DMSans-Bold.ttf", 34), fill=CREAM, anchor="mm")
+            x = PAD + 96
+        ty = y
+        if label:
+            d.text((x, ty), label.upper(), font=bold, fill=accent)
+            ty += int(size * 0.7)
+        for line in lines:
+            d.text((x, ty), line, font=font, fill=INK_ON_CREAM)
+            ty += int(size * 1.34)
+        y += h + int(size * 0.7)
+    _footer(d, brand, number, accent, INK_ON_CREAM, page)
+    return im
+
+
+def _cta_slide(topic, number: int, cfg, accent: str, page: str) -> Image.Image:
+    im, d = _base(NAVY)
+    d.text((PAD, 120), "SAVE THIS FOR YOUR TRIP", font=_font("DMSans-SemiBold.ttf", 40), fill=accent)
+    d.line((PAD, 178, PAD + 110, 178), fill=accent, width=7)
+    big = _font("DMSerifDisplay-Regular.ttf", 104)
+    y = 360
+    for line in ("Full guide,", "sources and", "booking links"):
+        d.text((PAD, y), line, font=big, fill=CREAM)
+        y += 122
+    d.text((PAD, y + 40), "\u2192  link in our bio", font=_font("DMSans-SemiBold.ttf", 52), fill=accent)
+    d.text((PAD, y + 130), f"@{cfg.handle}", font=_font("DMSans-Medium.ttf", 44), fill=CREAM)
+    _footer(d, cfg.brand_name, number, accent, CREAM, page)
     return im
 
 
@@ -150,23 +232,28 @@ def render_topic(topic, number: int, cfg, out_dir: Path) -> list[Path]:
     out_dir.mkdir(parents=True, exist_ok=True)
     brand = cfg.brand_name
     accent = KIND_ACCENT.get(topic.kind, TEAL)
-    paths = [out_dir / "1.jpg"]
-    _cover(topic, number, brand).save(paths[0], quality=92)
-    i = 2
-    for heading, lines, bullet in _slides_for(topic):
-        if not any(str(x).strip() for x in lines):
-            continue
+    slides = [(h, l, b) for h, l, b in _slides_for(topic) if any(str(x).strip() for x in l)]
+    total = len(slides) + 2  # cover + content + closing
+    paths = []
+    p = out_dir / "1.jpg"
+    _cover(topic, number, brand).save(p, quality=93)
+    paths.append(p)
+    for i, (heading, lines, bullet) in enumerate(slides, start=2):
         p = out_dir / f"{i}.jpg"
-        _content_slide(heading, lines, number, brand, accent, bullet=bullet).save(p, quality=92)
+        _content_slide(heading, lines, number, brand, accent, bullet=bullet, page=f"{i}/{total}").save(p, quality=93)
         paths.append(p)
-        i += 1
+    p = out_dir / f"{total}.jpg"
+    _cta_slide(topic, number, cfg, accent, f"{total}/{total}").save(p, quality=93)
+    paths.append(p)
     return paths
 
 
 def render_pin(topic, number: int, cfg, target: Path) -> None:
     """A single 2:3 Pinterest image (reuse the cover art)."""
     im = _cover(topic, number, cfg.brand_name)
-    pin = im.resize((1000, 1500))
+    pin = Image.new("RGB", (W, int(W * 1.5)), NAVY)
+    pin.paste(im, (0, (pin.height - H) // 2))
+    pin = pin.resize((1000, 1500))
     target.parent.mkdir(parents=True, exist_ok=True)
     pin.save(target, quality=92)
 
