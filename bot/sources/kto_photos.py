@@ -99,12 +99,34 @@ def find_results(data: dict, key: str, session=None) -> tuple[str, list[dict]]:
     return "", []
 
 
-def _vetted(topic, cfg, session=None, vision_session=None, max_judged: int = MAX_JUDGED):
+EXTRA_WORDS = ("거리", "먹거리", "쇼핑", "야경")   # added to the place name so results are not all one landmark
+
+
+def find_all(data: dict, key: str, session=None, cap: int = 80) -> list[dict]:
+    """Results for the place's main search word plus a few topical variants, merged and de-duplicated."""
+    kw, first = find_results(data, key, session)
+    if not kw:
+        return []
+    merged, seen = list(first), {i.get("galContentId") or i.get("galWebImageUrl") for i in first}
+    for extra in EXTRA_WORDS:
+        try:
+            more = search(f"{kw} {extra}", key, session)
+        except Exception:
+            continue
+        for item in more:
+            ident = item.get("galContentId") or item.get("galWebImageUrl")
+            if ident not in seen:
+                seen.add(ident)
+                merged.append(item)
+    return merged[:cap]
+
+
+def _vetted(topic, cfg, session=None, vision_session=None, max_judged: int = MAX_JUDGED, diverse: bool = False):
     """Yield (item, image, verdict) for candidate photos that pass every check, best-ranked first.
     verdict is None when no AI key is set (then only size and title-word ranking apply)."""
     key, ko = cfg.kto_key, topic.data["ko"]
-    _, results = find_results(topic.data, key, session)
-    judged, seen = 0, set()
+    results = find_all(topic.data, key, session) if diverse else find_results(topic.data, key, session)[1]
+    judged, seen, used = 0, set(), {}
     for item in sorted(results, key=_rank):
         url = item.get("galWebImageUrl")
         who = (item.get("galPhotographer") or "").strip()
@@ -130,6 +152,12 @@ def _vetted(topic, cfg, session=None, vision_session=None, max_judged: int = MAX
             if verdict is not None and not vision.acceptable(verdict):
                 log(f"사진 탈락: {item.get('galTitle', '')} {verdict}")
                 continue
+            if diverse and verdict is not None:
+                cat = str(verdict.get("category", "other"))
+                if used.get(cat, 0) >= (2 if cat == "other" else 1):   # one photo per kind of subject
+                    log(f"사진 중복 종류로 건너뜀: {item.get('galTitle', '')} ({cat})")
+                    continue
+                used[cat] = used.get(cat, 0) + 1
         yield item, im, verdict
 
 
@@ -137,7 +165,7 @@ def _entry(topic, item, name, verdict) -> dict:
     return {"key": topic.data["key"], "file": name, "credit": _credit((item.get("galPhotographer") or "").strip()),
             "source": "https://www.data.go.kr/data/15101914/openapi.do", "license": "kogl-1",
             "title": item.get("galTitle", ""), "content_id": item.get("galContentId", ""),
-            "ai_checked": verdict is not None}
+            "ai_checked": verdict is not None, "category": (verdict or {}).get("category", "")}
 
 
 def _usable(topic, cfg) -> bool:
@@ -186,7 +214,7 @@ def ensure_gallery(topic, cfg, n: int = GALLERY_SIZE, session=None, photos_dir: 
         return have
     have = []
     try:
-        for item, im, verdict in _vetted(topic, cfg, session, vision_session, max_judged=n * 3):
+        for item, im, verdict in _vetted(topic, cfg, session, vision_session, max_judged=n * 5, diverse=True):
             name = f"gallery-{topic.data['key']}-{len(have) + 1}.jpg"
             photos_dir.mkdir(parents=True, exist_ok=True)
             im.convert("RGB").save(photos_dir / name, quality=92)
@@ -199,7 +227,7 @@ def ensure_gallery(topic, cfg, n: int = GALLERY_SIZE, session=None, photos_dir: 
         table[topic.data["key"]] = have
         gallery_path.parent.mkdir(parents=True, exist_ok=True)
         gallery_path.write_text(json.dumps(table, ensure_ascii=False, indent=2))
-        notice("사진", f"갤러리 {topic.data['key']}: {len(have)}장 확보")
+        notice("사진", f"갤러리 {topic.data['key']}: {len(have)}장 확보 (" + ", ".join(e.get('category') or '?' for e in have) + ")")
     else:
         notice("사진", f"갤러리 {topic.data['key']}: 쓸 만한 사진 {len(have)}장뿐이라 포토 투어는 건너뛰어요")
     return have if len(have) >= MIN_GALLERY else []

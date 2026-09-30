@@ -24,6 +24,9 @@ PROMPT = (
     '"identifiable_faces": true/false (any person\'s face clearly recognizable), '
     '"crowd": true/false (many people dominate the picture), '
     '"prominent_text_or_logos": true/false, '
+    '"category": one of ["street scene", "shopping/storefronts", "street food", "restaurant/cafe", '
+    '"landmark or building exterior", "statue/monument", "interior", "park/nature/skyline", '
+    '"night lights/decorations", "event/crowd", "other"], '
     '"quality": 1-5 (sharp, well composed, good as a background under text)}}'
 )
 

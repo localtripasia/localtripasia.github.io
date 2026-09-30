@@ -97,6 +97,17 @@ jobs:
             pins/*.jpg
           retention-days: 14
 
+      - name: Publish preview cards to a branch (preview runs only)
+        if: env.DRY_RUN == 'true' && steps.prepare.outputs.has_post == 'true'
+        continue-on-error: true
+        run: |
+          # so the cards can be looked at in a browser: github.com/<repo>/tree/preview-latest
+          mkdir /tmp/pv && cp -r site/posts /tmp/pv/ && cd /tmp/pv
+          git init -q && git checkout -q -b preview-latest
+          git config user.name "github-actions[bot]" && git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A && git commit -qm "Preview cards"
+          git push -qf "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}" preview-latest
+
       - name: Upload link page + images
         if: steps.prepare.outputs.deploy == 'true'
         uses: actions/upload-pages-artifact@v3

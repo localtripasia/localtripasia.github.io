@@ -240,6 +240,46 @@ class SmokeTest(unittest.TestCase):
         self.assertEqual(seen[0], "old-model")
         self.assertEqual(seen[1], "gemini-3.5-flash-lite")
 
+    def test_gallery_takes_one_photo_per_kind_of_subject(self):
+        import io, json, os
+        from PIL import Image
+        from bot import photos as photos_mod
+        from bot.sources import kto_photos
+        entry = next(h for h in self.lib.hoods if h["key"] == "seoul-myeongdong")
+        topic = editorial.Topic(kind="hood", key="k", data=entry)
+        buf = io.BytesIO(); Image.new("RGB", (1500, 1000), (30, 100, 150)).save(buf, "JPEG")
+
+        class R:
+            def __init__(self, payload=None, content=b""): self._p, self.content = payload, content
+            def raise_for_status(self): pass
+            def json(self): return self._p
+
+        class Kto:
+            def get(self, url, params=None, timeout=0):
+                if "gallerySearchList1" in url:
+                    kw = params["keyword"]
+                    return R({"response": {"body": {"items": {"item": [
+                        {"galContentId": f"{kw}-{i}", "galTitle": f"t{kw}{i}", "galWebImageUrl": f"http://x/{kw}{i}.jpg", "galPhotographer": "Kim"}
+                        for i in range(3)]}}}})
+                return R(content=buf.getvalue())
+
+        cats = iter(["statue/monument", "statue/monument", "landmark or building exterior", "street food", "street scene",
+                     "landmark or building exterior", "shopping/storefronts", "night lights/decorations", "interior", "other", "other", "other"] * 3)
+
+        class Gem:
+            def post(self, url, json=None, timeout=0, headers=None):
+                v = {"shows_place": True, "quality": 4, "category": next(cats)}
+                return R({"candidates": [{"content": {"parts": [{"text": __import__("json").dumps(v)}]}}]})
+
+        os.environ["KTO_API_KEY"], os.environ["GEMINI_API_KEY"] = "k1", "k2"
+        try:
+            got = kto_photos.ensure_gallery(topic, self.cfg, session=Kto(), photos_dir=self.tmp / "gd", gallery_path=self.tmp / "gd.json", vision_session=Gem())
+            cats_got = [e["category"] for e in got]
+            self.assertEqual(len(got), 6)
+            self.assertEqual(len(set(c for c in cats_got if c != "other")), len([c for c in cats_got if c != "other"]))  # no repeated kind
+        finally:
+            os.environ.pop("KTO_API_KEY", None); os.environ.pop("GEMINI_API_KEY", None)
+
     def test_kto_photo_does_nothing_without_a_key(self):
         from bot.sources import kto_photos
         entry = next(h for h in self.lib.hoods if h["key"] == "seoul-seongsu")
