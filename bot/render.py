@@ -271,8 +271,8 @@ def _photo_slide(photo: dict, title: str, number: int, brand: str, page: str) ->
     im = cover_image(photo["path"], (W, H))
     shade = Image.new("L", (W, H), 0)
     sd = ImageDraw.Draw(shade)
-    for y in range(H - 260, H):
-        sd.line((0, y, W, y), fill=int(170 * (y - (H - 260)) / 260))
+    for y in range(H - 340, H):
+        sd.line((0, y, W, y), fill=int(225 * ((y - (H - 340)) / 340) ** 0.8))
     im = Image.composite(Image.new("RGB", (W, H), NAVY), im, shade)
     d = ImageDraw.Draw(im)
     f = _font("DMSans-SemiBold.ttf", 34)
