@@ -16,13 +16,14 @@ from pathlib import Path
 from .util import warn
 
 ROOT = Path(__file__).resolve().parent.parent
-KINDS = ("city101", "area", "hotel", "transport", "route", "season", "words", "recap")
+KINDS = ("city101", "hood", "area", "hotel", "transport", "route", "season", "words", "recap")
 
 
 @dataclass
 class Library:
     cities: list[dict] = field(default_factory=list)
     areas: list[dict] = field(default_factory=list)
+    hoods: list[dict] = field(default_factory=list)
     passes: list[dict] = field(default_factory=list)
     routes: list[dict] = field(default_factory=list)
     seasons: list[dict] = field(default_factory=list)
@@ -53,6 +54,7 @@ def load_library(cfg) -> Library:
     return Library(
         cities=_read(base, "cities.toml").get("city", []),
         areas=_read(base, "areas.toml").get("area", []),
+        hoods=_read(base, "hoods.toml").get("hood", []),
         passes=_read(base, "passes.toml").get("pass", []),
         routes=_read(base, "routes.toml").get("route", []),
         seasons=_read(base, "seasons.toml").get("season", []),
@@ -65,7 +67,7 @@ def load_library(cfg) -> Library:
 # ---------------------------------------------------------------------------
 @dataclass
 class Topic:
-    kind: str            # city101 | area | hotel | transport | route | season | words | recap
+    kind: str            # city101 | hood | area | hotel | transport | route | season | words | recap
     key: str             # state key, e.g. city-seoul, area-seoul-myeongdong-hongdae-seongsu
     data: dict
     repeat: bool = False
@@ -86,6 +88,7 @@ def entries_for(kind: str, lib: Library) -> list[dict]:
         "city101": lib.cities,
         "hotel": lib.cities,       # each city entry carries its own budget/mid/splurge picks
         "area": lib.areas,
+        "hood": lib.hoods,
         "transport": lib.passes,
         "route": lib.routes,
         "season": lib.seasons,

@@ -245,7 +245,7 @@ def cmd_check(args, cfg=None) -> int:
 
     lib = editorial.load_library(cfg)
     left = editorial.remaining(lib, state)
-    lines.append(f"- 자료: 도시 {len(lib.cities)} · 동네비교 {len(lib.areas)} · 교통 {len(lib.passes)}"
+    lines.append(f"- 자료: 도시 {len(lib.cities)} · 동네가이드 {len(lib.hoods)} · 동네비교 {len(lib.areas)} · 교통 {len(lib.passes)}"
                  f" · 코스 {len(lib.routes)} · 계절 {len(lib.seasons)} · 단어 {len(lib.words)}")
     lines.append(f"  - 아직 안 올린 것: " + " · ".join(f"{k} {v}" for k, v in left.items()))
     from .series import month_summary, series_cfg

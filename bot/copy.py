@@ -82,6 +82,16 @@ def build_copy(topic, cfg) -> Copy:
         return Copy(hook=hook, caption=_caption(hook, bullets, _hashtags(cfg, cfg.copy.get("hashtags_hotel", [])), True),
                     bullets=bullets, buttons=buttons, article_blocks=blocks, sources=topic.sources)
 
+    if k == "hood":
+        things = d.get("do", [])
+        hook = f"{d['title']}, Seoul: what it is like and what to do"
+        bullets = things[:3] or [d.get("vibe", "")]
+        buttons = [_agoda_button(cfg, d["city"], d["title"]), _tripcom_button(cfg)]
+        blocks = [("The vibe", d.get("vibe", "")), ("Do this", things),
+                  ("Getting there", d.get("getting_there", "")), ("Good to know", d.get("tip", ""))]
+        return Copy(hook=hook, caption=_caption(hook, bullets, _hashtags(cfg, cfg.copy.get("hashtags_hotel", [])), True),
+                    bullets=bullets, buttons=buttons, article_blocks=blocks, sources=topic.sources)
+
     if k == "area":
         picks = d.get("picks", [])
         hook = d["title"]

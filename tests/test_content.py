@@ -9,7 +9,7 @@ from bot import editorial
 from bot.config import load_config
 
 ROOT = Path(__file__).resolve().parent.parent
-NEEDS_SOURCES = ("cities", "areas", "passes", "routes", "seasons")  # words.toml is phrases, no claims to source
+NEEDS_SOURCES = ("cities", "areas", "hoods", "passes", "routes", "seasons")  # words.toml is phrases, no claims to source
 
 
 class ContentTest(unittest.TestCase):

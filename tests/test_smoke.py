@@ -29,7 +29,7 @@ class SmokeTest(unittest.TestCase):
         self.assertTrue(self.cfg.series)
 
     def test_every_kind_with_content_renders_a_cover_plus_slides(self):
-        for kind in ("city101", "hotel", "area", "transport", "route", "season", "words"):
+        for kind in ("city101", "hood", "hotel", "area", "transport", "route", "season", "words"):
             entries = editorial.entries_for(kind, self.lib)
             if not entries:
                 continue

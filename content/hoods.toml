@@ -1,0 +1,157 @@
+# 동네 한 곳을 소개하는 자료 ("동네 가이드" 시리즈). 출처 2개 이상 필수.
+#
+# key       상태 저장용 고유 키
+# city      content/cities.toml 의 city key
+# title     카드 제목 (동네 이름)
+# country   Korea / Japan
+# vibe      한두 문장 분위기 소개 (출처 내용을 바꿔 쓴 것)
+# do        할 것 3가지
+# getting_there  가장 가까운 역
+# tip       가기 전에 알아둘 것 한 가지
+# sources   출처 링크 2개 이상 (공식 관광 사이트 우선)
+#
+# 조사일: 2026-09-30. 가격·영업시간처럼 자주 바뀌는 정보는 넣지 않았어요.
+
+[[hood]]
+key = "seoul-myeongdong"
+city = "seoul"
+title = "Myeongdong"
+country = "Korea"
+vibe = "Seoul's shopping district: department stores, beauty shops and street food, with a 1898 brick cathedral in the middle. Very international, very busy."
+do = [
+  "Try street food along the main lanes (skewers, fried potato, tanghulu)",
+  "Visit Myeongdong Cathedral outside mass times",
+  "Browse the Myeongdong Underground Shopping Center for souvenirs",
+]
+getting_there = "Myeongdong Station (Line 4); Euljiro 1-ga Station (Line 2) is the other way in"
+tip = "Expect heavy tourist crowds, especially in the evening. The cathedral and Namsan Tower glow after dark."
+sources = [
+  "https://english.visitseoul.net/editorspicks/myeong-dong/ENNlwcnrh",
+  "https://www.seoultourism.org/seoul-neighborhoods-guide/",
+]
+
+[[hood]]
+key = "seoul-hongdae"
+city = "seoul"
+title = "Hongdae"
+country = "Korea"
+vibe = "Seoul's youth-culture hub around Hongik University: street performers, indie boutiques and late-night bars. Fun and loud, most of all on weekends."
+do = [
+  "Watch the buskers and dance crews on the main streets",
+  "Wander the themed streets: art-studio lane, Picasso's Street, Club Street",
+  "Browse indie boutiques and board-game cafes",
+]
+getting_there = "Hongik University Station (Line 2)"
+tip = "Plan to explore on foot and leave time to wander. Friday and Saturday nights are the loudest."
+sources = [
+  "https://english.visitkorea.or.kr/svc/whereToGo/locIntrdn/rgnContentsView.do?vcontsId=86853",
+  "https://www.seoultourism.org/seoul-neighborhoods-guide/",
+]
+
+[[hood]]
+key = "seoul-seongsu"
+city = "seoul"
+title = "Seongsu"
+country = "Korea"
+vibe = "A former factory district (3,000+ factories once) now full of cafes, design shops and pop-ups in old brick buildings. Often called the Brooklyn of Seoul."
+do = [
+  "Have coffee or bread in a converted 1970s factory cafe (Onion Seongsu)",
+  "Photograph the red-brick Seongsu Yeonbang complex",
+  "Walk Handmade Shoe Street, then Seoul Forest",
+]
+getting_there = "Seongsu Station (Line 2)"
+tip = "Go on a weekday to avoid the crowds. Spring and autumn are the most pleasant seasons."
+sources = [
+  "https://english.visitseoul.net/editorspicks/Seongsu-dong/ENNg9y9rs",
+  "https://www.seoultourism.org/seoul-neighborhoods-guide/",
+]
+
+[[hood]]
+key = "seoul-euljiro"
+city = "seoul"
+title = "Euljiro"
+country = "Korea"
+vibe = "Hardware shops and print workshops by day, craft-beer bars and neon alleys by night. A treasure-hunt district with two very different faces."
+do = [
+  "Drink in Nogari Alley's open-air beer spots",
+  "Try a craft workshop (metal lettering jewelry, custom perfume)",
+  "Look for the neon signs around Neon Alley",
+]
+getting_there = "Euljiro 3(sam)-ga Station (Lines 2 and 3), Exits 1, 3, 8 or 11"
+tip = "Book workshops at least 3 days ahead. Wear comfortable shoes: it is a walking district."
+sources = [
+  "https://english.visitseoul.net/editorspicks/An-A-to-Z-of-Euljiro-Days-that-Build-Nights-that-Spill/ENN0zl5gc",
+  "https://www.seoultourism.org/seoul-neighborhoods-guide/",
+]
+
+[[hood]]
+key = "seoul-ikseon-dong"
+city = "seoul"
+title = "Ikseon-dong"
+country = "Korea"
+vibe = "A hanok village of narrow alleys from the early 1900s, now filled with cafes, boutiques and wine bars in restored traditional houses."
+do = [
+  "Wander the grid of small alleys on foot",
+  "Have a drink at the rooftop cafe in Nagwonjang, a former inn",
+  "Try evening street food at the pojangmacha tents",
+]
+getting_there = "Jongno 3(sam)-ga Station (Lines 1, 3 and 5), Exit 3 or 6"
+tip = "Weekdays are calmer. Autumn (September to October) is the official guide's pick for weather."
+sources = [
+  "https://english.visitseoul.net/editorspicks/Ikseon-dong-Where-Tradition-Meets-Trend-in-the-Heart-of-Seoul/ENNmc5wkd",
+  "https://www.seoultourism.org/seoul-neighborhoods-guide/",
+]
+
+[[hood]]
+key = "seoul-jamsil"
+city = "seoul"
+title = "Jamsil"
+country = "Korea"
+vibe = "A modern district on what used to be an island in the Han River. Home to Lotte World and Lotte World Tower, with lakeside and park walks close by."
+do = [
+  "Walk around Seokchon Lake",
+  "Visit Lotte World Tower and its observation deck",
+  "Spend a slow afternoon at Olympic Park",
+]
+getting_there = "Jamsil Station (Line 2), Exit 3 is the guided walking-tour meeting point"
+tip = "Good for families and rainy days. The area is less atmospheric than the old-town districts."
+sources = [
+  "https://english.visitseoul.net/walking-tour/JamsilTour/ENN91jofy",
+  "https://www.seoultourism.org/seoul-neighborhoods-guide/",
+]
+
+[[hood]]
+key = "seoul-yeonnam"
+city = "seoul"
+title = "Yeonnam"
+country = "Korea"
+vibe = "Hongdae's creative energy at a lower volume. A linear park built over an old rail line runs through it, with brunch spots, indie bookshops and cafes."
+do = [
+  "Stroll Gyeongui Line Forest Park (Yeontral Park)",
+  "Brunch at a local cafe on a slow morning",
+  "Browse independent bookshops, then Mangwon Market by the river",
+]
+getting_there = "Hongik University Station (Line 2) is the closest big station, then walk"
+tip = "Good for a quieter stay near Hongdae, with good morning walks."
+sources = [
+  "https://english.visitkorea.or.kr/svc/contents/contentsView.do?vcontsId=14663",
+  "https://www.seoultourism.org/seoul-neighborhoods-guide/",
+]
+
+[[hood]]
+key = "seoul-itaewon"
+city = "seoul"
+title = "Itaewon"
+country = "Korea"
+vibe = "Korea's first special tourist zone (1997) and Seoul's most international neighborhood. World food, antique furniture shops and a big foreign-resident community."
+do = [
+  "Eat your way down World Food Street (about 40 international restaurants)",
+  "Browse Antique Furniture Street near the Hamilton Hotel",
+  "Come in October for the Itaewon Global Village Festival",
+]
+getting_there = "Itaewon Station (Line 6)"
+tip = "Quieter and more polished up the hill in Hannam-dong."
+sources = [
+  "https://english.visitkorea.or.kr/svc/whereToGo/locIntrdn/rgnContentsView.do?vcontsId=111543",
+  "https://www.seoultourism.org/seoul-neighborhoods-guide/",
+]

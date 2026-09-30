@@ -6,7 +6,7 @@ the bot posts the series that is furthest behind its target for this point in th
 fixed-day series (weekly) go first on their day. If a series has nothing left to post, the
 next one in line is tried (see plan_order's returned `steps`).
 
-Series: city101 · area · hotel · transport · route · season · words · weekly · recap
+Series: city101 · hood · area · hotel · transport · route · season · words · weekly · recap
   (what each one covers is in config.toml's comments and the 기획서 콘텐츠 시리즈 table)
 """
 from __future__ import annotations
@@ -18,7 +18,7 @@ from datetime import date as Date
 
 from .util import warn
 
-SERIES_NAMES = ("city101", "area", "hotel", "transport", "route", "season", "words", "weekly", "recap")
+SERIES_NAMES = ("city101", "hood", "area", "hotel", "transport", "route", "season", "words", "weekly", "recap")
 DAYS = {"mon": 0, "tue": 1, "wed": 2, "thu": 3, "fri": 4, "sat": 5, "sun": 6}
 FALLBACK_SERIES = "city101"  # always has something to say if everything else is exhausted
 

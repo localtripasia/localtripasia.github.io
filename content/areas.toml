@@ -6,7 +6,7 @@
 # picks    비교할 동네 2~4개, 각각 name + note (한 줄 특징)
 # sources  출처 링크 2개 이상
 #
-# ⚠️ 예시 1개(서울)만 채워뒀어요. 나머지 9개는 5단계에서 채워요.
+# ⚠️ 서울 2개만 채워뒀어요. 나머지 도시는 다음 단계에서 채워요.
 
 [[area]]
 key = "seoul-myeongdong-hongdae-seongsu"
@@ -20,4 +20,19 @@ picks = [
 sources = [
   "https://english.visitkorea.or.kr/",
   "https://www.seoul.go.kr/",
+]
+
+[[area]]
+key = "seoul-ikseon-euljiro-seongsu"
+city = "seoul"
+title = "Ikseon-dong vs. Euljiro vs. Seongsu"
+picks = [
+  { name = "Ikseon-dong", note = "Hanok alleys with cafes and wine bars; best on weekdays and on foot" },
+  { name = "Euljiro", note = "Old print and hardware district by day, craft-beer bars by night" },
+  { name = "Seongsu", note = "Former factories turned cafes and design shops; go on a weekday" },
+]
+sources = [
+  "https://english.visitseoul.net/editorspicks/Ikseon-dong-Where-Tradition-Meets-Trend-in-the-Heart-of-Seoul/ENNmc5wkd",
+  "https://english.visitseoul.net/editorspicks/An-A-to-Z-of-Euljiro-Days-that-Build-Nights-that-Spill/ENN0zl5gc",
+  "https://english.visitseoul.net/editorspicks/Seongsu-dong/ENNg9y9rs",
 ]

@@ -24,12 +24,12 @@ RED = "#E0483A"
 INK_ON_CREAM = "#15233F"
 
 KIND_LABEL = {
-    "city101": "CITY 101", "area": "WHERE TO STAY", "hotel": "HOTEL PICKS",
+    "city101": "CITY 101", "hood": "NEIGHBORHOOD GUIDE", "area": "WHERE TO STAY", "hotel": "HOTEL PICKS",
     "transport": "GETTING AROUND", "route": "ROUTE", "season": "SEASON GUIDE",
     "words": "SPEAK LIKE A LOCAL", "weekly": "TRENDING THIS WEEK", "recap": "LAST MONTH",
 }
 KIND_ACCENT = {
-    "city101": TEAL, "area": RED, "hotel": RED, "transport": TEAL,
+    "city101": TEAL, "hood": TEAL, "area": RED, "hotel": RED, "transport": TEAL,
     "route": RED, "season": TEAL, "words": RED, "weekly": TEAL, "recap": RED,
 }
 
@@ -80,7 +80,7 @@ def _route_motif(d: ImageDraw.ImageDraw, x: int, y: int, w: int, ink: str) -> No
 
 def _subtitle(topic) -> str:
     d = topic.data
-    if topic.kind in ("city101", "hotel"):
+    if topic.kind in ("city101", "hotel", "hood"):
         return {"Korea": "SOUTH KOREA", "Japan": "JAPAN"}.get(d.get("country", ""), d.get("country", "").upper())
     if topic.kind == "route":
         return f"{d.get('days', '')} DAYS".strip()
@@ -204,6 +204,13 @@ def _slides_for(topic) -> list[tuple[str, list[str], bool]]:
     if k == "hotel":
         lines = [f"{h['tier'].title()} — {h['name']} · {h.get('note', '')}" for h in d.get("example_hotels", [])]
         return [("Where to stay", lines or ["Example picks coming soon."], True)]
+    if k == "hood":
+        return [
+            ("The vibe", [d.get("vibe", "")], False),
+            ("Do this", d.get("do", []), True),
+            ("Getting there", [d.get("getting_there", "")], False),
+            ("Good to know", [d.get("tip", "")], False),
+        ]
     if k == "area":
         lines = [f"{p['name']} — {p.get('note', '')}" for p in d.get("picks", [])]
         return [("Neighborhoods compared", lines, True)]
