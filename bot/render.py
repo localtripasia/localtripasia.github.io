@@ -282,7 +282,7 @@ def _photo_slide(photo: dict, title: str, number: int, brand: str, page: str) ->
     d.text((PAD, H - 105), credit, font=cf, fill=CREAM)
     tag = f"No.{number:03d}  \u00b7  {page}"
     tw = d.textlength(tag, font=f)
-    d.text((W - PAD - tw, H - 150), tag, font=f, fill=_on_dark(RED))
+    d.text((W - PAD - tw, H - 150), tag, font=f, fill=CREAM)
     return im
 
 
