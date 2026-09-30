@@ -92,22 +92,35 @@ def frame(slide: Path, out: Path, handle: str = "") -> Path:
 
 
 def build_reel(slides: list[Path], out_video: Path, cover_out: Path, seconds: float = 3.6,
-               music: Path | None = None, ffmpeg: str | None = None) -> float:
+               music: Path | None = None, ffmpeg: str | None = None,
+               lengths: list[float] | None = None, zoom: set[int] | None = None) -> float:
     """Writes the MP4 (H.264 + AAC, 1080x1920, 30 fps) and a JPG cover. Returns the duration in seconds."""
     ff = ffmpeg or ffmpeg_path()
     work = out_video.parent / f".{out_video.stem}_frames"
     frames = [frame(s, work / f"{i:02d}.png") for i, s in enumerate(slides, 1)]
     Image.open(frames[0]).convert("RGB").save(cover_out, "JPEG", quality=90)
     n = len(frames)
-    first, last = seconds + 0.6, seconds + 0.9  # a beat longer on the cover and the last card
-    lengths = [first] + [seconds] * (n - 2) + [last] if n > 1 else [first + 1]
+    zoom = zoom or set()
+    if lengths is None or len(lengths) != n:
+        first, last = seconds + 0.6, seconds + 0.9  # a beat longer on the cover and the last card
+        lengths = [first] + [seconds] * (n - 2) + [last] if n > 1 else [first + 1]
     total = sum(lengths) - TRANSITION * (n - 1)
     cmd = [ff, "-y", "-loglevel", "error"]
-    for f, ln in zip(frames, lengths):
-        cmd += ["-loop", "1", "-framerate", str(FPS), "-t", f"{ln:.3f}", "-i", str(f)]
+    for i, (f, ln) in enumerate(zip(frames, lengths)):
+        if i in zoom:       # zoompan makes the frames itself from one still image
+            cmd += ["-i", str(f)]
+        else:
+            cmd += ["-loop", "1", "-framerate", str(FPS), "-t", f"{ln:.3f}", "-i", str(f)]
     if music:
         cmd += ["-stream_loop", "-1", "-i", str(music)]
-    chains = [f"[{i}:v]format=yuv420p,setsar=1[v{i}]" for i in range(n)]
+    chains = []
+    for i in range(n):
+        if i in zoom:       # slow push-in (1.0 -> 1.06) so photo shots do not feel static
+            fr = max(1, round(lengths[i] * FPS))
+            chains.append(f"[{i}:v]scale={RW * 2}:{RH * 2},zoompan=z='1+0.06*on/{fr}':x='iw/2-(iw/zoom/2)':"
+                          f"y='ih/2-(ih/zoom/2)':d={fr}:s={RW}x{RH}:fps={FPS},format=yuv420p,setsar=1[v{i}]")
+        else:
+            chains.append(f"[{i}:v]format=yuv420p,setsar=1[v{i}]")
     last_label, offset = "v0", 0.0
     for i in range(1, n):
         offset += lengths[i - 1] - TRANSITION
@@ -130,6 +143,34 @@ def build_reel(slides: list[Path], out_video: Path, cover_out: Path, seconds: fl
     return round(total, 2)
 
 
+def plan_shots(post: dict, n: int, seconds: float) -> tuple[list[int], list[float] | None, set[int]]:
+    """Shot order (indices into the carousel slides), lengths and which shots get a push-in.
+
+    Neighborhood posts (cover, vibe, do, know, photos..., closing) are cut for video: text and photo shots
+    alternate and photos are quick, so the reel keeps moving. Other posts keep the carousel order."""
+    if post.get("source") != "hood" or n < 8:
+        return list(range(n)), None, set()
+    cover, vibe, todo, know, closing = 0, 1, 2, 3, n - 1
+    photos = list(range(4, n - 1))
+    half = (len(photos) + 1) // 2
+    a, b = photos[:half], photos[half:]
+    order = [cover, vibe] + a[:2] + [todo] + a[2:] + b[:1] + [know] + b[1:] + [closing]
+    photo_set = set(photos)
+    lengths, zoom = [], set()
+    for pos, idx in enumerate(order):
+        if idx in photo_set:
+            lengths.append(2.4)
+            zoom.add(pos)
+        elif idx == cover:
+            lengths.append(seconds + 0.2)
+            zoom.add(pos)
+        elif idx == closing:
+            lengths.append(seconds + 0.9)
+        else:
+            lengths.append(seconds)
+    return order, lengths, zoom
+
+
 def make_for_post(cfg, post: dict, slides: list[Path], out: Path, manual: bool | None = None) -> dict | None:
     """Builds site/reels/NNN.mp4 (+ cover) for a prepared post and returns the record to keep on the post."""
     s = settings(cfg)
@@ -140,8 +181,10 @@ def make_for_post(cfg, post: dict, slides: list[Path], out: Path, manual: bool |
     folder = post["folder"]
     video = out / "reels" / f"{folder}.mp4"
     cover = out / "reels" / f"{folder}.jpg"
+    order, lengths, zoom = plan_shots(post, len(slides), s["seconds"])
+    slides = [slides[i] for i in order]
     try:
-        secs = build_reel(slides, video, cover, s["seconds"], music)
+        secs = build_reel(slides, video, cover, s["seconds"], music, lengths=lengths, zoom=zoom)
     except Exception as exc:
         err = getattr(exc, "stderr", b"") or b""
         warn(f"릴스 영상을 만들지 못했어요 (카드뉴스는 그대로 올려요): {exc} {err[-300:].decode(errors='ignore')}")
