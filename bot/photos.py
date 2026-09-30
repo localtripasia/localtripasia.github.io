@@ -11,6 +11,7 @@ from PIL import Image
 ROOT = Path(__file__).resolve().parent.parent
 PHOTOS_DIR = ROOT / "photos"
 AUTO_PATH = ROOT / "data" / "photos_auto.json"   # written by bot/sources/kto_photos.py
+GALLERY_PATH = ROOT / "data" / "gallery_auto.json"   # photo-tour photos per place, same writer
 ALLOWED_LICENSES = ("unsplash", "kogl-1", "own", "cc0", "cc-by", "pexels")
 
 
@@ -54,3 +55,15 @@ def cover_image(path: Path, size: tuple[int, int]) -> Image.Image:
     im = im.resize((round(im.width * scale), round(im.height * scale)), Image.LANCZOS)
     left, top = (im.width - w) // 2, (im.height - h) // 2
     return im.crop((left, top, left + w, top + h))
+
+
+def gallery_for(topic, photos_dir: Path | None = None, table: dict | None = None) -> list[dict]:
+    """The photo-tour photos saved for this topic (each with 'path'), only those whose file exists."""
+    if table is None:
+        table = json.loads(GALLERY_PATH.read_text()) if GALLERY_PATH.exists() else {}
+    out = []
+    for e in table.get(topic.data.get("key"), []):
+        path = (photos_dir or PHOTOS_DIR) / e["file"]
+        if path.exists():
+            out.append({**e, "path": path})
+    return out

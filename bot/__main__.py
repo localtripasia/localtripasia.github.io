@@ -93,7 +93,11 @@ def cmd_prepare(args, cfg=None) -> int:
         if topic is None:
             continue
         try:
-            kto_photos.ensure_photo(topic, cfg)
+            if topic.kind == "gallery":
+                if not kto_photos.ensure_gallery(topic, cfg):
+                    raise RuntimeError("포토 투어에 쓸 사진이 4장 미만이에요")
+            else:
+                kto_photos.ensure_photo(topic, cfg)
             cp = copy_mod.build_copy(topic, cfg)
             paths = render_topic(topic, number, cfg, out / "posts" / f"{number:03d}")
         except Exception as exc:

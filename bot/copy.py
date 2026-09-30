@@ -6,7 +6,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 
-from .photos import photo_for
+from .photos import gallery_for, photo_for
 from .sources.agoda import hotels_for
 
 DISCLOSURE = "#ad Contains affiliate links — we may earn a small commission at no extra cost to you."
@@ -93,6 +93,14 @@ def _build_copy(topic, cfg) -> Copy:
         return Copy(hook=hook, caption=_caption(hook, bullets, _hashtags(cfg, cfg.copy.get("hashtags_hotel", [])), True),
                     bullets=bullets, buttons=buttons, article_blocks=blocks, sources=topic.sources)
 
+    if k == "gallery":
+        hook = f"{d['title']}, Seoul: a photo tour"
+        bullets = [d.get("vibe", "")[:110].rstrip(" .,;:") + "."] if d.get("vibe") else []
+        buttons = [_agoda_button(cfg, d["city"], d["title"]), _tripcom_button(cfg)]
+        blocks = [("The vibe", d.get("vibe", "")), ("Getting there", d.get("getting_there", ""))]
+        return Copy(hook=hook, caption=_caption(hook, bullets, _hashtags(cfg, cfg.copy.get("hashtags_hotel", [])), True),
+                    bullets=bullets, buttons=buttons, article_blocks=blocks, sources=topic.sources)
+
     if k == "area":
         picks = d.get("picks", [])
         hook = d["title"]
@@ -140,6 +148,10 @@ def build_copy(topic, cfg) -> Copy:
     """Copy for the topic, plus the photo credit (caption + guide page) when the cover uses a photo."""
     cp = _build_copy(topic, cfg)
     photo = photo_for(topic)
+    if topic.kind == "gallery":
+        gal = gallery_for(topic)
+        photo = {"credit": "Photos: Korea Tourism Organization (KOGL Type 1)",
+                 "source": "https://www.data.go.kr/data/15101914/openapi.do"} if gal else photo
     if photo and photo.get("credit"):
         head, sep, tags = cp.caption.rpartition("\n\n")
         cp.caption = f"{head}\n\n{photo['credit']}{sep}{tags}" if sep else f"{cp.caption}\n\n{photo['credit']}"

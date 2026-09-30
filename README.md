@@ -31,10 +31,11 @@
 | 시리즈 | 월 횟수 | 내용 | 자료 |
 |---|---|---|---|
 | city101 | 6 | 왜 가야 하나·언제·가는 법·할 것 3가지·숙소 예산 3단계 | `content/cities.toml` |
-| hood | 6 | 동네 한 곳 소개 (분위기·할 것·가는 법) | `content/hoods.toml` |
-| area | 3 | 동네 비교 ("명동 vs 홍대 vs 성수") | `content/areas.toml` |
+| hood | 5 | 동네 한 곳 소개 (분위기·할 것·가는 법) | `content/hoods.toml` |
+| gallery | 3 | 포토 투어 (사진만 5장 · 한국관광공사 사진 + AI 확인, 4장 미만이면 건너뜀) | 관광공사 API + `GEMINI_API_KEY` |
+| area | 2 | 동네 비교 ("명동 vs 홍대 vs 성수") | `content/areas.toml` |
 | hotel | 4 | 조건별 호텔 픽 (예산 3단계) | `content/cities.toml`의 `example_hotels` + 아고다 API |
-| transport | 3 | JR패스·코레일패스·티머니·eSIM | `content/passes.toml` |
+| transport | 2 | JR패스·코레일패스·티머니·eSIM | `content/passes.toml` |
 | route | 2 | 3일·5일 코스, 한일 연결 코스 | `content/routes.toml` |
 | season | 2 | 벚꽃·단풍·눈 시기, 축제 | `content/seasons.toml` |
 | words | 1 | 식당·온천·지하철에서 쓰는 말 | `content/words.toml` |
@@ -66,6 +67,7 @@ API 호출로 바꿔요).
 | 이름 | 필수 | 용도 |
 |---|---|---|
 | `IG_ACCESS_TOKEN` | 게시하려면 필수 | 인스타 게시 |
+| `GEMINI_API_KEY` | 권장 | 사진을 AI가 보고 걸러요 (얼굴·인파·다른 장소). 없으면 제목 단어 순위만 써요 |
 | `KTO_API_KEY` | 권장 | 한국 동네·도시 카드 표지 사진 (한국관광공사 관광사진 API, 공공누리 1유형) |
 | `NAVER_CLIENT_ID` / `NAVER_CLIENT_SECRET` | 권장 | 목요일 게시물의 한국 검색 트렌드 |
 | `ESTAT_APP_ID` | 권장 | 목요일 게시물의 일본 숙박통계 |

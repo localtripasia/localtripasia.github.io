@@ -16,7 +16,7 @@ from pathlib import Path
 from .util import warn
 
 ROOT = Path(__file__).resolve().parent.parent
-KINDS = ("city101", "hood", "area", "hotel", "transport", "route", "season", "words", "recap")
+KINDS = ("city101", "hood", "gallery", "area", "hotel", "transport", "route", "season", "words", "recap")
 
 
 @dataclass
@@ -89,6 +89,7 @@ def entries_for(kind: str, lib: Library) -> list[dict]:
         "hotel": lib.cities,       # each city entry carries its own budget/mid/splurge picks
         "area": lib.areas,
         "hood": lib.hoods,
+        "gallery": [h for h in lib.hoods if h.get("ko") and h.get("country") == "Korea"],   # photo tours need a KTO search word
         "transport": lib.passes,
         "route": lib.routes,
         "season": lib.seasons,

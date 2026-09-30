@@ -23,10 +23,12 @@ from urllib.parse import quote, unquote
 from PIL import Image
 
 from .. import vision
-from ..photos import AUTO_PATH, PHOTOS_DIR
+from ..photos import AUTO_PATH, GALLERY_PATH, PHOTOS_DIR
 from ..util import log, notice, scrub, warn
 
 API = "https://apis.data.go.kr/B551011/PhotoGalleryService1/gallerySearchList1"
+GALLERY_SIZE = 5       # photos in a photo-tour post
+MIN_GALLERY = 4        # fewer than this and the photo tour is skipped that day
 MAX_JUDGED = 6         # at most this many AI checks per place (keeps a run cheap and fast)
 MIN_SIDE = 900          # px, so the cover doesn't look blurry after cropping to 1080x1350
 CREDIT_SUFFIX = "Korea Tourism Organization (KOGL Type 1)"
@@ -97,64 +99,107 @@ def find_results(data: dict, key: str, session=None) -> tuple[str, list[dict]]:
     return "", []
 
 
+def _vetted(topic, cfg, session=None, vision_session=None, max_judged: int = MAX_JUDGED):
+    """Yield (item, image, verdict) for candidate photos that pass every check, best-ranked first.
+    verdict is None when no AI key is set (then only size and title-word ranking apply)."""
+    key, ko = cfg.kto_key, topic.data["ko"]
+    _, results = find_results(topic.data, key, session)
+    judged, seen = 0, set()
+    for item in sorted(results, key=_rank):
+        url = item.get("galWebImageUrl")
+        who = (item.get("galPhotographer") or "").strip()
+        if not url or not who or url in seen:
+            continue
+        seen.add(url)
+        try:
+            im = _download(url, session)
+        except Exception:
+            continue
+        if im is None:
+            continue
+        verdict = None
+        if cfg.gemini_key:
+            if judged >= max_judged:
+                return
+            judged += 1
+            try:
+                verdict = vision.judge(im, topic.data.get("title") or topic.data.get("name") or ko, "Seoul",
+                                       cfg.gemini_key, cfg.vision.get("model", "gemini-2.5-flash"), vision_session)
+            except Exception as exc:
+                notice("사진", f"AI 확인 오류 (제목 순위만으로 진행): {_clean(str(exc), cfg.gemini_key)[:200]}")
+            if verdict is not None and not vision.acceptable(verdict):
+                log(f"사진 탈락: {item.get('galTitle', '')} {verdict}")
+                continue
+        yield item, im, verdict
+
+
+def _entry(topic, item, name, verdict) -> dict:
+    return {"key": topic.data["key"], "file": name, "credit": _credit((item.get("galPhotographer") or "").strip()),
+            "source": "https://www.data.go.kr/data/15101914/openapi.do", "license": "kogl-1",
+            "title": item.get("galTitle", ""), "content_id": item.get("galContentId", ""),
+            "ai_checked": verdict is not None}
+
+
+def _usable(topic, cfg) -> bool:
+    return bool(cfg.kto_key and topic.data.get("ko") and topic.data.get("country") == "Korea")
+
+
 def ensure_photo(topic, cfg, session=None, photos_dir: Path | None = None, auto_path: Path | None = None,
                  vision_session=None) -> bool:
-    """Make sure this topic has a photo when it can. True if a photo is available afterwards."""
+    """Make sure this topic has a cover photo when it can. True if a photo is available afterwards."""
     from ..photos import photo_for
     if photo_for(topic, photos_dir):
         return True
-    key = cfg.kto_key
-    ko = topic.data.get("ko")
-    if not key or not ko or topic.data.get("country") != "Korea":
+    if not _usable(topic, cfg):
         return False
     photos_dir = photos_dir or PHOTOS_DIR
     auto_path = auto_path or AUTO_PATH
     try:
-        _, results = find_results(topic.data, key, session)
-        judged = 0
-        for item in sorted(results, key=_rank):
-            url = item.get("galWebImageUrl")
-            who = (item.get("galPhotographer") or "").strip()
-            if not url or not who:
-                continue
-            try:
-                im = _download(url, session)
-            except Exception:
-                continue
-            if im is None:
-                continue
-            verdict = None
-            if cfg.gemini_key:
-                if judged >= MAX_JUDGED:
-                    break
-                judged += 1
-                try:
-                    verdict = vision.judge(im, topic.data.get("title") or topic.data.get("name") or ko, "Seoul", cfg.gemini_key,
-                                           cfg.vision.get("model", "gemini-2.5-flash"), vision_session)
-                except Exception as exc:
-                    notice("사진", f"AI 확인 오류 (제목 순위만으로 진행): {_clean(str(exc), cfg.gemini_key)[:200]}")
-                if verdict is not None and not vision.acceptable(verdict):
-                    log(f"사진 탈락: {item.get('galTitle', '')} {verdict}")
-                    continue
+        for item, im, verdict in _vetted(topic, cfg, session, vision_session):
             name = f"auto-{topic.data['key']}.jpg"
             photos_dir.mkdir(parents=True, exist_ok=True)
             im.convert("RGB").save(photos_dir / name, quality=92)
             table = json.loads(auto_path.read_text()) if auto_path.exists() else {}
-            table[topic.data["key"]] = {
-                "key": topic.data["key"], "file": name,
-                "credit": _credit(who),
-                "source": "https://www.data.go.kr/data/15101914/openapi.do",
-                "license": "kogl-1", "title": item.get("galTitle", ""), "content_id": item.get("galContentId", ""),
-                "ai_checked": verdict is not None,
-            }
+            table[topic.data["key"]] = _entry(topic, item, name, verdict)
             auto_path.parent.mkdir(parents=True, exist_ok=True)
             auto_path.write_text(json.dumps(table, ensure_ascii=False, indent=2))
             notice("사진", f"확보: {topic.data['key']} <- {item.get('galTitle', '')} ({im.size[0]}x{im.size[1]}) AI확인={'예' if verdict else '아니오'}")
             log(f"사진 확보: {topic.data['key']} ← {item.get('galTitle', '')}")
             return True
-        notice("사진", f"'{ko}' 결과 없음, 모두 작음, 또는 AI가 모두 탈락시킴 (사진 없이 진행)")
-        warn(f"'{ko}' 로 쓸 만한 관광공사 사진을 찾지 못했어요 (사진 없이 진행)")
+        notice("사진", f"'{topic.data['ko']}' 결과 없음, 모두 작음, 또는 AI가 모두 탈락시킴 (사진 없이 진행)")
+        warn(f"'{topic.data['ko']}' 로 쓸 만한 관광공사 사진을 찾지 못했어요 (사진 없이 진행)")
     except Exception as exc:
-        notice("사진", f"API 오류: {_clean(str(exc), key)[:300]}")
-        warn(f"관광공사 사진 API 오류 (사진 없이 진행): {_clean(str(exc), key)}")
+        notice("사진", f"API 오류: {_clean(str(exc), cfg.kto_key)[:300]}")
+        warn(f"관광공사 사진 API 오류 (사진 없이 진행): {_clean(str(exc), cfg.kto_key)}")
     return False
+
+
+def ensure_gallery(topic, cfg, n: int = GALLERY_SIZE, session=None, photos_dir: Path | None = None,
+                   gallery_path: Path | None = None, vision_session=None) -> list[dict]:
+    """Up to n vetted photos of this place for a photo-tour post (saved as photos/gallery-<key>-N.jpg).
+    Reuses an existing gallery; returns [] when the place has none or the API is not set up."""
+    photos_dir = photos_dir or PHOTOS_DIR
+    gallery_path = gallery_path or GALLERY_PATH
+    table = json.loads(gallery_path.read_text()) if gallery_path.exists() else {}
+    have = [e for e in table.get(topic.data["key"], []) if (photos_dir / e["file"]).exists()]
+    if len(have) >= MIN_GALLERY or not _usable(topic, cfg):
+        return have
+    have = []
+    try:
+        for item, im, verdict in _vetted(topic, cfg, session, vision_session, max_judged=n * 3):
+            name = f"gallery-{topic.data['key']}-{len(have) + 1}.jpg"
+            photos_dir.mkdir(parents=True, exist_ok=True)
+            im.convert("RGB").save(photos_dir / name, quality=92)
+            have.append(_entry(topic, item, name, verdict))
+            if len(have) >= n:
+                break
+    except Exception as exc:
+        notice("사진", f"갤러리 API 오류: {_clean(str(exc), cfg.kto_key)[:300]}")
+    if len(have) >= MIN_GALLERY:
+        table[topic.data["key"]] = have
+        gallery_path.parent.mkdir(parents=True, exist_ok=True)
+        gallery_path.write_text(json.dumps(table, ensure_ascii=False, indent=2))
+        notice("사진", f"갤러리 {topic.data['key']}: {len(have)}장 확보")
+    else:
+        notice("사진", f"갤러리 {topic.data['key']}: 쓸 만한 사진 {len(have)}장뿐이라 포토 투어는 건너뛰어요")
+    return have if len(have) >= MIN_GALLERY else []

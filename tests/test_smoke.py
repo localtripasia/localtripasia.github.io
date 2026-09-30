@@ -179,6 +179,44 @@ class SmokeTest(unittest.TestCase):
         finally:
             os.environ.pop("KTO_API_KEY", None); os.environ.pop("GEMINI_API_KEY", None)
 
+    def test_photo_tour_needs_four_photos_and_renders_cover_photos_and_closing_slide(self):
+        import io, json, os
+        from PIL import Image
+        from bot import photos as photos_mod
+        from bot.sources import kto_photos
+        entry = next(h for h in self.lib.hoods if h["key"] == "seoul-itaewon")
+        topic = editorial.Topic(kind="gallery", key="gallery-seoul-itaewon", data=entry)
+        buf = io.BytesIO(); Image.new("RGB", (1500, 1000), (30, 100, 150)).save(buf, "JPEG")
+
+        class R:
+            def __init__(self, payload=None, content=b""): self._p, self.content = payload, content
+            def raise_for_status(self): pass
+            def json(self): return self._p
+
+        def session(n):
+            class S:
+                def get(self, url, params=None, timeout=0):
+                    if "gallerySearchList1" in url:
+                        return R({"response": {"body": {"items": {"item": [
+                            {"galTitle": f"이태원 거리 {i}", "galWebImageUrl": f"http://x/{i}.jpg", "galPhotographer": "Kim"} for i in range(n)]}}}})
+                    return R(content=buf.getvalue())
+            return S()
+
+        os.environ["KTO_API_KEY"] = "k"
+        orig = photos_mod.PHOTOS_DIR, photos_mod.GALLERY_PATH, photos_mod.AUTO_PATH
+        photos_mod.PHOTOS_DIR, photos_mod.GALLERY_PATH, photos_mod.AUTO_PATH = self.tmp / "g", self.tmp / "g.json", self.tmp / "none.json"
+        try:
+            self.assertEqual(kto_photos.ensure_gallery(topic, self.cfg, session=session(3), photos_dir=self.tmp / "g0", gallery_path=self.tmp / "g0.json"), [])
+            got = kto_photos.ensure_gallery(topic, self.cfg, session=session(8), photos_dir=self.tmp / "g", gallery_path=self.tmp / "g.json")
+            self.assertEqual(len(got), 5)
+            paths = render_topic(topic, 3, self.cfg, self.tmp / "tour")
+            self.assertEqual(len(paths), 7)            # cover + 5 photos + closing slide
+            cp = copy_mod.build_copy(topic, self.cfg)
+            self.assertIn("Photos: Korea Tourism Organization", cp.caption)
+        finally:
+            os.environ.pop("KTO_API_KEY", None)
+            photos_mod.PHOTOS_DIR, photos_mod.GALLERY_PATH, photos_mod.AUTO_PATH = orig
+
     def test_kto_photo_does_nothing_without_a_key(self):
         from bot.sources import kto_photos
         entry = next(h for h in self.lib.hoods if h["key"] == "seoul-seongsu")

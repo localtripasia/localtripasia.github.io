@@ -18,7 +18,7 @@ from datetime import date as Date
 
 from .util import warn
 
-SERIES_NAMES = ("city101", "hood", "area", "hotel", "transport", "route", "season", "words", "weekly", "recap")
+SERIES_NAMES = ("city101", "hood", "gallery", "area", "hotel", "transport", "route", "season", "words", "weekly", "recap")
 DAYS = {"mon": 0, "tue": 1, "wed": 2, "thu": 3, "fri": 4, "sat": 5, "sun": 6}
 FALLBACK_SERIES = "city101"  # always has something to say if everything else is exhausted
 

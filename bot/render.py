@@ -12,7 +12,7 @@ from pathlib import Path
 
 from PIL import Image, ImageDraw, ImageFont
 
-from .photos import cover_image, photo_for
+from .photos import cover_image, gallery_for, photo_for
 
 ROOT = Path(__file__).resolve().parent.parent
 FONTS = ROOT / "assets" / "fonts"
@@ -26,12 +26,12 @@ RED = "#E0483A"
 INK_ON_CREAM = "#15233F"
 
 KIND_LABEL = {
-    "city101": "CITY 101", "hood": "NEIGHBORHOOD GUIDE", "area": "WHERE TO STAY", "hotel": "HOTEL PICKS",
+    "city101": "CITY 101", "hood": "NEIGHBORHOOD GUIDE", "gallery": "PHOTO TOUR", "area": "WHERE TO STAY", "hotel": "HOTEL PICKS",
     "transport": "GETTING AROUND", "route": "ROUTE", "season": "SEASON GUIDE",
     "words": "SPEAK LIKE A LOCAL", "weekly": "TRENDING THIS WEEK", "recap": "LAST MONTH",
 }
 KIND_ACCENT = {
-    "city101": TEAL, "hood": TEAL, "area": RED, "hotel": RED, "transport": TEAL,
+    "city101": TEAL, "hood": TEAL, "gallery": RED, "area": RED, "hotel": RED, "transport": TEAL,
     "route": RED, "season": TEAL, "words": RED, "weekly": TEAL, "recap": RED,
 }
 
@@ -89,7 +89,7 @@ def _route_motif(d: ImageDraw.ImageDraw, x: int, y: int, w: int, ink: str) -> No
 
 def _subtitle(topic) -> str:
     d = topic.data
-    if topic.kind in ("city101", "hotel", "hood"):
+    if topic.kind in ("city101", "hotel", "hood", "gallery"):
         return {"Korea": "SOUTH KOREA", "Japan": "JAPAN"}.get(d.get("country", ""), d.get("country", "").upper())
     if topic.kind == "route":
         return f"{d.get('days', '')} DAYS".strip()
@@ -112,10 +112,10 @@ def _photo_backdrop(path: Path) -> Image.Image:
     return Image.composite(tint, im, fade)
 
 
-def _cover(topic, number: int, brand: str, total: int = 0) -> Image.Image:
+def _cover(topic, number: int, brand: str, total: int = 0, photo_override: dict | None = None) -> Image.Image:
     accent = _on_dark(KIND_ACCENT.get(topic.kind, TEAL))
     im, d = _base(NAVY)
-    photo = photo_for(topic)
+    photo = photo_override or photo_for(topic)
     if photo:
         im = _photo_backdrop(photo["path"])
         d = ImageDraw.Draw(im)
@@ -266,8 +266,50 @@ def _slides_for(topic) -> list[tuple[str, list[str], bool]]:
     return [("", [str(d)], False)]
 
 
+def _photo_slide(photo: dict, title: str, number: int, brand: str, page: str) -> Image.Image:
+    """A full-bleed photo with only a small place label and the credit (photo-tour posts)."""
+    im = cover_image(photo["path"], (W, H))
+    shade = Image.new("L", (W, H), 0)
+    sd = ImageDraw.Draw(shade)
+    for y in range(H - 260, H):
+        sd.line((0, y, W, y), fill=int(170 * (y - (H - 260)) / 260))
+    im = Image.composite(Image.new("RGB", (W, H), NAVY), im, shade)
+    d = ImageDraw.Draw(im)
+    f = _font("DMSans-SemiBold.ttf", 34)
+    d.text((PAD, H - 150), title.upper(), font=f, fill=CREAM)
+    cf = _font("DMSans-Medium.ttf", 24)
+    credit = photo.get("credit", "")
+    d.text((PAD, H - 105), credit, font=cf, fill=CREAM)
+    tag = f"No.{number:03d}  \u00b7  {page}"
+    tw = d.textlength(tag, font=f)
+    d.text((W - PAD - tw, H - 150), tag, font=f, fill=_on_dark(RED))
+    return im
+
+
+def _render_gallery(topic, number: int, cfg, out_dir: Path) -> list[Path]:
+    photos = gallery_for(topic)
+    if len(photos) < 2:
+        raise RuntimeError("포토 투어에 쓸 사진이 부족해요")
+    accent = KIND_ACCENT["gallery"]
+    total = len(photos) + 2
+    paths = []
+    p = out_dir / "1.jpg"
+    _cover(topic, number, cfg.brand_name, photo_override=photos[0]).save(p, quality=93)
+    paths.append(p)
+    for i, photo in enumerate(photos, start=2):
+        p = out_dir / f"{i}.jpg"
+        _photo_slide(photo, topic.title, number, cfg.brand_name, f"{i}/{total}").save(p, quality=93)
+        paths.append(p)
+    p = out_dir / f"{total}.jpg"
+    _cta_slide(topic, number, cfg, accent, f"{total}/{total}").save(p, quality=93)
+    paths.append(p)
+    return paths
+
+
 def render_topic(topic, number: int, cfg, out_dir: Path) -> list[Path]:
     out_dir.mkdir(parents=True, exist_ok=True)
+    if topic.kind == "gallery":
+        return _render_gallery(topic, number, cfg, out_dir)
     brand = cfg.brand_name
     accent = KIND_ACCENT.get(topic.kind, TEAL)
     slides = [(h, l, b) for h, l, b in _slides_for(topic) if any(str(x).strip() for x in l)]
@@ -288,7 +330,8 @@ def render_topic(topic, number: int, cfg, out_dir: Path) -> list[Path]:
 
 def render_pin(topic, number: int, cfg, target: Path) -> None:
     """A single 2:3 Pinterest image (reuse the cover art)."""
-    im = _cover(topic, number, cfg.brand_name)
+    gal = gallery_for(topic) if topic.kind == "gallery" else []
+    im = _cover(topic, number, cfg.brand_name, photo_override=gal[0] if gal else None)
     pin = Image.new("RGB", (W, int(W * 1.5)), NAVY)
     pin.paste(im, (0, (pin.height - H) // 2))
     pin = pin.resize((1000, 1500))

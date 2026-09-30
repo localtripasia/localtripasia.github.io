@@ -13,7 +13,7 @@ on:
       source:
         description: "올릴 종류 (auto = config [series] 계획대로 · 나머지 = 그 종류로 · site = 링크 페이지만)"
         type: choice
-        options: [auto, city101, hood, area, hotel, transport, route, season, words, weekly, recap, site]
+        options: [auto, city101, hood, gallery, area, hotel, transport, route, season, words, weekly, recap, site]
         default: auto
       reel:
         description: "릴스 (auto = config [reels] 요일대로 · yes = 오늘 릴스도 · no = 카드뉴스만)"
@@ -119,7 +119,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/state.json pins photos data/photos_auto.json
+          git add data/state.json pins photos data/photos_auto.json data/gallery_auto.json
           if git diff --cached --quiet; then exit 0; fi
           git commit -m "Update posting state (No.${{ steps.prepare.outputs.number }})"
           git pull --rebase --autostash

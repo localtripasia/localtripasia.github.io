@@ -9,11 +9,12 @@ timezone = "Asia/Seoul"                                     # 날짜 기준 시�
 # 주제별 한 달 목표 횟수. gap = 같은 주제가 다시 나오기까지 최소 며칠.
 # day가 있으면 그 요일에 고정(예: weekly는 매주 목요일).
 [series]
-city101   = { per_month = 6, gap = 3 }    # 도시 101 (왜 가야 하나·언제·가는 법·할 것 3가지·숙소 예산 3단계)
-hood      = { per_month = 6, gap = 10 }   # 동네 가이드 (한 동네 소개: 분위기·할 것·가는 법)
-area      = { per_month = 3, gap = 6 }    # 어디에 숙소 잡을까 (동네 비교)
+city101   = { per_month = 5, gap = 3 }    # 도시 101 (왜 가야 하나·언제·가는 법·할 것 3가지·숙소 예산 3단계)
+hood      = { per_month = 5, gap = 10 }   # 동네 가이드 (한 동네 소개: 분위기·할 것·가는 법)
+gallery   = { per_month = 3, gap = 10 }   # 포토 투어 (사진만 5장, 한국관광공사 사진 + AI 확인. 사진이 4장 미만이면 그날은 건너뜀)
+area      = { per_month = 2, gap = 6 }    # 어디에 숙소 잡을까 (동네 비교)
 hotel     = { per_month = 2, gap = 6 }    # 호텔 픽 (조건별 추천)
-transport = { per_month = 3, gap = 8 }    # 교통·준비물 (JR패스, 코레일패스, 티머니·스이카, eSIM)
+transport = { per_month = 2, gap = 8 }    # 교통·준비물 (JR패스, 코레일패스, 티머니·스이카, eSIM)
 route     = { per_month = 2, gap = 12 }   # 코스 (3일·5일, 한일 연결 코스)
 season    = { per_month = 2, gap = 12 }   # 계절·축제
 words     = { per_month = 1, gap = 20 }   # 현지 말·에티켓
