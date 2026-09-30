@@ -286,42 +286,34 @@ def _photo_slide(photo: dict, title: str, number: int, brand: str, page: str) ->
     return im
 
 
-def _render_gallery(topic, number: int, cfg, out_dir: Path) -> list[Path]:
-    photos = gallery_for(topic)
-    if len(photos) < 2:
-        raise RuntimeError("포토 투어에 쓸 사진이 부족해요")
-    accent = KIND_ACCENT["gallery"]
-    total = len(photos) + 2
-    paths = []
-    p = out_dir / "1.jpg"
-    _cover(topic, number, cfg.brand_name, photo_override=photos[0]).save(p, quality=93)
-    paths.append(p)
-    for i, photo in enumerate(photos, start=2):
-        p = out_dir / f"{i}.jpg"
-        _photo_slide(photo, topic.title, number, cfg.brand_name, f"{i}/{total}").save(p, quality=93)
-        paths.append(p)
-    p = out_dir / f"{total}.jpg"
-    _cta_slide(topic, number, cfg, accent, f"{total}/{total}").save(p, quality=93)
-    paths.append(p)
-    return paths
-
-
 def render_topic(topic, number: int, cfg, out_dir: Path) -> list[Path]:
     out_dir.mkdir(parents=True, exist_ok=True)
-    if topic.kind == "gallery":
-        return _render_gallery(topic, number, cfg, out_dir)
+    gallery = gallery_for(topic) if topic.kind in ("hood", "gallery") else []
+    if len(gallery) < 4:          # too few photos to be worth a photo section
+        gallery = []
+    if topic.kind == "gallery" and not gallery:
+        raise RuntimeError("포토 투어에 쓸 사진이 부족해요")
     brand = cfg.brand_name
     accent = KIND_ACCENT.get(topic.kind, TEAL)
-    slides = [(h, l, b) for h, l, b in _slides_for(topic) if any(str(x).strip() for x in l)]
-    total = len(slides) + 2  # cover + content + closing
+    slides = [] if topic.kind == "gallery" else \
+        [(h, l, b) for h, l, b in _slides_for(topic) if any(str(x).strip() for x in l)]
+    photo_slides = gallery[1:] if gallery else []      # gallery[0] is the cover photo
+    total = len(slides) + len(photo_slides) + 2        # cover + text + photos + closing
     paths = []
     p = out_dir / "1.jpg"
-    _cover(topic, number, brand).save(p, quality=93)
+    _cover(topic, number, brand, photo_override=gallery[0] if gallery else None).save(p, quality=93)
     paths.append(p)
-    for i, (heading, lines, bullet) in enumerate(slides, start=2):
-        p = out_dir / f"{i}.jpg"
-        _content_slide(heading, lines, number, brand, accent, bullet=bullet, page=f"{i}/{total}").save(p, quality=93)
+    n = 2
+    for heading, lines, bullet in slides:
+        p = out_dir / f"{n}.jpg"
+        _content_slide(heading, lines, number, brand, accent, bullet=bullet, page=f"{n}/{total}").save(p, quality=93)
         paths.append(p)
+        n += 1
+    for photo in photo_slides:
+        p = out_dir / f"{n}.jpg"
+        _photo_slide(photo, topic.title, number, brand, f"{n}/{total}").save(p, quality=93)
+        paths.append(p)
+        n += 1
     p = out_dir / f"{total}.jpg"
     _cta_slide(topic, number, cfg, accent, f"{total}/{total}").save(p, quality=93)
     paths.append(p)
@@ -330,8 +322,8 @@ def render_topic(topic, number: int, cfg, out_dir: Path) -> list[Path]:
 
 def render_pin(topic, number: int, cfg, target: Path) -> None:
     """A single 2:3 Pinterest image (reuse the cover art)."""
-    gal = gallery_for(topic) if topic.kind == "gallery" else []
-    im = _cover(topic, number, cfg.brand_name, photo_override=gal[0] if gal else None)
+    gal = gallery_for(topic) if topic.kind in ("hood", "gallery") else []
+    im = _cover(topic, number, cfg.brand_name, photo_override=gal[0] if len(gal) >= 4 else None)
     pin = Image.new("RGB", (W, int(W * 1.5)), NAVY)
     pin.paste(im, (0, (pin.height - H) // 2))
     pin = pin.resize((1000, 1500))

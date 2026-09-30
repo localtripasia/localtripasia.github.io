@@ -179,13 +179,13 @@ class SmokeTest(unittest.TestCase):
         finally:
             os.environ.pop("KTO_API_KEY", None); os.environ.pop("GEMINI_API_KEY", None)
 
-    def test_photo_tour_needs_four_photos_and_renders_cover_photos_and_closing_slide(self):
+    def test_neighborhood_post_gets_five_photo_slides_when_enough_photos_exist(self):
         import io, json, os
         from PIL import Image
         from bot import photos as photos_mod
         from bot.sources import kto_photos
         entry = next(h for h in self.lib.hoods if h["key"] == "seoul-itaewon")
-        topic = editorial.Topic(kind="gallery", key="gallery-seoul-itaewon", data=entry)
+        topic = editorial.Topic(kind="hood", key="hood-seoul-itaewon", data=entry)
         buf = io.BytesIO(); Image.new("RGB", (1500, 1000), (30, 100, 150)).save(buf, "JPEG")
 
         class R:
@@ -208,9 +208,9 @@ class SmokeTest(unittest.TestCase):
         try:
             self.assertEqual(kto_photos.ensure_gallery(topic, self.cfg, session=session(3), photos_dir=self.tmp / "g0", gallery_path=self.tmp / "g0.json"), [])
             got = kto_photos.ensure_gallery(topic, self.cfg, session=session(8), photos_dir=self.tmp / "g", gallery_path=self.tmp / "g.json")
-            self.assertEqual(len(got), 5)
+            self.assertEqual(len(got), 6)              # 1 cover photo + 5 photo slides
             paths = render_topic(topic, 3, self.cfg, self.tmp / "tour")
-            self.assertEqual(len(paths), 7)            # cover + 5 photos + closing slide
+            self.assertEqual(len(paths), 10)           # cover + 3 text slides + 5 photos + closing slide (Instagram's max)
             cp = copy_mod.build_copy(topic, self.cfg)
             self.assertIn("Photos: Korea Tourism Organization", cp.caption)
         finally:

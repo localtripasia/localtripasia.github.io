@@ -96,6 +96,9 @@ def cmd_prepare(args, cfg=None) -> int:
             if topic.kind == "gallery":
                 if not kto_photos.ensure_gallery(topic, cfg):
                     raise RuntimeError("포토 투어에 쓸 사진이 4장 미만이에요")
+            elif topic.kind == "hood":
+                if not kto_photos.ensure_gallery(topic, cfg):   # 4+ photos -> photo slides at the end
+                    kto_photos.ensure_photo(topic, cfg)         # otherwise just a cover photo, if any
             else:
                 kto_photos.ensure_photo(topic, cfg)
             cp = copy_mod.build_copy(topic, cfg)

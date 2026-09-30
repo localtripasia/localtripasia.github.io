@@ -27,7 +27,7 @@ from ..photos import AUTO_PATH, GALLERY_PATH, PHOTOS_DIR
 from ..util import log, notice, scrub, warn
 
 API = "https://apis.data.go.kr/B551011/PhotoGalleryService1/gallerySearchList1"
-GALLERY_SIZE = 5       # photos in a photo-tour post
+GALLERY_SIZE = 6       # cover photo + 5 photo slides
 MIN_GALLERY = 4        # fewer than this and the photo tour is skipped that day
 MAX_JUDGED = 6         # at most this many AI checks per place (keeps a run cheap and fast)
 MIN_SIDE = 900          # px, so the cover doesn't look blurry after cropping to 1080x1350

@@ -31,8 +31,7 @@
 | 시리즈 | 월 횟수 | 내용 | 자료 |
 |---|---|---|---|
 | city101 | 6 | 왜 가야 하나·언제·가는 법·할 것 3가지·숙소 예산 3단계 | `content/cities.toml` |
-| hood | 5 | 동네 한 곳 소개 (분위기·할 것·가는 법) | `content/hoods.toml` |
-| gallery | 3 | 포토 투어 (사진만 5장 · 한국관광공사 사진 + AI 확인, 4장 미만이면 건너뜀) | 관광공사 API + `GEMINI_API_KEY` |
+| hood | 7 | 동네 한 곳 소개 (분위기·할 것·가는 법, 뒤에 사진 5장) | `content/hoods.toml` |
 | area | 2 | 동네 비교 ("명동 vs 홍대 vs 성수") | `content/areas.toml` |
 | hotel | 4 | 조건별 호텔 픽 (예산 3단계) | `content/cities.toml`의 `example_hotels` + 아고다 API |
 | transport | 2 | JR패스·코레일패스·티머니·eSIM | `content/passes.toml` |

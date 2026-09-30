@@ -148,8 +148,9 @@ def build_copy(topic, cfg) -> Copy:
     """Copy for the topic, plus the photo credit (caption + guide page) when the cover uses a photo."""
     cp = _build_copy(topic, cfg)
     photo = photo_for(topic)
-    if topic.kind == "gallery":
+    if topic.kind in ("hood", "gallery"):
         gal = gallery_for(topic)
+        gal = gal if len(gal) >= 4 else []
         photo = {"credit": "Photos: Korea Tourism Organization (KOGL Type 1)",
                  "source": "https://www.data.go.kr/data/15101914/openapi.do"} if gal else photo
     if photo and photo.get("credit"):
