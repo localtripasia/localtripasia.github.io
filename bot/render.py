@@ -1,5 +1,5 @@
-"""Card renderer (1080x1350, Pillow). Text + shapes only, no stock photos — same approach as
-the K-beauty bot, so there's never a copyright question about a hotel or attraction photo.
+"""Card renderer (1080x1350, Pillow). Text + shapes; a cover photo is used only when one is
+listed in content/photos.toml (commercial-use licensed photos only — see that file).
 
 This is a working first pass so `python -m bot demo` produces real cards for every series today.
 The bespoke per-series layouts (도시 101 / 동네 비교 / 호텔 픽 / 코스 / TOP 10 cards from the
@@ -11,6 +11,8 @@ from __future__ import annotations
 from pathlib import Path
 
 from PIL import Image, ImageDraw, ImageFont
+
+from .photos import cover_image, photo_for
 
 ROOT = Path(__file__).resolve().parent.parent
 FONTS = ROOT / "assets" / "fonts"
@@ -91,9 +93,26 @@ def _subtitle(topic) -> str:
     return ""
 
 
+def _photo_backdrop(path: Path) -> Image.Image:
+    """Photo filling the cover, darkened so the cream text stays readable (navy tint + bottom fade)."""
+    im = cover_image(path, (W, H))
+    tint = Image.new("RGB", (W, H), NAVY)
+    im = Image.blend(im, tint, 0.55)
+    fade = Image.new("L", (W, H), 0)
+    fd = ImageDraw.Draw(fade)
+    for y in range(H // 2, H):
+        fd.line((0, y, W, y), fill=int(150 * (y - H // 2) / (H // 2)))
+    return Image.composite(tint, im, fade)
+
+
 def _cover(topic, number: int, brand: str, total: int = 0) -> Image.Image:
     accent = KIND_ACCENT.get(topic.kind, TEAL)
     im, d = _base(NAVY)
+    photo = photo_for(topic)
+    if photo:
+        im = _photo_backdrop(photo["path"])
+        d = ImageDraw.Draw(im)
+        accent = {TEAL: "#6FE0D6", RED: "#FF9A8A"}.get(accent, accent)  # lighter accents read better on a photo
     label = KIND_LABEL.get(topic.kind, topic.kind.upper())
     d.text((PAD, 120), label, font=_font("DMSans-SemiBold.ttf", 40), fill=accent)
     d.line((PAD, 178, PAD + 110, 178), fill=accent, width=7)
@@ -110,9 +129,14 @@ def _cover(topic, number: int, brand: str, total: int = 0) -> Image.Image:
         y += line_h
     if sub:
         d.text((PAD, y + 26), sub, font=_font("DMSans-SemiBold.ttf", 44), fill=accent)
-    _route_motif(d, PAD + 30, 1010, W - PAD * 2 - 60, CREAM)
+    if not photo:
+        _route_motif(d, PAD + 30, 1010, W - PAD * 2 - 60, CREAM)
     d.text((PAD, H - 250), "Swipe  \u2192", font=_font("DMSans-Medium.ttf", 38), fill=CREAM)
     _footer(d, brand, number, accent, CREAM)
+    if photo and photo.get("credit"):
+        cf = _font("DMSans-Medium.ttf", 24)
+        tw = d.textlength(photo["credit"], font=cf)
+        d.text((W - PAD - tw, H - 130), photo["credit"], font=cf, fill=CREAM)
     return im
 
 

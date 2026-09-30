@@ -1,0 +1,19 @@
+# 카드 표지에 깔 사진 목록. 사진 파일은 photos/ 폴더에 넣어요 (JPG/PNG, 가로세로 어느 쪽이든 자동으로 잘라요).
+#
+# key       사진을 붙일 항목의 key (content/cities.toml 의 city key, content/hoods.toml 의 hood key)
+# file      photos/ 안의 파일 이름
+# credit    카드·가이드 페이지에 쓸 표기. 예: "Photo: Jane Doe / Unsplash" 또는 "Photo: Korea Tourism Organization (KOGL Type 1)"
+# source    사진 원본 페이지 링크
+# license   "unsplash" | "kogl-1" | "own" | "cc-by" 등 (기록용)
+#
+# ⚠️ 상업 이용이 되는 사진만 넣으세요 (제휴 수익이 붙는 계정이에요).
+#    공공누리는 1유형만, Unsplash·직접 찍은 사진은 괜찮아요.
+#
+# 아래는 예시예요. 사진을 넣으면 앞의 # 를 지우고 파일 이름을 맞추세요.
+#
+# [[photo]]
+# key = "seoul-seongsu"
+# file = "seoul-seongsu.jpg"
+# credit = "Photo: Jane Doe / Unsplash"
+# source = "https://unsplash.com/photos/xxxxxxxx"
+# license = "unsplash"

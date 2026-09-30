@@ -69,6 +69,25 @@ class SmokeTest(unittest.TestCase):
         self.assertTrue(link.startswith("https://www.trip.com/hotels/?"))
         self.assertIn("&", self.cfg.tripcom_link("https://www.trip.com/hotels/?a=1"))
 
+    def test_cover_uses_a_photo_when_listed_and_falls_back_without_one(self):
+        from PIL import Image
+        from bot import photos as photos_mod
+        entry = editorial.entries_for("hood", self.lib)[0]
+        topic = editorial.Topic(kind="hood", key=editorial.key_of("hood", entry), data=entry)
+        plain = render_topic(topic, 1, self.cfg, self.tmp / "plain")[0]
+        Image.new("RGB", (1600, 900), (200, 120, 60)).save(self.tmp / "p.jpg")
+        table = {entry["key"]: {"key": entry["key"], "file": "p.jpg", "credit": "Photo: Test / Unsplash"}}
+        orig_dir, orig_load = photos_mod.PHOTOS_DIR, photos_mod.load_photos
+        photos_mod.PHOTOS_DIR, photos_mod.load_photos = self.tmp, lambda path=None: table
+        try:
+            with_photo = render_topic(topic, 1, self.cfg, self.tmp / "photo")[0]
+            cp = copy_mod.build_copy(topic, self.cfg)
+        finally:
+            photos_mod.PHOTOS_DIR, photos_mod.load_photos = orig_dir, orig_load
+        self.assertNotEqual(Image.open(plain).getpixel((540, 1000)), Image.open(with_photo).getpixel((540, 1000)))
+        self.assertIn("Photo: Test / Unsplash", cp.caption)
+        self.assertTrue(any(h == "Photo" for h, _ in cp.article_blocks))
+
 
 if __name__ == "__main__":
     unittest.main()

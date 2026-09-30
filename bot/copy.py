@@ -6,6 +6,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 
+from .photos import photo_for
 from .sources.agoda import hotels_for
 
 DISCLOSURE = "#ad Contains affiliate links — we may earn a small commission at no extra cost to you."
@@ -53,7 +54,7 @@ def _caption(hook: str, bullets: list[str], hashtags: str, has_buttons: bool) ->
     return "\n".join(lines)
 
 
-def build_copy(topic, cfg) -> Copy:
+def _build_copy(topic, cfg) -> Copy:
     d = topic.data
     k = topic.kind
 
@@ -133,3 +134,15 @@ def build_copy(topic, cfg) -> Copy:
 
     hook = d.get("title") or topic.title
     return Copy(hook=hook, caption=_caption(hook, [], _hashtags(cfg, []), False), sources=topic.sources)
+
+
+def build_copy(topic, cfg) -> Copy:
+    """Copy for the topic, plus the photo credit (caption + guide page) when the cover uses a photo."""
+    cp = _build_copy(topic, cfg)
+    photo = photo_for(topic)
+    if photo and photo.get("credit"):
+        head, sep, tags = cp.caption.rpartition("\n\n")
+        cp.caption = f"{head}\n\n{photo['credit']}{sep}{tags}" if sep else f"{cp.caption}\n\n{photo['credit']}"
+        credit = photo["credit"] + (f" — {photo['source']}" if photo.get("source") else "")
+        cp.article_blocks = list(cp.article_blocks) + [("Photo", credit)]
+    return cp
