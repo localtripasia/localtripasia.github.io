@@ -16,6 +16,7 @@
 [[city]]
 key = "seoul"
 name = "Seoul"
+ko = "서울"          # 관광공사 사진 검색어 (한국 도시만)
 country = "Korea"
 why = "Korea's capital and the country's main international gateway — most first-time visitors start here, and it's the easiest base for day trips."
 when = "Spring (Apr) and autumn (Oct–Nov) have the mildest, driest weather. Summer (Jul–Aug) is hot and humid with a monsoon season; winter (Dec–Feb) is cold and dry."

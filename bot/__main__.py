@@ -24,6 +24,7 @@ from .instagram import Instagram, wait_for_urls
 from .linkpage import build_link_page
 from .pinterest import build_pinterest
 from .render import render_pin, render_topic
+from .sources import kto_photos
 from .state import State
 from .util import add_summary, log, scrub, set_output, warn
 
@@ -92,6 +93,7 @@ def cmd_prepare(args, cfg=None) -> int:
         if topic is None:
             continue
         try:
+            kto_photos.ensure_photo(topic, cfg)
             cp = copy_mod.build_copy(topic, cfg)
             paths = render_topic(topic, number, cfg, out / "posts" / f"{number:03d}")
         except Exception as exc:
@@ -228,6 +230,16 @@ def cmd_check(args, cfg=None) -> int:
         lines.append("- 네이버 API: 키 없음 → '이번 주 현지인이 가는 곳'에서 한국 쪽이 빠져요")
 
     lines.append(f"- e-Stat(일본 숙박통계): {'앱 ID 있음' if cfg.estat_app_id else '앱 ID 없음 → 일본 쪽이 빠져요'}")
+    if cfg.kto_key:
+        try:
+            from .sources.kto_photos import search as kto_search
+            n = len(kto_search("성수동", cfg.kto_key, rows=3))
+            lines.append(f"- 관광공사 사진 API: 연결됨 (검색 결과 {n}장)")
+        except Exception as exc:
+            ok = False
+            lines.append(f"- ❌ 관광공사 사진 API 오류: {scrub(str(exc), cfg.kto_key)}")
+    else:
+        lines.append("- 관광공사 사진 API: 키 없음 → 한국 동네 카드가 사진 없이 나가요")
     lines.append(f"- 아고다: {'Site ID 있음' if cfg.agoda_site_id else '제휴 승인 전 → 일반 링크로 대신 나가요'}")
     lines.append(f"- 트립닷컴: {'키 있음' if cfg.tripcom_key else '제휴 승인 전 → 일반 링크로 대신 나가요'}")
     lines.append(f"- 클룩(Involve Asia): {'키 있음' if cfg.klook_key else '제휴 승인 전 → 일반 링크로 대신 나가요'}")

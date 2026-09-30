@@ -3,6 +3,7 @@
 # key       상태 저장용 고유 키
 # city      content/cities.toml 의 city key
 # title     카드 제목 (동네 이름)
+# ko        관광공사 사진 API 검색어 (한국 동네만)
 # country   Korea / Japan
 # vibe      한두 문장 분위기 소개 (출처 내용을 바꿔 쓴 것)
 # do        할 것 3가지
@@ -16,6 +17,7 @@
 key = "seoul-myeongdong"
 city = "seoul"
 title = "Myeongdong"
+ko = "명동"          # 관광공사 사진 검색어
 country = "Korea"
 vibe = "Seoul's shopping district: department stores, beauty shops and street food, with a 1898 brick cathedral in the middle. Very international, very busy."
 do = [
@@ -34,6 +36,7 @@ sources = [
 key = "seoul-hongdae"
 city = "seoul"
 title = "Hongdae"
+ko = "홍대"          # 관광공사 사진 검색어
 country = "Korea"
 vibe = "Seoul's youth-culture hub around Hongik University: street performers, indie boutiques and late-night bars. Fun and loud, most of all on weekends."
 do = [
@@ -52,6 +55,7 @@ sources = [
 key = "seoul-seongsu"
 city = "seoul"
 title = "Seongsu"
+ko = "성수동"          # 관광공사 사진 검색어
 country = "Korea"
 vibe = "A former factory district (3,000+ factories once) now full of cafes, design shops and pop-ups in old brick buildings. Often called the Brooklyn of Seoul."
 do = [
@@ -70,6 +74,7 @@ sources = [
 key = "seoul-euljiro"
 city = "seoul"
 title = "Euljiro"
+ko = "을지로"          # 관광공사 사진 검색어
 country = "Korea"
 vibe = "Hardware shops and print workshops by day, craft-beer bars and neon alleys by night. A treasure-hunt district with two very different faces."
 do = [
@@ -88,6 +93,7 @@ sources = [
 key = "seoul-ikseon-dong"
 city = "seoul"
 title = "Ikseon-dong"
+ko = "익선동"          # 관광공사 사진 검색어
 country = "Korea"
 vibe = "A hanok village of narrow alleys from the early 1900s, now filled with cafes, boutiques and wine bars in restored traditional houses."
 do = [
@@ -106,6 +112,7 @@ sources = [
 key = "seoul-jamsil"
 city = "seoul"
 title = "Jamsil"
+ko = "잠실"          # 관광공사 사진 검색어
 country = "Korea"
 vibe = "A modern district on what used to be an island in the Han River. Home to Lotte World and Lotte World Tower, with lakeside and park walks close by."
 do = [
@@ -124,6 +131,7 @@ sources = [
 key = "seoul-yeonnam"
 city = "seoul"
 title = "Yeonnam"
+ko = "연남동"          # 관광공사 사진 검색어
 country = "Korea"
 vibe = "Hongdae's creative energy at a lower volume. A linear park built over an old rail line runs through it, with brunch spots, indie bookshops and cafes."
 do = [
@@ -142,6 +150,7 @@ sources = [
 key = "seoul-itaewon"
 city = "seoul"
 title = "Itaewon"
+ko = "이태원"          # 관광공사 사진 검색어
 country = "Korea"
 vibe = "Korea's first special tourist zone (1997) and Seoul's most international neighborhood. World food, antique furniture shops and a big foreign-resident community."
 do = [

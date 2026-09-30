@@ -64,6 +64,7 @@ jobs:
           AGODA_API_KEY: ${{ secrets.AGODA_API_KEY }}
           TRIPCOM_AFFILIATE_KEY: ${{ secrets.TRIPCOM_AFFILIATE_KEY }}
           INVOLVE_ASIA_KEY: ${{ secrets.INVOLVE_ASIA_KEY }}
+          KTO_API_KEY: ${{ secrets.KTO_API_KEY }}
           SITE_URL: ${{ steps.pages.outputs.base_url }}
         run: |
           ARGS="--out site --source ${{ inputs.source || 'auto' }} --reel ${{ inputs.reel || 'auto' }}"
@@ -116,7 +117,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/state.json pins
+          git add data/state.json pins photos data/photos_auto.json
           if git diff --cached --quiet; then exit 0; fi
           git commit -m "Update posting state (No.${{ steps.prepare.outputs.number }})"
           git pull --rebase --autostash

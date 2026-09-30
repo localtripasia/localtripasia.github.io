@@ -88,6 +88,51 @@ class SmokeTest(unittest.TestCase):
         self.assertIn("Photo: Test / Unsplash", cp.caption)
         self.assertTrue(any(h == "Photo" for h, _ in cp.article_blocks))
 
+    def test_kto_photo_is_downloaded_credited_and_used(self):
+        import io, json, os
+        from PIL import Image
+        from bot import photos as photos_mod
+        from bot.sources import kto_photos
+
+        entry = next(h for h in self.lib.hoods if h["key"] == "seoul-seongsu")
+        topic = editorial.Topic(kind="hood", key="hood-seoul-seongsu", data=entry)
+        buf = io.BytesIO(); Image.new("RGB", (1600, 1200), (90, 140, 200)).save(buf, "JPEG")
+
+        class Resp:
+            def __init__(self, payload=None, content=b""):
+                self._p, self.content = payload, content
+            def raise_for_status(self): pass
+            def json(self): return self._p
+
+        class FakeSession:
+            def get(self, url, params=None, timeout=0):
+                if "gallerySearchList1" in url:
+                    return Resp({"response": {"body": {"items": {"item": [
+                        {"galTitle": "tiny", "galWebImageUrl": "http://x/tiny.jpg", "galPhotographer": "A"},
+                        {"galTitle": "Seongsu", "galWebImageUrl": "http://x/big.jpg", "galPhotographer": "Kim Test"}]}}}})
+                if url.endswith("tiny.jpg"):
+                    b = io.BytesIO(); Image.new("RGB", (300, 200)).save(b, "JPEG"); return Resp(content=b.getvalue())
+                return Resp(content=buf.getvalue())
+
+        os.environ["KTO_API_KEY"] = "test-key"
+        orig = photos_mod.AUTO_PATH, photos_mod.PHOTOS_DIR
+        photos_mod.AUTO_PATH, photos_mod.PHOTOS_DIR = self.tmp / "auto.json", self.tmp / "ph"
+        try:
+            self.assertTrue(kto_photos.ensure_photo(topic, self.cfg, FakeSession(), self.tmp / "ph", self.tmp / "auto.json"))
+            table = json.loads((self.tmp / "auto.json").read_text())
+            self.assertIn("Kim Test", table["seoul-seongsu"]["credit"])   # skipped the too-small first result
+            self.assertIn("KOGL", table["seoul-seongsu"]["credit"])
+            self.assertIsNotNone(photos_mod.photo_for(topic, self.tmp / "ph", photos_mod.load_photos()))
+        finally:
+            os.environ.pop("KTO_API_KEY", None)
+            photos_mod.AUTO_PATH, photos_mod.PHOTOS_DIR = orig
+
+    def test_kto_photo_does_nothing_without_a_key(self):
+        from bot.sources import kto_photos
+        entry = next(h for h in self.lib.hoods if h["key"] == "seoul-seongsu")
+        topic = editorial.Topic(kind="hood", key="k", data=entry)
+        self.assertFalse(kto_photos.ensure_photo(topic, self.cfg, None, self.tmp / "ph", self.tmp / "a.json"))
+
 
 if __name__ == "__main__":
     unittest.main()

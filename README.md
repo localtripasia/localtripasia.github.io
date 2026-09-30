@@ -30,8 +30,9 @@
 
 | 시리즈 | 월 횟수 | 내용 | 자료 |
 |---|---|---|---|
-| city101 | 8 | 왜 가야 하나·언제·가는 법·할 것 3가지·숙소 예산 3단계 | `content/cities.toml` |
-| area | 4 | 동네 비교 ("명동 vs 홍대 vs 성수") | `content/areas.toml` |
+| city101 | 6 | 왜 가야 하나·언제·가는 법·할 것 3가지·숙소 예산 3단계 | `content/cities.toml` |
+| hood | 6 | 동네 한 곳 소개 (분위기·할 것·가는 법) | `content/hoods.toml` |
+| area | 3 | 동네 비교 ("명동 vs 홍대 vs 성수") | `content/areas.toml` |
 | hotel | 4 | 조건별 호텔 픽 (예산 3단계) | `content/cities.toml`의 `example_hotels` + 아고다 API |
 | transport | 3 | JR패스·코레일패스·티머니·eSIM | `content/passes.toml` |
 | route | 2 | 3일·5일 코스, 한일 연결 코스 | `content/routes.toml` |
@@ -65,6 +66,7 @@ API 호출로 바꿔요).
 | 이름 | 필수 | 용도 |
 |---|---|---|
 | `IG_ACCESS_TOKEN` | 게시하려면 필수 | 인스타 게시 |
+| `KTO_API_KEY` | 권장 | 한국 동네·도시 카드 표지 사진 (한국관광공사 관광사진 API, 공공누리 1유형) |
 | `NAVER_CLIENT_ID` / `NAVER_CLIENT_SECRET` | 권장 | 목요일 게시물의 한국 검색 트렌드 |
 | `ESTAT_APP_ID` | 권장 | 목요일 게시물의 일본 숙박통계 |
 | `AGODA_SITE_ID` / `AGODA_API_KEY` | 승인 후 | 호텔 실제 목록·제휴 링크 |
@@ -86,6 +88,9 @@ content/routes.toml                ← 코스 자료
 content/seasons.toml                ← 계절·축제 자료
 content/words.toml                   ← 현지 말·에티켓
 content/keywords.toml                 ← 네이버에서 볼 목적지 검색어
+content/hoods.toml                     ← 동네 한 곳씩 소개 (서울 8곳)
+content/photos.toml                     ← 손으로 고른 표지 사진 목록 (자동 사진보다 우선)
+photos/                                  ← 사진 파일 (자동으로 받은 것 + 직접 넣은 것)
 data/state.json                        ← 게시 기록 (봇이 자동 관리)
 data/trend_latest.json                  ← 이번 주 트렌드 (매주 월요일 자동)
 data/agoda_catalog.json                  ← 도시별 아고다 호텔 목록 (제휴 승인 후 자동)
