@@ -139,6 +139,46 @@ class SmokeTest(unittest.TestCase):
                  {"galTitle": "명동 쇼핑", "galSearchKeyword": "명동"}]
         self.assertEqual([i["galTitle"] for i in sorted(items, key=_rank)], ["명동 거리", "명동 쇼핑", "명동성당 미사"])
 
+    def test_ai_check_rejects_crowds_and_keeps_the_next_good_photo(self):
+        import io, json, os
+        from PIL import Image
+        from bot.sources import kto_photos
+        entry = next(h for h in self.lib.hoods if h["key"] == "seoul-hongdae")
+        topic = editorial.Topic(kind="hood", key="k", data=entry)
+        buf = io.BytesIO(); Image.new("RGB", (1600, 1200), (10, 90, 60)).save(buf, "JPEG")
+
+        class R:
+            def __init__(self, payload=None, content=b""): self._p, self.content = payload, content
+            def raise_for_status(self): pass
+            def json(self): return self._p
+
+        class KtoSession:
+            def get(self, url, params=None, timeout=0):
+                if "gallerySearchList1" in url:
+                    return R({"response": {"body": {"items": {"item": [
+                        {"galTitle": "홍대 거리", "galWebImageUrl": "http://x/a.jpg", "galPhotographer": "A Kim"},
+                        {"galTitle": "홍대 골목", "galWebImageUrl": "http://x/b.jpg", "galPhotographer": "B Lee"}]}}}})
+                return R(content=buf.getvalue())
+
+        verdicts = iter([{"shows_place": True, "identifiable_faces": False, "crowd": True, "quality": 4},
+                         {"shows_place": True, "identifiable_faces": False, "crowd": False, "quality": 4}])
+
+        class GeminiSession:
+            def post(self, url, json=None, timeout=0, headers=None):
+                assert "key=" not in url and "x-goog-api-key" in headers   # key goes in a header, never the URL
+                v = next(verdicts)
+                return R({"candidates": [{"content": {"parts": [{"text": __import__("json").dumps(v)}]}}]})
+
+        os.environ["KTO_API_KEY"], os.environ["GEMINI_API_KEY"] = "k1", "k2"
+        try:
+            ok = kto_photos.ensure_photo(topic, self.cfg, KtoSession(), self.tmp / "ph2", self.tmp / "a2.json", GeminiSession())
+            table = json.loads((self.tmp / "a2.json").read_text())
+            self.assertTrue(ok)
+            self.assertEqual(table["seoul-hongdae"]["title"], "홍대 골목")   # the first one was rejected as a crowd
+            self.assertTrue(table["seoul-hongdae"]["ai_checked"])
+        finally:
+            os.environ.pop("KTO_API_KEY", None); os.environ.pop("GEMINI_API_KEY", None)
+
     def test_kto_photo_does_nothing_without_a_key(self):
         from bot.sources import kto_photos
         entry = next(h for h in self.lib.hoods if h["key"] == "seoul-seongsu")

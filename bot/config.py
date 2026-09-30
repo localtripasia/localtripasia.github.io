@@ -135,6 +135,14 @@ class Config:
         return os.environ.get("INVOLVE_ASIA_KEY", "").strip() or None
 
     @property
+    def gemini_key(self) -> str | None:
+        return os.environ.get("GEMINI_API_KEY", "").strip() or None
+
+    @property
+    def vision(self) -> dict:
+        return self.raw.get("vision", {})
+
+    @property
     def kto_key(self) -> str | None:
         return os.environ.get("KTO_API_KEY", "").strip() or None
 
@@ -150,7 +158,7 @@ class Config:
 
     def secrets(self) -> list[str]:
         """Every secret value currently set, for util.scrub() before logging."""
-        vals = [self.ig_token, self.agoda_api_key, self.tripcom_key, self.klook_key, self.estat_app_id, self.kto_key]
+        vals = [self.ig_token, self.agoda_api_key, self.tripcom_key, self.klook_key, self.estat_app_id, self.kto_key, self.gemini_key]
         if self.naver_keys:
             vals.extend(self.naver_keys)
         return [v for v in vals if v]

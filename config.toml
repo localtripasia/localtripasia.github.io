@@ -58,6 +58,9 @@ link_template = "{url}"
 
 # 일본 지역별 인기: 라쿠텐 랭킹 API는 약관상 쓸 수 없어서(순위 화면에서 타사 링크 금지,
 # 데이터 공개 저장소 저장 금지, 지역별 순위 미제공) 대신 일본 관광청 숙박여행통계(e-Stat)를 써요.
+[vision]                                  # 사진을 AI가 보고 고르는 단계 (GEMINI_API_KEY 가 있을 때만)
+model = "gemini-2.5-flash"                # 구글이 모델을 없애면 여기만 바꾸면 돼요
+
 [estat]
 app_id = ""                               # e-Stat API 앱 ID (무료)
 stats_id = "0003006863"                   # 숙泊여행統計調査 통계표 ID (research.py에서 실제 표 ID로 재확인)

@@ -22,10 +22,12 @@ from urllib.parse import quote, unquote
 
 from PIL import Image
 
+from .. import vision
 from ..photos import AUTO_PATH, PHOTOS_DIR
 from ..util import log, notice, scrub, warn
 
 API = "https://apis.data.go.kr/B551011/PhotoGalleryService1/gallerySearchList1"
+MAX_JUDGED = 6         # at most this many AI checks per place (keeps a run cheap and fast)
 MIN_SIDE = 900          # px, so the cover doesn't look blurry after cropping to 1080x1350
 CREDIT_SUFFIX = "Korea Tourism Organization (KOGL Type 1)"
 
@@ -95,7 +97,8 @@ def find_results(data: dict, key: str, session=None) -> tuple[str, list[dict]]:
     return "", []
 
 
-def ensure_photo(topic, cfg, session=None, photos_dir: Path | None = None, auto_path: Path | None = None) -> bool:
+def ensure_photo(topic, cfg, session=None, photos_dir: Path | None = None, auto_path: Path | None = None,
+                 vision_session=None) -> bool:
     """Make sure this topic has a photo when it can. True if a photo is available afterwards."""
     from ..photos import photo_for
     if photo_for(topic, photos_dir):
@@ -108,6 +111,7 @@ def ensure_photo(topic, cfg, session=None, photos_dir: Path | None = None, auto_
     auto_path = auto_path or AUTO_PATH
     try:
         _, results = find_results(topic.data, key, session)
+        judged = 0
         for item in sorted(results, key=_rank):
             url = item.get("galWebImageUrl")
             who = (item.get("galPhotographer") or "").strip()
@@ -119,6 +123,19 @@ def ensure_photo(topic, cfg, session=None, photos_dir: Path | None = None, auto_
                 continue
             if im is None:
                 continue
+            verdict = None
+            if cfg.gemini_key:
+                if judged >= MAX_JUDGED:
+                    break
+                judged += 1
+                try:
+                    verdict = vision.judge(im, topic.data.get("title") or topic.data.get("name") or ko, "Seoul", cfg.gemini_key,
+                                           cfg.vision.get("model", "gemini-2.5-flash"), vision_session)
+                except Exception as exc:
+                    notice("사진", f"AI 확인 오류 (제목 순위만으로 진행): {_clean(str(exc), cfg.gemini_key)[:200]}")
+                if verdict is not None and not vision.acceptable(verdict):
+                    log(f"사진 탈락: {item.get('galTitle', '')} {verdict}")
+                    continue
             name = f"auto-{topic.data['key']}.jpg"
             photos_dir.mkdir(parents=True, exist_ok=True)
             im.convert("RGB").save(photos_dir / name, quality=92)
@@ -128,13 +145,14 @@ def ensure_photo(topic, cfg, session=None, photos_dir: Path | None = None, auto_
                 "credit": _credit(who),
                 "source": "https://www.data.go.kr/data/15101914/openapi.do",
                 "license": "kogl-1", "title": item.get("galTitle", ""), "content_id": item.get("galContentId", ""),
+                "ai_checked": verdict is not None,
             }
             auto_path.parent.mkdir(parents=True, exist_ok=True)
             auto_path.write_text(json.dumps(table, ensure_ascii=False, indent=2))
-            notice("사진", f"확보: {topic.data['key']} <- {item.get('galTitle', '')} / {who} ({im.size[0]}x{im.size[1]})")
-            log(f"사진 확보: {topic.data['key']} ← {item.get('galTitle', '')} ({who})")
+            notice("사진", f"확보: {topic.data['key']} <- {item.get('galTitle', '')} ({im.size[0]}x{im.size[1]}) AI확인={'예' if verdict else '아니오'}")
+            log(f"사진 확보: {topic.data['key']} ← {item.get('galTitle', '')}")
             return True
-        notice("사진", f"'{ko}' 결과 없음 또는 모두 작음")
+        notice("사진", f"'{ko}' 결과 없음, 모두 작음, 또는 AI가 모두 탈락시킴 (사진 없이 진행)")
         warn(f"'{ko}' 로 쓸 만한 관광공사 사진을 찾지 못했어요 (사진 없이 진행)")
     except Exception as exc:
         notice("사진", f"API 오류: {_clean(str(exc), key)[:300]}")

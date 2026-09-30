@@ -65,6 +65,7 @@ jobs:
           TRIPCOM_AFFILIATE_KEY: ${{ secrets.TRIPCOM_AFFILIATE_KEY }}
           INVOLVE_ASIA_KEY: ${{ secrets.INVOLVE_ASIA_KEY }}
           KTO_API_KEY: ${{ secrets.KTO_API_KEY }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           SITE_URL: ${{ steps.pages.outputs.base_url }}
         run: |
           ARGS="--out site --source ${{ inputs.source || 'auto' }} --reel ${{ inputs.reel || 'auto' }}"

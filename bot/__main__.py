@@ -246,6 +246,7 @@ def cmd_check(args, cfg=None) -> int:
             lines.append(f"- ❌ 관광공사 사진 API 오류: {__import__('bot.sources.kto_photos', fromlist=['_clean'])._clean(str(exc), cfg.kto_key)}")
     else:
         lines.append("- 관광공사 사진 API: 키 없음 → 한국 동네 카드가 사진 없이 나가요")
+    lines.append(f"- 사진 AI 확인(Gemini): {'키 있음' if cfg.gemini_key else '키 없음 → 제목 단어 순위만으로 사진을 골라요'}")
     lines.append(f"- 아고다: {'Site ID 있음' if cfg.agoda_site_id else '제휴 승인 전 → 일반 링크로 대신 나가요'}")
     lines.append(f"- 트립닷컴: {'키 있음' if cfg.tripcom_key else '제휴 승인 전 → 일반 링크로 대신 나가요'}")
     lines.append(f"- 클룩(Involve Asia): {'키 있음' if cfg.klook_key else '제휴 승인 전 → 일반 링크로 대신 나가요'}")
