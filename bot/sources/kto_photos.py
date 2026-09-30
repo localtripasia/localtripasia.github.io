@@ -70,13 +70,28 @@ def _items(payload: dict) -> list[dict]:
     return [item] if isinstance(item, dict) else list(item)
 
 
+def _get(session, url, tries: int = 3, **kw):
+    """GET with retries: the KTO server is slow to connect from some networks (seen: connect timeouts)."""
+    import time
+    last = None
+    for i in range(tries):
+        try:
+            r = session.get(url, **kw)
+            r.raise_for_status()
+            return r
+        except Exception as exc:          # timeouts, resets, 5xx: wait and try again
+            last = exc
+            if i < tries - 1:
+                time.sleep(3 * (i + 1) if not getattr(session, "fast", False) else 0)
+    raise last
+
+
 def search(keyword: str, key: str, session=None, rows: int = 30) -> list[dict]:
     import requests
     session = session or requests
     params = {"serviceKey": unquote(key), "numOfRows": rows, "pageNo": 1, "MobileOS": "ETC",
               "MobileApp": "LocalTrip", "keyword": keyword, "_type": "json"}
-    r = session.get(API, params=params, timeout=30)
-    r.raise_for_status()
+    r = _get(session, API, params=params, timeout=(20, 40))
     return _items(r.json())
 
 
@@ -87,8 +102,7 @@ ERRORS: list[str] = []
 def _download(url: str, session=None) -> Image.Image | None:
     import requests
     session = session or requests
-    r = session.get(url.replace("http://", "https://"), timeout=60)
-    r.raise_for_status()
+    r = _get(session, url.replace("http://", "https://"), timeout=(20, 60))
     im = Image.open(io.BytesIO(r.content))
     SIZES.append(min(im.size))
     return im if min(im.size) >= MIN_SIDE else None
