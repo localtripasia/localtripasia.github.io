@@ -80,12 +80,17 @@ def search(keyword: str, key: str, session=None, rows: int = 30) -> list[dict]:
     return _items(r.json())
 
 
+SIZES: list[int] = []      # short side of every downloaded candidate in the latest run (for notices)
+ERRORS: list[str] = []
+
+
 def _download(url: str, session=None) -> Image.Image | None:
     import requests
     session = session or requests
     r = session.get(url.replace("http://", "https://"), timeout=60)
     r.raise_for_status()
     im = Image.open(io.BytesIO(r.content))
+    SIZES.append(min(im.size))
     return im if min(im.size) >= MIN_SIDE else None
 
 
@@ -129,7 +134,9 @@ def _vetted(topic, cfg, session=None, vision_session=None, max_judged: int = MAX
     results = find_all(topic.data, key, session) if diverse else find_results(topic.data, key, session)[1]
     judged, seen, used = 0, set(), {}
     LAST_STATS.clear()
-    LAST_STATS.update(candidates=len(results), small_or_failed=0, wrong_place=0, low_quality=0, same_kind=0, accepted=0)
+    SIZES.clear()
+    ERRORS.clear()
+    LAST_STATS.update(candidates=len(results), download_failed=0, too_small=0, wrong_place=0, low_quality=0, same_kind=0, accepted=0)
     for item in sorted(results, key=_rank):
         url = item.get("galWebImageUrl")
         who = (item.get("galPhotographer") or "").strip()
@@ -138,11 +145,13 @@ def _vetted(topic, cfg, session=None, vision_session=None, max_judged: int = MAX
         seen.add(url)
         try:
             im = _download(url, session)
-        except Exception:
-            LAST_STATS["small_or_failed"] += 1
+        except Exception as exc:
+            LAST_STATS["download_failed"] += 1
+            if len(ERRORS) < 3:
+                ERRORS.append(f"{type(exc).__name__}: {str(exc)[:80]}")
             continue
         if im is None:
-            LAST_STATS["small_or_failed"] += 1
+            LAST_STATS["too_small"] += 1
             continue
         verdict = None
         if cfg.gemini_key:
@@ -237,5 +246,5 @@ def ensure_gallery(topic, cfg, n: int = GALLERY_SIZE, session=None, photos_dir: 
         gallery_path.write_text(json.dumps(table, ensure_ascii=False, indent=2))
         notice("사진", f"갤러리 {topic.data['key']}: {len(have)}장 확보 (" + ", ".join(e.get('category') or '?' for e in have) + ")")
     else:
-        notice("사진", f"갤러리 {topic.data['key']}: 쓸 만한 사진 {len(have)}장뿐이라 포토 투어는 건너뛰어요 · 후보 통계 {dict(LAST_STATS)}")
+        notice("사진", f"갤러리 {topic.data['key']}: 쓸 만한 사진 {len(have)}장뿐이라 포토 투어는 건너뛰어요 · 후보 통계 {dict(LAST_STATS)} · 짧은 변 크기(최대 8개) {sorted(SIZES)[-8:]} · 오류 예 {ERRORS}")
     return have if len(have) >= MIN_GALLERY else []
