@@ -232,10 +232,14 @@ def cmd_check(args, cfg=None) -> int:
     lines.append(f"- e-Stat(일본 숙박통계): {'앱 ID 있음' if cfg.estat_app_id else '앱 ID 없음 → 일본 쪽이 빠져요'}")
     if cfg.kto_key:
         try:
-            from .sources.kto_photos import search as kto_search
             lib0 = editorial.load_library(cfg)
-            words = [e["ko"] for e in lib0.hoods + lib0.cities if e.get("ko")]
-            counts = ", ".join(f"{w} {len(kto_search(w, cfg.kto_key, rows=5))}" for w in words)
+            from .sources.kto_photos import find_results
+            parts = []
+            for e in lib0.hoods + lib0.cities:
+                if e.get("ko"):
+                    kw, res = find_results(e, cfg.kto_key)
+                    parts.append(f"{e['ko']}→{kw or '없음'} {len(res)}")
+            counts = ", ".join(parts)
             lines.append(f"- 관광공사 사진 API: 연결됨 (검색어별 결과 수: {counts})")
         except Exception as exc:
             ok = False

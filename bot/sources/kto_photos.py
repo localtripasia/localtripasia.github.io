@@ -74,6 +74,16 @@ def _download(url: str, session=None) -> Image.Image | None:
     return im if min(im.size) >= MIN_SIDE else None
 
 
+def find_results(data: dict, key: str, session=None) -> tuple[str, list[dict]]:
+    """Try the place's search words in order (ko, ko without a trailing 동, then ko_alt); first non-empty wins."""
+    ko = data["ko"]
+    for kw in dict.fromkeys([ko, ko.removesuffix("동")] + list(data.get("ko_alt", []))):
+        results = search(kw, key, session)
+        if results:
+            return kw, results
+    return "", []
+
+
 def ensure_photo(topic, cfg, session=None, photos_dir: Path | None = None, auto_path: Path | None = None) -> bool:
     """Make sure this topic has a photo when it can. True if a photo is available afterwards."""
     from ..photos import photo_for
@@ -86,11 +96,7 @@ def ensure_photo(topic, cfg, session=None, photos_dir: Path | None = None, auto_
     photos_dir = photos_dir or PHOTOS_DIR
     auto_path = auto_path or AUTO_PATH
     try:
-        results = []
-        for kw in dict.fromkeys([ko, ko.removesuffix("동")] + list(topic.data.get("ko_alt", []))):
-            results = search(kw, key, session)
-            if results:
-                break
+        _, results = find_results(topic.data, key, session)
         for item in results:
             url = item.get("galWebImageUrl")
             who = (item.get("galPhotographer") or "").strip()
