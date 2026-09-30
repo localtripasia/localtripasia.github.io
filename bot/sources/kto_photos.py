@@ -99,6 +99,7 @@ def find_results(data: dict, key: str, session=None) -> tuple[str, list[dict]]:
     return "", []
 
 
+LAST_STATS: dict[str, int] = {}     # why candidates were skipped in the latest _vetted run (for run notices)
 EXTRA_WORDS = ("거리", "먹거리", "쇼핑", "야경")   # added to the place name so results are not all one landmark
 
 
@@ -127,6 +128,8 @@ def _vetted(topic, cfg, session=None, vision_session=None, max_judged: int = MAX
     key, ko = cfg.kto_key, topic.data["ko"]
     results = find_all(topic.data, key, session) if diverse else find_results(topic.data, key, session)[1]
     judged, seen, used = 0, set(), {}
+    LAST_STATS.clear()
+    LAST_STATS.update(candidates=len(results), small_or_failed=0, wrong_place=0, low_quality=0, same_kind=0, accepted=0)
     for item in sorted(results, key=_rank):
         url = item.get("galWebImageUrl")
         who = (item.get("galPhotographer") or "").strip()
@@ -136,8 +139,10 @@ def _vetted(topic, cfg, session=None, vision_session=None, max_judged: int = MAX
         try:
             im = _download(url, session)
         except Exception:
+            LAST_STATS["small_or_failed"] += 1
             continue
         if im is None:
+            LAST_STATS["small_or_failed"] += 1
             continue
         verdict = None
         if cfg.gemini_key:
@@ -150,14 +155,17 @@ def _vetted(topic, cfg, session=None, vision_session=None, max_judged: int = MAX
             except Exception as exc:
                 notice("사진", f"AI 확인 오류 (제목 순위만으로 진행): {_clean(str(exc), cfg.gemini_key)[:200]}")
             if verdict is not None and not vision.acceptable(verdict):
+                LAST_STATS["wrong_place" if not verdict.get("shows_place") else "low_quality"] += 1
                 log(f"사진 탈락: {item.get('galTitle', '')} {verdict}")
                 continue
             if diverse and verdict is not None:
                 cat = str(verdict.get("category", "other"))
                 if used.get(cat, 0) >= (2 if cat == "other" else 1):   # one photo per kind of subject
+                    LAST_STATS["same_kind"] += 1
                     log(f"사진 중복 종류로 건너뜀: {item.get('galTitle', '')} ({cat})")
                     continue
                 used[cat] = used.get(cat, 0) + 1
+        LAST_STATS["accepted"] += 1
         yield item, im, verdict
 
 
@@ -229,5 +237,5 @@ def ensure_gallery(topic, cfg, n: int = GALLERY_SIZE, session=None, photos_dir: 
         gallery_path.write_text(json.dumps(table, ensure_ascii=False, indent=2))
         notice("사진", f"갤러리 {topic.data['key']}: {len(have)}장 확보 (" + ", ".join(e.get('category') or '?' for e in have) + ")")
     else:
-        notice("사진", f"갤러리 {topic.data['key']}: 쓸 만한 사진 {len(have)}장뿐이라 포토 투어는 건너뛰어요")
+        notice("사진", f"갤러리 {topic.data['key']}: 쓸 만한 사진 {len(have)}장뿐이라 포토 투어는 건너뛰어요 · 후보 통계 {dict(LAST_STATS)}")
     return have if len(have) >= MIN_GALLERY else []
