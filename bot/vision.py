@@ -83,5 +83,6 @@ def _judge_with(im: Image.Image, place: str, city: str, key: str, model: str, se
 
 
 def acceptable(v: dict) -> bool:
-    return bool(v.get("shows_place")) and not v.get("identifiable_faces") and not v.get("crowd") \
-        and int(v.get("quality", 0) or 0) >= 3
+    """Faces and crowds are fine (the photos are already published under KOGL Type 1);
+    what matters is that it shows the right place and looks good."""
+    return bool(v.get("shows_place")) and int(v.get("quality", 0) or 0) >= 3

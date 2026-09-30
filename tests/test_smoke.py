@@ -160,8 +160,8 @@ class SmokeTest(unittest.TestCase):
                         {"galTitle": "홍대 골목", "galWebImageUrl": "http://x/b.jpg", "galPhotographer": "B Lee"}]}}}})
                 return R(content=buf.getvalue())
 
-        verdicts = iter([{"shows_place": True, "identifiable_faces": False, "crowd": True, "quality": 4},
-                         {"shows_place": True, "identifiable_faces": False, "crowd": False, "quality": 4}])
+        verdicts = iter([{"shows_place": False, "quality": 4},
+                         {"shows_place": True, "identifiable_faces": True, "crowd": True, "quality": 4}])
 
         class GeminiSession:
             def post(self, url, json=None, timeout=0, headers=None):
@@ -174,7 +174,7 @@ class SmokeTest(unittest.TestCase):
             ok = kto_photos.ensure_photo(topic, self.cfg, KtoSession(), self.tmp / "ph2", self.tmp / "a2.json", GeminiSession())
             table = json.loads((self.tmp / "a2.json").read_text())
             self.assertTrue(ok)
-            self.assertEqual(table["seoul-hongdae"]["title"], "홍대 골목")   # the first one was rejected as a crowd
+            self.assertEqual(table["seoul-hongdae"]["title"], "홍대 골목")   # the first was rejected as the wrong place; faces/crowds are allowed
             self.assertTrue(table["seoul-hongdae"]["ai_checked"])
         finally:
             os.environ.pop("KTO_API_KEY", None); os.environ.pop("GEMINI_API_KEY", None)
