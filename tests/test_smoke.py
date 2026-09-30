@@ -217,6 +217,29 @@ class SmokeTest(unittest.TestCase):
             os.environ.pop("KTO_API_KEY", None)
             photos_mod.PHOTOS_DIR, photos_mod.GALLERY_PATH, photos_mod.AUTO_PATH = orig
 
+    def test_vision_falls_back_to_the_next_model_when_one_is_gone(self):
+        from PIL import Image
+        from bot import vision
+        seen = []
+
+        class R:
+            def __init__(self, code, payload=None): self.status_code, self._p = code, payload
+            def raise_for_status(self): pass
+            def json(self): return self._p
+
+        class S:
+            def post(self, url, json=None, timeout=0, headers=None):
+                seen.append(url.split("/models/")[1].split(":")[0])
+                if "old-model" in url:
+                    return R(404)
+                return R(200, {"candidates": [{"content": {"parts": [{"text": '{"shows_place": true, "quality": 4}'}]}}]})
+
+        vision._working.clear()
+        v = vision.judge(Image.new("RGB", (100, 100)), "X", "Seoul", "key", "old-model", S())
+        self.assertTrue(v["shows_place"])
+        self.assertEqual(seen[0], "old-model")
+        self.assertEqual(seen[1], "gemini-3.5-flash-lite")
+
     def test_kto_photo_does_nothing_without_a_key(self):
         from bot.sources import kto_photos
         entry = next(h for h in self.lib.hoods if h["key"] == "seoul-seongsu")

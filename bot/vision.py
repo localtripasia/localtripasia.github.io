@@ -36,8 +36,29 @@ def _jpeg_b64(im: Image.Image, max_side: int = 768) -> str:
     return base64.b64encode(buf.getvalue()).decode()
 
 
+FALLBACK_MODELS = ("gemini-3.5-flash-lite", "gemini-3.1-flash-lite", "gemini-3.8-flash")
+_working: dict[str, str] = {}      # key-independent cache: configured model -> the one that answered
+
+
 def judge(im: Image.Image, place: str, city: str, key: str, model: str, session=None) -> dict | None:
-    """The model's verdict as a dict, or None if the call failed."""
+    """The model's verdict as a dict. If Google has retired the configured model (404), the fallbacks
+    are tried in order and the one that works is remembered for the rest of the run."""
+    last = None
+    for m in dict.fromkeys([_working.get(model, model), model, *FALLBACK_MODELS]):
+        try:
+            verdict = _judge_with(im, place, city, key, m, session)
+            _working[model] = m
+            return verdict
+        except _ModelGone as exc:
+            last = exc
+    raise RuntimeError(str(last))
+
+
+class _ModelGone(Exception):
+    pass
+
+
+def _judge_with(im: Image.Image, place: str, city: str, key: str, model: str, session=None) -> dict:
     import requests
     session = session or requests
     body = {
@@ -50,9 +71,13 @@ def judge(im: Image.Image, place: str, city: str, key: str, model: str, session=
     try:
         r = session.post(ENDPOINT.format(model=model), json=body, timeout=60,
                          headers={"x-goog-api-key": key})   # header, not ?key=, so it never lands in a URL
+        if getattr(r, "status_code", 200) == 404:
+            raise _ModelGone(f"model {model} not found")
         r.raise_for_status()
         text = r.json()["candidates"][0]["content"]["parts"][0]["text"]
         return json.loads(text)
+    except _ModelGone:
+        raise
     except Exception as exc:
         raise RuntimeError(scrub(str(exc), key)) from None
 

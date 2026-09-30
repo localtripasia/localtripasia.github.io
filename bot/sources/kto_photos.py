@@ -124,7 +124,7 @@ def _vetted(topic, cfg, session=None, vision_session=None, max_judged: int = MAX
             judged += 1
             try:
                 verdict = vision.judge(im, topic.data.get("title") or topic.data.get("name") or ko, "Seoul",
-                                       cfg.gemini_key, cfg.vision.get("model", "gemini-2.5-flash"), vision_session)
+                                       cfg.gemini_key, cfg.vision.get("model", "gemini-3.5-flash-lite"), vision_session)
             except Exception as exc:
                 notice("사진", f"AI 확인 오류 (제목 순위만으로 진행): {_clean(str(exc), cfg.gemini_key)[:200]}")
             if verdict is not None and not vision.acceptable(verdict):
