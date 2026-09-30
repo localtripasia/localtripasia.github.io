@@ -127,6 +127,11 @@ class SmokeTest(unittest.TestCase):
             os.environ.pop("KTO_API_KEY", None)
             photos_mod.AUTO_PATH, photos_mod.PHOTOS_DIR = orig
 
+    def test_photo_credit_never_puts_hangul_on_the_card(self):
+        from bot.sources.kto_photos import _credit
+        self.assertEqual(_credit("한국관광공사 김지호"), "Photo: Korea Tourism Organization (KOGL Type 1)")
+        self.assertEqual(_credit("Kim Test"), "Photo: Kim Test / Korea Tourism Organization (KOGL Type 1)")
+
     def test_kto_photo_does_nothing_without_a_key(self):
         from bot.sources import kto_photos
         entry = next(h for h in self.lib.hoods if h["key"] == "seoul-seongsu")

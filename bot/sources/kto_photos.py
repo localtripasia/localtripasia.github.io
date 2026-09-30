@@ -16,6 +16,7 @@ from __future__ import annotations
 
 import io
 import json
+import re
 from pathlib import Path
 from urllib.parse import quote, unquote
 
@@ -27,6 +28,15 @@ from ..util import log, notice, scrub, warn
 API = "https://apis.data.go.kr/B551011/PhotoGalleryService1/gallerySearchList1"
 MIN_SIDE = 900          # px, so the cover doesn't look blurry after cropping to 1080x1350
 CREDIT_SUFFIX = "Korea Tourism Organization (KOGL Type 1)"
+
+
+def _credit(photographer: str) -> str:
+    """Card text is set in a Latin-only font, so a Hangul photographer name would render as boxes:
+    then credit the organization only (KOGL Type 1 needs the source, not a personal name)."""
+    name = photographer.replace("한국관광공사", "").strip()
+    if not name or re.search(r"[\u1100-\u11ff\u3130-\u318f\uac00-\ud7af]", name):
+        return f"Photo: {CREDIT_SUFFIX}"
+    return f"Photo: {name} / {CREDIT_SUFFIX}"
 
 
 def _clean(text: str, key: str) -> str:
@@ -93,7 +103,7 @@ def ensure_photo(topic, cfg, session=None, photos_dir: Path | None = None, auto_
             table = json.loads(auto_path.read_text()) if auto_path.exists() else {}
             table[topic.data["key"]] = {
                 "key": topic.data["key"], "file": name,
-                "credit": f"Photo: {who} / {CREDIT_SUFFIX}",
+                "credit": _credit(who),
                 "source": "https://www.data.go.kr/data/15101914/openapi.do",
                 "license": "kogl-1", "title": item.get("galTitle", ""), "content_id": item.get("galContentId", ""),
             }
