@@ -66,6 +66,68 @@
       "ig_media_id": "18135034855645391",
       "permalink": "https://www.instagram.com/p/Dd6hJrJkQQt/",
       "published_at": "2026-09-30T23:11+09:00"
+    },
+    {
+      "number": 2,
+      "date": "2026-10-01",
+      "source": "hood",
+      "key": "hood-seoul-myeongdong",
+      "title": "Myeongdong",
+      "folder": "002",
+      "slides": 10,
+      "caption": "Myeongdong, Seoul: what it is like and what to do\n\n✓ Try street food along the main lanes (skewers, fried potato, tanghulu)\n✓ Visit Myeongdong Cathedral outside mass times\n✓ Browse the Myeongdong Underground Shopping Center for souvenirs\n\nFull guide + links in bio →\n\n#ad Contains affiliate links — we may earn a small commission at no extra cost to you.\n\nPhotos: Korea Tourism Organization (KOGL Type 1)\n\n#travelkorea #traveljapan #koreatraveltips #japantraveltips #asiatravel #wheretostay #hoteltips #budgettravel",
+      "hook": "Myeongdong, Seoul: what it is like and what to do",
+      "bullets": [
+        "Try street food along the main lanes (skewers, fried potato, tanghulu)",
+        "Visit Myeongdong Cathedral outside mass times",
+        "Browse the Myeongdong Underground Shopping Center for souvenirs"
+      ],
+      "buttons": [
+        {
+          "label": "Agoda",
+          "url": "https://www.agoda.com/",
+          "class": ""
+        },
+        {
+          "label": "Trip.com",
+          "url": "https://www.trip.com/hotels/?Allianceid=10791404&SID=332513490&trip_sub1=&trip_sub3=D20019365",
+          "class": "teal"
+        }
+      ],
+      "article_blocks": [
+        [
+          "The vibe",
+          "Seoul's shopping district: department stores, beauty shops and street food, with a 1898 brick cathedral in the middle. Very international, very busy."
+        ],
+        [
+          "Do this",
+          [
+            "Try street food along the main lanes (skewers, fried potato, tanghulu)",
+            "Visit Myeongdong Cathedral outside mass times",
+            "Browse the Myeongdong Underground Shopping Center for souvenirs"
+          ]
+        ],
+        [
+          "Getting there",
+          "Myeongdong Station (Line 4); Euljiro 1-ga Station (Line 2) is the other way in"
+        ],
+        [
+          "Good to know",
+          "Expect heavy tourist crowds, especially in the evening. The cathedral and Namsan Tower glow after dark."
+        ],
+        [
+          "Photo",
+          "Photos: Korea Tourism Organization (KOGL Type 1) — https://www.data.go.kr/data/15101914/openapi.do"
+        ]
+      ],
+      "sources": [
+        "https://english.visitseoul.net/editorspicks/myeong-dong/ENNlwcnrh",
+        "https://www.seoultourism.org/seoul-neighborhoods-guide/"
+      ],
+      "status": "published",
+      "ig_media_id": "18013391705959460",
+      "permalink": "https://www.instagram.com/p/Dd6td0AkY2P/",
+      "published_at": "2026-10-01T00:58+09:00"
     }
   ]
 }

@@ -1,0 +1,70 @@
+{
+  "seoul-myeongdong": [
+    {
+      "key": "seoul-myeongdong",
+      "file": "gallery-seoul-myeongdong-1.jpg",
+      "credit": "Photo: Korea Tourism Organization (KOGL Type 1)",
+      "source": "https://www.data.go.kr/data/15101914/openapi.do",
+      "license": "kogl-1",
+      "title": "명동 롯데백화점",
+      "content_id": "1440205",
+      "ai_checked": true,
+      "category": "night lights/decorations"
+    },
+    {
+      "key": "seoul-myeongdong",
+      "file": "gallery-seoul-myeongdong-2.jpg",
+      "credit": "Photo: Korea Tourism Organization (KOGL Type 1)",
+      "source": "https://www.data.go.kr/data/15101914/openapi.do",
+      "license": "kogl-1",
+      "title": "롤포테이토",
+      "content_id": "1514059",
+      "ai_checked": true,
+      "category": "street food"
+    },
+    {
+      "key": "seoul-myeongdong",
+      "file": "gallery-seoul-myeongdong-3.jpg",
+      "credit": "Photo: Korea Tourism Organization (KOGL Type 1)",
+      "source": "https://www.data.go.kr/data/15101914/openapi.do",
+      "license": "kogl-1",
+      "title": "춘천명동닭갈비골목",
+      "content_id": "1653505",
+      "ai_checked": true,
+      "category": "street scene"
+    },
+    {
+      "key": "seoul-myeongdong",
+      "file": "gallery-seoul-myeongdong-4.jpg",
+      "credit": "Photo: Korea Tourism Organization (KOGL Type 1)",
+      "source": "https://www.data.go.kr/data/15101914/openapi.do",
+      "license": "kogl-1",
+      "title": "명동 쇼핑상품",
+      "content_id": "1794219",
+      "ai_checked": true,
+      "category": "shopping/storefronts"
+    },
+    {
+      "key": "seoul-myeongdong",
+      "file": "gallery-seoul-myeongdong-5.jpg",
+      "credit": "Photo: Korea Tourism Organization (KOGL Type 1)",
+      "source": "https://www.data.go.kr/data/15101914/openapi.do",
+      "license": "kogl-1",
+      "title": "명동거리",
+      "content_id": "1869881",
+      "ai_checked": true,
+      "category": "park/nature/skyline"
+    },
+    {
+      "key": "seoul-myeongdong",
+      "file": "gallery-seoul-myeongdong-6.jpg",
+      "credit": "Photo: Korea Tourism Organization (KOGL Type 1)",
+      "source": "https://www.data.go.kr/data/15101914/openapi.do",
+      "license": "kogl-1",
+      "title": "명동거리",
+      "content_id": "2506082",
+      "ai_checked": true,
+      "category": "landmark or building exterior"
+    }
+  ]
+}
