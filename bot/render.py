@@ -36,6 +36,13 @@ KIND_ACCENT = {
 }
 
 
+LIGHT_ACCENT = {TEAL: "#6FE0D6", RED: "#FF9A8A"}   # readable on navy / photo backgrounds
+
+
+def _on_dark(accent: str) -> str:
+    return LIGHT_ACCENT.get(accent, accent)
+
+
 def _font(name: str, size: int) -> ImageFont.FreeTypeFont:
     return ImageFont.truetype(str(FONTS / name), size)
 
@@ -106,21 +113,21 @@ def _photo_backdrop(path: Path) -> Image.Image:
 
 
 def _cover(topic, number: int, brand: str, total: int = 0) -> Image.Image:
-    accent = KIND_ACCENT.get(topic.kind, TEAL)
+    accent = _on_dark(KIND_ACCENT.get(topic.kind, TEAL))
     im, d = _base(NAVY)
     photo = photo_for(topic)
     if photo:
         im = _photo_backdrop(photo["path"])
         d = ImageDraw.Draw(im)
-        accent = {TEAL: "#6FE0D6", RED: "#FF9A8A"}.get(accent, accent)  # lighter accents read better on a photo
     label = KIND_LABEL.get(topic.kind, topic.kind.upper())
     d.text((PAD, 120), label, font=_font("DMSans-SemiBold.ttf", 40), fill=accent)
     d.line((PAD, 178, PAD + 110, 178), fill=accent, width=7)
     sub = _subtitle(topic)
-    for size in (190, 160, 130, 108, 92, 80):
+    for size in (190, 160, 130, 108, 92, 80, 68, 58):
         title_font = _font("DMSerifDisplay-Regular.ttf", size)
         lines = _wrap(d, topic.title, title_font, W - PAD * 2)
-        if len(lines) * size * 1.08 <= 560:
+        fits_width = all(d.textlength(ln, font=title_font) <= W - PAD * 2 for ln in lines)
+        if fits_width and len(lines) * size * 1.08 <= 560:
             break
     line_h = int(size * 1.08)
     y = 330
@@ -195,6 +202,7 @@ def _content_slide(heading: str, body_lines: list[str], number: int, brand: str,
 
 
 def _cta_slide(topic, number: int, cfg, accent: str, page: str) -> Image.Image:
+    accent = _on_dark(accent)
     im, d = _base(NAVY)
     d.text((PAD, 120), "SAVE THIS FOR YOUR TRIP", font=_font("DMSans-SemiBold.ttf", 40), fill=accent)
     d.line((PAD, 178, PAD + 110, 178), fill=accent, width=7)
@@ -232,8 +240,7 @@ def _slides_for(topic) -> list[tuple[str, list[str], bool]]:
         return [
             ("The vibe", [d.get("vibe", "")], False),
             ("Do this", d.get("do", []), True),
-            ("Getting there", [d.get("getting_there", "")], False),
-            ("Good to know", [d.get("tip", "")], False),
+            ("Good to know", [f"Getting there: {d.get('getting_there', '')}", f"Tip: {d.get('tip', '')}"], True),
         ]
     if k == "area":
         lines = [f"{p['name']} — {p.get('note', '')}" for p in d.get("picks", [])]

@@ -39,6 +39,17 @@ def _credit(photographer: str) -> str:
     return f"Photo: {name} / {CREDIT_SUFFIX}"
 
 
+# Photos with crowds or identifiable faces are a privacy/relevance risk on a public account, so words in
+# a photo's title/keywords that suggest people push it to the back; scenery words bring it forward.
+AVOID = ("미사", "예배", "공연", "행사", "축제", "퍼레이드", "인물", "모델", "체험", "시위", "집회", "내부", "관람", "경기", "마라톤", "콘서트", "공연장")
+PREFER = ("거리", "전경", "야경", "풍경", "골목", "경관", "외관", "전망", "공원", "야외", "건축")
+
+
+def _rank(item: dict) -> tuple[int, int]:
+    text = f"{item.get('galTitle', '')} {item.get('galSearchKeyword', '')}"
+    return (1 if any(w in text for w in AVOID) else 0, 0 if any(w in text for w in PREFER) else 1)
+
+
 def _clean(text: str, key: str) -> str:
     """Remove the key from an error message in every form it can appear in (raw, decoded, URL-encoded)."""
     for form in {key, unquote(key), quote(unquote(key), safe=""), quote(key, safe="")}:
@@ -97,7 +108,7 @@ def ensure_photo(topic, cfg, session=None, photos_dir: Path | None = None, auto_
     auto_path = auto_path or AUTO_PATH
     try:
         _, results = find_results(topic.data, key, session)
-        for item in results:
+        for item in sorted(results, key=_rank):
             url = item.get("galWebImageUrl")
             who = (item.get("galPhotographer") or "").strip()
             if not url or not who:
