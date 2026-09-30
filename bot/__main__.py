@@ -233,8 +233,10 @@ def cmd_check(args, cfg=None) -> int:
     if cfg.kto_key:
         try:
             from .sources.kto_photos import search as kto_search
-            n = len(kto_search("성수동", cfg.kto_key, rows=3))
-            lines.append(f"- 관광공사 사진 API: 연결됨 (검색 결과 {n}장)")
+            lib0 = editorial.load_library(cfg)
+            words = [e["ko"] for e in lib0.hoods + lib0.cities if e.get("ko")]
+            counts = ", ".join(f"{w} {len(kto_search(w, cfg.kto_key, rows=5))}" for w in words)
+            lines.append(f"- 관광공사 사진 API: 연결됨 (검색어별 결과 수: {counts})")
         except Exception as exc:
             ok = False
             lines.append(f"- ❌ 관광공사 사진 API 오류: {__import__('bot.sources.kto_photos', fromlist=['_clean'])._clean(str(exc), cfg.kto_key)}")

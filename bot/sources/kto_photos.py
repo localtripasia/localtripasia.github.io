@@ -86,7 +86,12 @@ def ensure_photo(topic, cfg, session=None, photos_dir: Path | None = None, auto_
     photos_dir = photos_dir or PHOTOS_DIR
     auto_path = auto_path or AUTO_PATH
     try:
-        for item in search(ko, key, session):
+        results = []
+        for kw in dict.fromkeys([ko, ko.removesuffix("동")] + list(topic.data.get("ko_alt", []))):
+            results = search(kw, key, session)
+            if results:
+                break
+        for item in results:
             url = item.get("galWebImageUrl")
             who = (item.get("galPhotographer") or "").strip()
             if not url or not who:
