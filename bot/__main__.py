@@ -26,7 +26,7 @@ from .pinterest import build_pinterest
 from .render import render_pin, render_topic
 from .sources import kto_photos
 from .state import State
-from .util import add_summary, log, scrub, set_output, warn
+from .util import add_summary, log, notice, scrub, set_output, warn
 
 
 def _today(cfg, override: str | None) -> Date:
@@ -237,7 +237,7 @@ def cmd_check(args, cfg=None) -> int:
             lines.append(f"- 관광공사 사진 API: 연결됨 (검색 결과 {n}장)")
         except Exception as exc:
             ok = False
-            lines.append(f"- ❌ 관광공사 사진 API 오류: {scrub(str(exc), cfg.kto_key)}")
+            lines.append(f"- ❌ 관광공사 사진 API 오류: {__import__('bot.sources.kto_photos', fromlist=['_clean'])._clean(str(exc), cfg.kto_key)}")
     else:
         lines.append("- 관광공사 사진 API: 키 없음 → 한국 동네 카드가 사진 없이 나가요")
     lines.append(f"- 아고다: {'Site ID 있음' if cfg.agoda_site_id else '제휴 승인 전 → 일반 링크로 대신 나가요'}")
@@ -267,6 +267,7 @@ def cmd_check(args, cfg=None) -> int:
     text = "\n".join(lines)
     log(text)
     add_summary(text)
+    notice("연결 확인", text)
     return 0 if ok else 1
 
 

@@ -17,16 +17,23 @@ from __future__ import annotations
 import io
 import json
 from pathlib import Path
-from urllib.parse import unquote
+from urllib.parse import quote, unquote
 
 from PIL import Image
 
 from ..photos import AUTO_PATH, PHOTOS_DIR
-from ..util import log, scrub, warn
+from ..util import log, notice, scrub, warn
 
 API = "https://apis.data.go.kr/B551011/PhotoGalleryService1/gallerySearchList1"
 MIN_SIDE = 900          # px, so the cover doesn't look blurry after cropping to 1080x1350
 CREDIT_SUFFIX = "Korea Tourism Organization (KOGL Type 1)"
+
+
+def _clean(text: str, key: str) -> str:
+    """Remove the key from an error message in every form it can appear in (raw, decoded, URL-encoded)."""
+    for form in {key, unquote(key), quote(unquote(key), safe=""), quote(key, safe="")}:
+        text = scrub(text, form)
+    return text
 
 
 def _items(payload: dict) -> list[dict]:
@@ -92,9 +99,12 @@ def ensure_photo(topic, cfg, session=None, photos_dir: Path | None = None, auto_
             }
             auto_path.parent.mkdir(parents=True, exist_ok=True)
             auto_path.write_text(json.dumps(table, ensure_ascii=False, indent=2))
+            notice("사진", f"확보: {topic.data['key']} <- {item.get('galTitle', '')} / {who} ({im.size[0]}x{im.size[1]})")
             log(f"사진 확보: {topic.data['key']} ← {item.get('galTitle', '')} ({who})")
             return True
+        notice("사진", f"'{ko}' 결과 없음 또는 모두 작음")
         warn(f"'{ko}' 로 쓸 만한 관광공사 사진을 찾지 못했어요 (사진 없이 진행)")
     except Exception as exc:
-        warn(f"관광공사 사진 API 오류 (사진 없이 진행): {scrub(str(exc), key)}")
+        notice("사진", f"API 오류: {_clean(str(exc), key)[:300]}")
+        warn(f"관광공사 사진 API 오류 (사진 없이 진행): {_clean(str(exc), key)}")
     return False

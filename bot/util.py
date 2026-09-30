@@ -59,3 +59,10 @@ def scrub(text: str, *secrets: str | None) -> str:
         if s:
             out = out.replace(s, "***")
     return re.sub(r"(access_token=)[^&\s\"']+", r"\1***", out)
+
+
+def notice(title: str, message: str) -> None:
+    """A GitHub Actions annotation (shows on the run page). Never pass secrets here."""
+    if os.environ.get("GITHUB_ACTIONS"):
+        msg = message.replace("%", "%25").replace("\r", "").replace("\n", "%0A")
+        print(f"::notice title={title}::{msg}")
