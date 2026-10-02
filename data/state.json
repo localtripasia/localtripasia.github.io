@@ -163,6 +163,82 @@
       "ig_media_id": "18091417901680510",
       "permalink": "https://www.instagram.com/p/Dd9l_SfGMsG/",
       "published_at": "2026-10-02T03:50+09:00"
+    },
+    {
+      "number": 4,
+      "date": "2026-10-03",
+      "source": "city101",
+      "key": "city101-tokyo",
+      "title": "Tokyo",
+      "folder": "004",
+      "slides": 7,
+      "caption": "Tokyo: your first 48 hours\n\n✓ Cross Shibuya Scramble at least once, then duck into a side-street coffee shop\n✓ Wander Yanaka, an old neighborhood that survived the war and postwar rebuilding\n✓ Catch the early-morning tuna auction viewing at Toyosu Market\n\nFull guide + links in bio →\n\n#ad Contains affiliate links — we may earn a small commission at no extra cost to you.\n\n#travelkorea #traveljapan #koreatraveltips #japantraveltips #asiatravel",
+      "hook": "Tokyo: your first 48 hours",
+      "bullets": [
+        "Cross Shibuya Scramble at least once, then duck into a side-street coffee shop",
+        "Wander Yanaka, an old neighborhood that survived the war and postwar rebuilding",
+        "Catch the early-morning tuna auction viewing at Toyosu Market"
+      ],
+      "buttons": [
+        {
+          "label": "Agoda",
+          "url": "https://www.agoda.com/",
+          "class": ""
+        },
+        {
+          "label": "Trip.com",
+          "url": "https://www.trip.com/hotels/?Allianceid=10791404&SID=332513490&trip_sub1=&trip_sub3=D20019365",
+          "class": "teal"
+        }
+      ],
+      "article_blocks": [
+        [
+          "Why go",
+          "Japan's capital and its biggest transit hub — nearly every itinerary that includes Japan starts or ends here."
+        ],
+        [
+          "When to go",
+          "Spring (late Mar–Apr) for cherry blossoms and autumn (Nov) for foliage are the most popular; both can be crowded and pricier."
+        ],
+        [
+          "Getting there",
+          "Narita (NRT) or Haneda (HND) airport. From Haneda, the Tokyo Monorail or Keikyu Line reaches central Tokyo in under 30 minutes."
+        ],
+        [
+          "Do this",
+          [
+            "Cross Shibuya Scramble at least once, then duck into a side-street coffee shop",
+            "Wander Yanaka, an old neighborhood that survived the war and postwar rebuilding",
+            "Catch the early-morning tuna auction viewing at Toyosu Market"
+          ]
+        ],
+        [
+          "Where to stay",
+          [
+            "Budget: A capsule or business hotel near Ueno or Asakusa — close to the Narita Express / Skyliner",
+            "Mid: A hotel in Shinjuku or Shibuya — central, well connected by train",
+            "Splurge: A hotel overlooking Tokyo Bay or Shinjuku's skyline — for a view room"
+          ]
+        ]
+      ],
+      "sources": [
+        "https://www.japan.travel/en/",
+        "https://www.e-stat.go.jp/en"
+      ],
+      "status": "published",
+      "reel": {
+        "mode": "auto",
+        "video": "reels/004.mp4",
+        "cover": "reels/004.jpg",
+        "seconds": 28.2,
+        "track": "departure-morning",
+        "status": "published",
+        "media_id": "18116954207103320",
+        "permalink": "https://www.instagram.com/reel/DeAHopwkoRk/"
+      },
+      "ig_media_id": "18112306571031551",
+      "permalink": "https://www.instagram.com/p/DeAHycVoHuR/",
+      "published_at": "2026-10-03T03:24+09:00"
     }
   ]
 }
