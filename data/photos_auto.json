@@ -1,0 +1,13 @@
+{
+  "seoul": {
+    "key": "seoul",
+    "file": "auto-seoul.jpg",
+    "credit": "Photo: Korea Tourism Organization (KOGL Type 1)",
+    "source": "https://www.data.go.kr/data/15101914/openapi.do",
+    "license": "kogl-1",
+    "title": "사랑의 자물쇠",
+    "content_id": "1003835",
+    "ai_checked": true,
+    "category": "landmark or building exterior"
+  }
+}
