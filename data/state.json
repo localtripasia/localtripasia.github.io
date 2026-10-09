@@ -502,6 +502,48 @@
       "ig_media_id": "17974704396137143",
       "permalink": "https://www.instagram.com/p/DePqdI3mZZk/",
       "published_at": "2026-10-09T04:16+09:00"
+    },
+    {
+      "number": 10,
+      "date": "2026-10-10",
+      "source": "words",
+      "key": "words-restaurant-korean",
+      "title": "At a restaurant (Korean)",
+      "folder": "010",
+      "slides": 3,
+      "caption": "At a restaurant (Korean)\n\n✓ 이거 주세요 (igeo juseyo) — This one, please\n✓ 맛있어요 (masisseoyo) — It's delicious\n✓ 계산해 주세요 (gyesanhae juseyo) — Check, please\n\nFull guide + links in bio →\n\n#travelkorea #traveljapan #koreatraveltips #japantraveltips #asiatravel",
+      "hook": "At a restaurant (Korean)",
+      "bullets": [
+        "이거 주세요 (igeo juseyo) — This one, please",
+        "맛있어요 (masisseoyo) — It's delicious",
+        "계산해 주세요 (gyesanhae juseyo) — Check, please"
+      ],
+      "buttons": [],
+      "article_blocks": [
+        [
+          "Phrases",
+          [
+            "이거 주세요 (igeo juseyo) — This one, please",
+            "맛있어요 (masisseoyo) — It's delicious",
+            "계산해 주세요 (gyesanhae juseyo) — Check, please"
+          ]
+        ]
+      ],
+      "sources": [],
+      "status": "published",
+      "reel": {
+        "mode": "auto",
+        "video": "reels/010.mp4",
+        "cover": "reels/010.jpg",
+        "seconds": 13.2,
+        "track": "local-market",
+        "status": "published",
+        "media_id": "18067185092716300",
+        "permalink": "https://www.instagram.com/reel/DeSL_hmkYV5/"
+      },
+      "ig_media_id": "17970896478151960",
+      "permalink": "https://www.instagram.com/p/DeSMFlFFUg-/",
+      "published_at": "2026-10-10T03:48+09:00"
     }
   ]
 }
