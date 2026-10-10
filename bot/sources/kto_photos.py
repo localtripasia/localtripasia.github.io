@@ -56,6 +56,8 @@ def _rank(item: dict) -> tuple[int, int]:
 
 def _clean(text: str, key: str) -> str:
     """Remove the key from an error message in every form it can appear in (raw, decoded, URL-encoded)."""
+    if not key:
+        return text
     for form in {key, unquote(key), quote(unquote(key), safe=""), quote(key, safe="")}:
         text = scrub(text, form)
     return text
@@ -144,8 +146,12 @@ def find_all(data: dict, key: str, session=None, cap: int = 80) -> list[dict]:
 def _vetted(topic, cfg, session=None, vision_session=None, max_judged: int = MAX_JUDGED, diverse: bool = False):
     """Yield (item, image, verdict) for candidate photos that pass every check, best-ranked first.
     verdict is None when no AI key is set (then only size and title-word ranking apply)."""
-    key, ko = cfg.kto_key, topic.data["ko"]
-    results = find_all(topic.data, key, session) if diverse else find_results(topic.data, key, session)[1]
+    key, ko = cfg.kto_key, topic.data.get("ko") or topic.data.get("title", "")
+    if _is_japan(topic):
+        from . import open_photos
+        results = open_photos.find_candidates(topic.data, cfg, session, diverse)
+    else:
+        results = find_all(topic.data, key, session) if diverse else find_results(topic.data, key, session)[1]
     judged, seen, used = 0, set(), {}
     LAST_STATS.clear()
     SIZES.clear()
@@ -173,8 +179,9 @@ def _vetted(topic, cfg, session=None, vision_session=None, max_judged: int = MAX
                 return
             judged += 1
             try:
-                verdict = vision.judge(im, topic.data.get("title") or topic.data.get("name") or ko, "Seoul",
-                                       cfg.gemini_key, cfg.vision.get("model", "gemini-3.5-flash-lite"), vision_session)
+                verdict = vision.judge(im, topic.data.get("title") or topic.data.get("name") or ko, _city_name(topic),
+                                       cfg.gemini_key, cfg.vision.get("model", "gemini-3.5-flash-lite"), vision_session,
+                                       country="Japan" if _is_japan(topic) else "South Korea")
             except Exception as exc:
                 notice("사진", f"AI 확인 오류 (제목 순위만으로 진행): {_clean(str(exc), cfg.gemini_key)[:200]}")
             if verdict is not None and not vision.acceptable(verdict):
@@ -192,7 +199,19 @@ def _vetted(topic, cfg, session=None, vision_session=None, max_judged: int = MAX
         yield item, im, verdict
 
 
+def _is_japan(topic) -> bool:
+    return topic.data.get("country") == "Japan"
+
+
+def _city_name(topic) -> str:
+    return str(topic.data.get("city") or topic.data.get("key") or "Seoul").replace("-", " ").title()
+
+
 def _entry(topic, item, name, verdict) -> dict:
+    if item.get("_credit"):          # openly licensed photo from bot/sources/open_photos.py
+        return {"key": topic.data["key"], "file": name, "credit": item["_credit"], "source": item["_source"],
+                "license": item["_license"], "title": item.get("galTitle", ""), "content_id": item.get("galContentId", ""),
+                "ai_checked": verdict is not None, "category": (verdict or {}).get("category", "")}
     return {"key": topic.data["key"], "file": name, "credit": _credit((item.get("galPhotographer") or "").strip()),
             "source": "https://www.data.go.kr/data/15101914/openapi.do", "license": "kogl-1",
             "title": item.get("galTitle", ""), "content_id": item.get("galContentId", ""),
@@ -200,6 +219,8 @@ def _entry(topic, item, name, verdict) -> dict:
 
 
 def _usable(topic, cfg) -> bool:
+    if _is_japan(topic):
+        return True          # Wikimedia Commons needs no key; Pexels is added when PEXELS_API_KEY is set
     return bool(cfg.kto_key and topic.data.get("ko") and topic.data.get("country") == "Korea")
 
 
@@ -225,8 +246,8 @@ def ensure_photo(topic, cfg, session=None, photos_dir: Path | None = None, auto_
             notice("사진", f"확보: {topic.data['key']} <- {item.get('galTitle', '')} ({im.size[0]}x{im.size[1]}) AI확인={'예' if verdict else '아니오'}")
             log(f"사진 확보: {topic.data['key']} ← {item.get('galTitle', '')}")
             return True
-        notice("사진", f"'{topic.data['ko']}' 결과 없음, 모두 작음, 또는 AI가 모두 탈락시킴 (사진 없이 진행)")
-        warn(f"'{topic.data['ko']}' 로 쓸 만한 관광공사 사진을 찾지 못했어요 (사진 없이 진행)")
+        notice("사진", f"'{topic.data.get('ko') or topic.data.get('title')}' 결과 없음, 모두 작음, 또는 AI가 모두 탈락시킴 (사진 없이 진행)")
+        warn(f"'{topic.data.get('ko') or topic.data.get('title')}' 로 쓸 만한 관광공사 사진을 찾지 못했어요 (사진 없이 진행)")
     except Exception as exc:
         notice("사진", f"API 오류: {_clean(str(exc), cfg.kto_key)[:300]}")
         warn(f"관광공사 사진 API 오류 (사진 없이 진행): {_clean(str(exc), cfg.kto_key)}")

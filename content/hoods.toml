@@ -166,3 +166,81 @@ sources = [
   "https://english.visitkorea.or.kr/svc/whereToGo/locIntrdn/rgnContentsView.do?vcontsId=111543",
   "https://www.seoultourism.org/seoul-neighborhoods-guide/",
 ]
+
+# ---- Tokyo (조사일: 2026-10-10). 사진은 위키미디어 커먼즈 / Pexels (`en` = 영어 검색어) ----
+
+[[hood]]
+key = "tokyo-shibuya"
+city = "tokyo"
+title = "Shibuya"
+en = "Shibuya Tokyo"
+country = "Japan"
+vibe = "A neon-lit district built around the world-famous scramble crossing. Busy day and night, with cheap fashion, bars and clubs, and quieter cafes on the side streets."
+do = [
+  "Watch the Scramble Crossing, then see it from above at Shibuya Sky",
+  "Meet at the Hachiko statue (go early for a clear photo)",
+  "Stroll Center-Gai for cheap food, karaoke and glowing signs after dark",
+]
+getting_there = "Shibuya Station (many lines; some Narita Express trains stop here). Follow the 'Hachiko' exit signs to the crossing"
+tip = "The station is a maze, so allow extra time for transfers. The walkway toward Shibuya Mark City gives a calmer view of the crossing."
+sources = [
+  "https://www.gotokyo.org/en/story/walks-and-tours/shibuya/index.html",
+  "https://www.gotokyo.org/en/spot/1749/index.html",
+]
+
+[[hood]]
+key = "tokyo-asakusa"
+city = "tokyo"
+title = "Asakusa"
+en = "Asakusa Tokyo"
+country = "Japan"
+vibe = "Old Tokyo around Sensoji, the city's oldest Buddhist temple, with stalls and souvenir shops by the Sumida River."
+do = [
+  "Walk through Kaminarimon and along Nakamise shopping street to the main hall",
+  "Take the Sumida River waterbus from the pier near the station",
+  "Eat and drink at Rokku Broadway, a revived old theater street",
+]
+getting_there = "Asakusa Station (Ginza Line, Toei Asakusa Line, Tobu Skytree Line); the temple is about a 5-minute walk"
+tip = "Check current opening hours and any waterbus stop changes on the official sites before you go."
+sources = [
+  "https://www.gotokyo.org/en/destinations/eastern-tokyo/asakusa/index.html",
+  "https://www.gotokyo.org/en/spot/15/index.html",
+]
+
+[[hood]]
+key = "tokyo-harajuku"
+city = "tokyo"
+title = "Harajuku"
+en = "Harajuku Tokyo"
+country = "Japan"
+vibe = "Tokyo's youth-fashion corner: playful sweets, street style and cheap finds, with the polished, leafy Omotesando boulevard next door."
+do = [
+  "Browse Takeshita Street for affordable fashion and crepes",
+  "Walk Omotesando's boulevard and its designer buildings",
+  "Walk through the forest to Meiji Jingu shrine",
+]
+getting_there = "Harajuku Station (JR Yamanote Line) for Takeshita Street; Meiji-jingumae Station (Chiyoda Line) for Omotesando"
+tip = "Everything is walkable, so go on foot between the two areas. The shrine gets very crowded at New Year."
+sources = [
+  "https://www.japan.travel/en/destinations/kanto/tokyo/harajuku-and-omotesando/",
+  "https://www.gotokyo.org/en/story/walks-and-tours/harajuku/index.html",
+]
+
+[[hood]]
+key = "tokyo-shinjuku"
+city = "tokyo"
+title = "Shinjuku"
+en = "Shinjuku Tokyo"
+country = "Japan"
+vibe = "A huge entertainment, business and shopping district around one of the world's busiest stations: skyscrapers to the west, neon nightlife to the northeast."
+do = [
+  "See the skyline free from the Tokyo Metropolitan Government Building observation deck",
+  "Eat in the tiny alley eateries of Omoide Yokocho",
+  "Explore Golden Gai's small bars and Kabukicho's neon at night",
+]
+getting_there = "Shinjuku Station (about a dozen rail and subway lines, including the JR Yamanote Line)"
+tip = "Be careful in Kabukicho: the guide warns of high cover charges and drink-spiking scams aimed at visitors. Many Golden Gai bars are tiny and cater to regulars."
+sources = [
+  "https://www.japan-guide.com/e/e3011.html",
+  "https://www.gotokyo.org/en/story/guide/tokyo-at-night/index.html",
+]

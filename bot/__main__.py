@@ -253,6 +253,15 @@ def cmd_check(args, cfg=None) -> int:
             lines.append(f"- ❌ 관광공사 사진 API 오류: {__import__('bot.sources.kto_photos', fromlist=['_clean'])._clean(str(exc), cfg.kto_key)}")
     else:
         lines.append("- 관광공사 사진 API: 키 없음 → 한국 동네 카드가 사진 없이 나가요")
+    try:
+        from .sources import open_photos
+        import requests
+        n_c = len(open_photos.commons_search("Shibuya Tokyo", requests))
+        n_p = len(open_photos.pexels_search("Shibuya Tokyo", cfg.pexels_key, requests)) if cfg.pexels_key else None
+        lines.append(f"- 일본 무료 사진: 위키미디어 커먼즈 연결됨 (시부야 검색 {n_c}장)"
+                     + (f" · Pexels 연결됨 ({n_p}장)" if n_p is not None else " · Pexels 키 없음 (커먼즈만 사용)"))
+    except Exception as exc:
+        lines.append(f"- ❌ 일본 무료 사진 오류: {type(exc).__name__}: {str(exc)[:150]}")
     lines.append(f"- 사진 AI 확인(Gemini): {'키 있음' if cfg.gemini_key else '키 없음 → 제목 단어 순위만으로 사진을 골라요'}")
     lines.append(f"- 아고다: {'Site ID 있음' if cfg.agoda_site_id else '제휴 승인 전 → 일반 링크로 대신 나가요'}")
     lines.append(f"- 트립닷컴: {'키 있음' if cfg.tripcom_key else '제휴 승인 전 → 일반 링크로 대신 나가요'}")

@@ -66,6 +66,7 @@ jobs:
           INVOLVE_ASIA_KEY: ${{ secrets.INVOLVE_ASIA_KEY }}
           KTO_API_KEY: ${{ secrets.KTO_API_KEY }}
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          PEXELS_API_KEY: ${{ secrets.PEXELS_API_KEY }}
           SITE_URL: ${{ steps.pages.outputs.base_url }}
         run: |
           ARGS="--out site --source ${{ inputs.source || 'auto' }} --reel ${{ inputs.reel || 'auto' }}"
@@ -82,6 +83,7 @@ jobs:
           AGODA_SITE_ID: ${{ secrets.AGODA_SITE_ID }}
           KTO_API_KEY: ${{ secrets.KTO_API_KEY }}
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          PEXELS_API_KEY: ${{ secrets.PEXELS_API_KEY }}
           IG_ACCESS_TOKEN: ${{ secrets.IG_ACCESS_TOKEN }}
         run: python -m bot check
 

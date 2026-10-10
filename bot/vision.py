@@ -18,7 +18,7 @@ from .util import scrub
 
 ENDPOINT = "https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent"
 PROMPT = (
-    "This photo may become the cover of a travel post about {place} ({city}, South Korea). "
+    "This photo may become the cover of a travel post about {place} ({city}, {country}). "
     "Answer with JSON only: "
     '{{"shows_place": true/false (does it plausibly show or represent {place}, not some other place), '
     '"identifiable_faces": true/false (any person\'s face clearly recognizable), '
@@ -43,13 +43,13 @@ FALLBACK_MODELS = ("gemini-3.5-flash-lite", "gemini-3.1-flash-lite", "gemini-3.8
 _working: dict[str, str] = {}      # key-independent cache: configured model -> the one that answered
 
 
-def judge(im: Image.Image, place: str, city: str, key: str, model: str, session=None) -> dict | None:
+def judge(im: Image.Image, place: str, city: str, key: str, model: str, session=None, country: str = "South Korea") -> dict | None:
     """The model's verdict as a dict. If Google has retired the configured model (404), the fallbacks
     are tried in order and the one that works is remembered for the rest of the run."""
     last = None
     for m in dict.fromkeys([_working.get(model, model), model, *FALLBACK_MODELS]):
         try:
-            verdict = _judge_with(im, place, city, key, m, session)
+            verdict = _judge_with(im, place, city, key, m, session, country)
             _working[model] = m
             return verdict
         except _ModelGone as exc:
@@ -61,12 +61,12 @@ class _ModelGone(Exception):
     pass
 
 
-def _judge_with(im: Image.Image, place: str, city: str, key: str, model: str, session=None) -> dict:
+def _judge_with(im: Image.Image, place: str, city: str, key: str, model: str, session=None, country: str = "South Korea") -> dict:
     import requests
     session = session or requests
     body = {
         "contents": [{"parts": [
-            {"text": PROMPT.format(place=place, city=city)},
+            {"text": PROMPT.format(place=place, city=city, country=country)},
             {"inline_data": {"mime_type": "image/jpeg", "data": _jpeg_b64(im)}},
         ]}],
         "generationConfig": {"responseMimeType": "application/json", "temperature": 0},

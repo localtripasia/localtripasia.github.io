@@ -286,6 +286,59 @@ class SmokeTest(unittest.TestCase):
         topic = editorial.Topic(kind="hood", key="k", data=entry)
         self.assertFalse(kto_photos.ensure_photo(topic, self.cfg, None, self.tmp / "ph", self.tmp / "a.json"))
 
+    def test_japan_photos_come_from_open_licenses_and_are_credited(self):
+        import io, json, os
+        from PIL import Image
+        from bot.sources import kto_photos, open_photos
+
+        topic = editorial.Topic(kind="hood", key="hood-tokyo-shibuya", data={
+            "key": "tokyo-shibuya", "title": "Shibuya", "city": "tokyo", "country": "Japan"})
+        buf = io.BytesIO(); Image.new("RGB", (1600, 1200), (200, 120, 90)).save(buf, "JPEG")
+
+        class Resp:
+            def __init__(self, payload=None, content=b""):
+                self._p, self.content = payload, content
+            def raise_for_status(self): pass
+            def json(self): return self._p
+
+        def meta(lic, artist):
+            return {"LicenseShortName": {"value": lic}, "Artist": {"value": artist}}
+
+        class FakeSession:
+            def get(self, url, params=None, headers=None, timeout=0):
+                if "wikimedia" in url and "api.php" in url:
+                    self_ua = (headers or {}).get("User-Agent", "")
+                    assert "LocalTripBot" in self_ua            # Wikimedia requires a descriptive User-Agent
+                    page = lambda i, lic, who: {"pageid": i, "title": f"File:Shibuya {i}.jpg", "imageinfo": [{
+                        "mime": "image/jpeg", "width": 2000, "height": 1500, "thumburl": f"https://x/c{i}.jpg",
+                        "descriptionurl": f"https://commons.wikimedia.org/wiki/File:{i}", "extmetadata": meta(lic, who)}]}
+                    return Resp({"query": {"pages": {"1": page(1, "CC BY-SA 4.0", "Share Alike"),
+                                                     "2": page(2, "CC BY 4.0", "<a>Jane Photographer</a>"),
+                                                     "3": page(3, "CC BY 4.0", "山田太郎")}}})
+                if "pexels.com" in url:
+                    assert (headers or {}).get("Authorization") == "pexels-test"
+                    return Resp({"photos": [{"id": 9, "width": 3000, "height": 2000, "photographer": "Pex Person",
+                                             "alt": "Shibuya crossing", "url": "https://www.pexels.com/photo/9/",
+                                             "src": {"large2x": "https://x/p9.jpg"}}]})
+                return Resp(content=buf.getvalue())
+
+        os.environ["PEXELS_API_KEY"] = "pexels-test"
+        try:
+            cands = open_photos.find_candidates(topic.data, self.cfg, FakeSession())
+            ids = [c["galContentId"] for c in cands]
+            self.assertNotIn("commons-1", ids)                       # share-alike license is skipped
+            self.assertEqual(ids[0], "pexels-9")                     # Pexels first when the key is set
+            credits = {c["galContentId"]: c["_credit"] for c in cands}
+            self.assertIn("Jane Photographer / Wikimedia Commons (CC BY 4.0)", credits["commons-2"])
+            self.assertNotIn("山", credits["commons-3"])              # no CJK on the card font
+            ok = kto_photos.ensure_photo(topic, self.cfg, FakeSession(), self.tmp / "jp", self.tmp / "jp.json")
+            self.assertTrue(ok)
+            table = json.loads((self.tmp / "jp.json").read_text())
+            self.assertEqual(table["tokyo-shibuya"]["credit"], "Photo: Pex Person / Pexels")
+            self.assertEqual(table["tokyo-shibuya"]["license"], "pexels")
+        finally:
+            os.environ.pop("PEXELS_API_KEY", None)
+
 
 if __name__ == "__main__":
     unittest.main()

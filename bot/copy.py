@@ -85,7 +85,7 @@ def _build_copy(topic, cfg) -> Copy:
 
     if k == "hood":
         things = d.get("do", [])
-        hook = f"{d['title']}, Seoul: what it is like and what to do"
+        hook = f"{d['title']}, {d['city'].replace('-', ' ').title()}: what it is like and what to do"
         bullets = things[:3] or [d.get("vibe", "")]
         buttons = [_agoda_button(cfg, d["city"], d["title"]), _tripcom_button(cfg)]
         blocks = [("The vibe", d.get("vibe", "")), ("Do this", things),
@@ -94,7 +94,7 @@ def _build_copy(topic, cfg) -> Copy:
                     bullets=bullets, buttons=buttons, article_blocks=blocks, sources=topic.sources)
 
     if k == "gallery":
-        hook = f"{d['title']}, Seoul: a photo tour"
+        hook = f"{d['title']}, {d['city'].replace('-', ' ').title()}: a photo tour"
         bullets = [d.get("vibe", "")[:110].rstrip(" .,;:") + "."] if d.get("vibe") else []
         buttons = [_agoda_button(cfg, d["city"], d["title"]), _tripcom_button(cfg)]
         blocks = [("The vibe", d.get("vibe", "")), ("Getting there", d.get("getting_there", ""))]
