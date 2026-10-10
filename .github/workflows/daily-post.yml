@@ -15,6 +15,10 @@ on:
         type: choice
         options: [auto, city101, hood, gallery, area, hotel, transport, route, season, words, weekly, recap, site]
         default: auto
+      topic:
+        description: "미리보기에서 특정 항목만 만들기 (예: hood-tokyo-shibuya). 비우면 순서대로"
+        type: string
+        default: ""
       reel:
         description: "릴스 (auto = config [reels] 요일대로 · yes = 오늘 릴스도 · no = 카드뉴스만)"
         type: choice
@@ -70,6 +74,7 @@ jobs:
           SITE_URL: ${{ steps.pages.outputs.base_url }}
         run: |
           ARGS="--out site --source ${{ inputs.source || 'auto' }} --reel ${{ inputs.reel || 'auto' }}"
+          if [ -n "${{ inputs.topic }}" ] && [ "$DRY_RUN" = "true" ]; then ARGS="$ARGS --topic ${{ inputs.topic }}"; fi
           if [ "$DRY_RUN" = "true" ]; then ARGS="$ARGS --dry-run"; fi
           python -m bot prepare $ARGS
 

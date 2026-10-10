@@ -89,7 +89,8 @@ def cmd_prepare(args, cfg=None) -> int:
 
     made = None
     for step in order:
-        topic = editorial.next_topic(step, lib, state, today, cfg)
+        topic = (editorial.find_topic(step, args.topic, lib) if getattr(args, "topic", None) and args.dry_run
+                 else editorial.next_topic(step, lib, state, today, cfg))
         if topic is None:
             continue
         try:
@@ -339,6 +340,7 @@ def main(argv=None) -> int:
     a.add_argument("--source", default="auto", choices=["auto", *series.SERIES_NAMES, "site"])
     a.add_argument("--date", default=None, help="YYYY-MM-DD (테스트용)")
     a.add_argument("--reel", default="auto", choices=["auto", "yes", "no"])
+    a.add_argument("--topic", default=None, help="미리보기용: 이 키의 항목만 만들기 (예: hood-tokyo-shibuya)")
     b = sub.add_parser("publish")
     b.add_argument("--site-url", required=True)
     sub.add_parser("check")
