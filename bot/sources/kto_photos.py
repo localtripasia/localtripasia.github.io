@@ -194,7 +194,10 @@ def _vetted(topic, cfg, session=None, vision_session=None, max_judged: int = MAX
                                        cfg.gemini_key, cfg.vision.get("model", "gemini-3.5-flash-lite"), vision_session,
                                        country="Japan" if _is_japan(topic) else "South Korea")
             except Exception as exc:
-                notice("사진", f"AI 확인 오류 (제목 순위만으로 진행): {_clean(str(exc), cfg.gemini_key)[:200]}")
+                notice("사진", f"AI 확인 오류: {_clean(str(exc), cfg.gemini_key)[:200]}")
+                if item.get("_credit"):      # open-license photos are not place-specific: never use one the AI could not check
+                    LAST_STATS["download_failed"] += 1
+                    continue
             if verdict is not None and not vision.acceptable(verdict):
                 LAST_STATS["wrong_place" if not verdict.get("shows_place") else "low_quality"] += 1
                 log(f"사진 탈락: {item.get('galTitle', '')} {verdict}")

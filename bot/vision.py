@@ -11,6 +11,7 @@ from __future__ import annotations
 import base64
 import io
 import json
+import time
 
 from PIL import Image
 
@@ -72,10 +73,15 @@ def _judge_with(im: Image.Image, place: str, city: str, key: str, model: str, se
         "generationConfig": {"responseMimeType": "application/json", "temperature": 0},
     }
     try:
-        r = session.post(ENDPOINT.format(model=model), json=body, timeout=60,
-                         headers={"x-goog-api-key": key})   # header, not ?key=, so it never lands in a URL
-        if getattr(r, "status_code", 200) == 404:
-            raise _ModelGone(f"model {model} not found")
+        for wait in (0, 6, 15, 30):          # the free tier answers 429 when calls come too fast: wait and retry
+            if wait:
+                time.sleep(wait)
+            r = session.post(ENDPOINT.format(model=model), json=body, timeout=60,
+                             headers={"x-goog-api-key": key})   # header, not ?key=, so it never lands in a URL
+            if getattr(r, "status_code", 200) == 404:
+                raise _ModelGone(f"model {model} not found")
+            if getattr(r, "status_code", 200) != 429:
+                break
         r.raise_for_status()
         text = r.json()["candidates"][0]["content"]["parts"][0]["text"]
         return json.loads(text)
