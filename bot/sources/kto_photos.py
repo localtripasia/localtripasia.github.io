@@ -101,10 +101,16 @@ SIZES: list[int] = []      # short side of every downloaded candidate in the lat
 ERRORS: list[str] = []
 
 
+def _wikimedia_ua() -> str:
+    from .open_photos import USER_AGENT
+    return USER_AGENT
+
+
 def _download(url: str, session=None) -> Image.Image | None:
     import requests
     session = session or requests
-    r = _get(session, url.replace("http://", "https://"), timeout=(20, 60))
+    kw = {"headers": {"User-Agent": _wikimedia_ua()}} if "wikimedia.org" in url else {}   # Wikimedia throttles generic clients
+    r = _get(session, url.replace("http://", "https://"), timeout=(20, 60), **kw)
     im = Image.open(io.BytesIO(r.content))
     SIZES.append(min(im.size))
     return im if min(im.size) >= MIN_SIDE else None
@@ -157,7 +163,12 @@ def _vetted(topic, cfg, session=None, vision_session=None, max_judged: int = MAX
     SIZES.clear()
     ERRORS.clear()
     LAST_STATS.update(candidates=len(results), download_failed=0, too_small=0, wrong_place=0, low_quality=0, same_kind=0, accepted=0)
+    import time
+    started = time.monotonic()
     for item in sorted(results, key=_rank):
+        if time.monotonic() - started > 240:        # never let one place hold up the whole run
+            notice("사진", "사진 찾기가 4분을 넘어서 여기까지만 사용해요")
+            return
         url = item.get("galWebImageUrl")
         who = (item.get("galPhotographer") or "").strip()
         if not url or not who or url in seen:
