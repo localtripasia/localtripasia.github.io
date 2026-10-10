@@ -202,6 +202,10 @@ def _vetted(topic, cfg, session=None, vision_session=None, max_judged: int = MAX
                 LAST_STATS["wrong_place" if not verdict.get("shows_place") else "low_quality"] += 1
                 log(f"사진 탈락: {item.get('galTitle', '')} {verdict}")
                 continue
+            if verdict is not None and item.get("_credit") and verdict.get("identifiable_faces"):
+                LAST_STATS["low_quality"] += 1       # no close-ups of strangers from open-license sources
+                log(f"사진 얼굴 때문에 탈락: {item.get('galTitle', '')}")
+                continue
             if diverse and verdict is not None:
                 cat = str(verdict.get("category", "other"))
                 if used.get(cat, 0) >= (2 if cat == "other" else 1):   # one photo per kind of subject

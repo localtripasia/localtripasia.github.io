@@ -29,7 +29,8 @@ def _text(value: str) -> str:
 
 def _latin(name: str, fallback: str) -> str:
     """The card font has no CJK/Hangul glyphs, so a non-Latin name falls back to the site name."""
-    return name if name and all(ord(c) < 0x250 for c in name) else fallback
+    ok = name and all(ord(c) < 0x250 for c in name) and "http" not in name.lower() and "/" not in name
+    return name if ok else fallback
 
 
 def license_ok(short: str) -> bool:
