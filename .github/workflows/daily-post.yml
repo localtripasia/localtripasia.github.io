@@ -134,5 +134,8 @@ jobs:
           git add data pins photos   # whole folders: they always exist, unlike optional files inside them
           if git diff --cached --quiet; then exit 0; fi
           git commit -m "Update posting state (No.${{ steps.prepare.outputs.number }})"
-          git pull --rebase --autostash
-          git push
+          for i in 1 2 3 4; do
+            git pull --rebase --autostash && git push && exit 0
+            echo "push failed (try $i), retrying"; sleep $((i * 5))
+          done
+          exit 1
