@@ -544,6 +544,64 @@
       "ig_media_id": "17970896478151960",
       "permalink": "https://www.instagram.com/p/DeSMFlFFUg-/",
       "published_at": "2026-10-10T03:48+09:00"
+    },
+    {
+      "number": 11,
+      "date": "2026-10-11",
+      "source": "hood",
+      "key": "hood-seoul-hongdae",
+      "title": "Hongdae",
+      "folder": "011",
+      "slides": 5,
+      "caption": "Hongdae, Seoul: what it is like and what to do\n\n✓ Watch the buskers and dance crews on the main streets\n✓ Wander the themed streets: art-studio lane, Picasso's Street, Club Street\n✓ Browse indie boutiques and board-game cafes\n\nFull guide + links in bio →\n\n#ad Contains affiliate links — we may earn a small commission at no extra cost to you.\n\n#travelkorea #traveljapan #koreatraveltips #japantraveltips #asiatravel #wheretostay #hoteltips #budgettravel",
+      "hook": "Hongdae, Seoul: what it is like and what to do",
+      "bullets": [
+        "Watch the buskers and dance crews on the main streets",
+        "Wander the themed streets: art-studio lane, Picasso's Street, Club Street",
+        "Browse indie boutiques and board-game cafes"
+      ],
+      "buttons": [
+        {
+          "label": "Agoda",
+          "url": "https://www.agoda.com/",
+          "class": ""
+        },
+        {
+          "label": "Trip.com",
+          "url": "https://www.trip.com/hotels/?Allianceid=10791404&SID=332513490&trip_sub1=&trip_sub3=D20019365",
+          "class": "teal"
+        }
+      ],
+      "article_blocks": [
+        [
+          "The vibe",
+          "Seoul's youth-culture hub around Hongik University: street performers, indie boutiques and late-night bars. Fun and loud, most of all on weekends."
+        ],
+        [
+          "Do this",
+          [
+            "Watch the buskers and dance crews on the main streets",
+            "Wander the themed streets: art-studio lane, Picasso's Street, Club Street",
+            "Browse indie boutiques and board-game cafes"
+          ]
+        ],
+        [
+          "Getting there",
+          "Hongik University Station (Line 2)"
+        ],
+        [
+          "Good to know",
+          "Plan to explore on foot and leave time to wander. Friday and Saturday nights are the loudest."
+        ]
+      ],
+      "sources": [
+        "https://english.visitkorea.or.kr/svc/whereToGo/locIntrdn/rgnContentsView.do?vcontsId=86853",
+        "https://www.seoultourism.org/seoul-neighborhoods-guide/"
+      ],
+      "status": "published",
+      "ig_media_id": "18070938356789082",
+      "permalink": "https://www.instagram.com/p/DeUqWLrmWwA/",
+      "published_at": "2026-10-11T02:51+09:00"
     }
   ]
 }
