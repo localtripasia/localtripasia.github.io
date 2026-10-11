@@ -9,5 +9,16 @@
     "content_id": "1003835",
     "ai_checked": true,
     "category": "landmark or building exterior"
+  },
+  "tokyo": {
+    "key": "tokyo",
+    "file": "auto-tokyo.jpg",
+    "credit": "Photo: David Kernan / Wikimedia Commons (CC BY 4.0)",
+    "source": "https://commons.wikimedia.org/wiki/File:Minato_City,_Tokyo,_Japan.jpg",
+    "license": "cc-by",
+    "title": "Minato City, Tokyo, Japan",
+    "content_id": "commons-142191115",
+    "ai_checked": true,
+    "category": "park/nature/skyline"
   }
 }
