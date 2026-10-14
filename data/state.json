@@ -721,7 +721,7 @@
     },
     {
       "number": 14,
-      "date": "2026-10-14",
+      "date": "2026-10-15",
       "source": "hotel",
       "key": "hotel-tokyo",
       "title": "Tokyo",
@@ -774,8 +774,19 @@
         "https://www.japan.travel/en/",
         "https://www.e-stat.go.jp/en"
       ],
-      "status": "failed",
-      "error": "Application request limit reached (code 4/2207051)"
+      "status": "published",
+      "reel": {
+        "mode": "auto",
+        "video": "reels/014.mp4",
+        "cover": "reels/014.jpg",
+        "seconds": 13.2,
+        "track": "local-market",
+        "status": "published",
+        "media_id": "18117574765956164",
+        "permalink": "https://www.instagram.com/reel/Dee-YM7COCP/"
+      },
+      "carousel_error": "Application request limit reached (code 4/2207051)",
+      "published_at": "2026-10-15T02:59+09:00"
     }
   ]
 }
