@@ -790,7 +790,7 @@
     },
     {
       "number": 15,
-      "date": "2026-10-16",
+      "date": "2026-10-17",
       "source": "transport",
       "key": "transport-jr-pass",
       "title": "The JR Pass: still worth it?",
@@ -822,8 +822,19 @@
         "https://www.japanrailpass.net/",
         "https://www.jreast.co.jp/e/"
       ],
-      "status": "failed",
-      "error": "Application request limit reached (code 4/2207051)"
+      "status": "published",
+      "reel": {
+        "mode": "auto",
+        "video": "reels/015.mp4",
+        "cover": "reels/015.jpg",
+        "seconds": 16.95,
+        "track": "night-train",
+        "status": "published",
+        "media_id": "17899244241604797",
+        "permalink": "https://www.instagram.com/reel/DekD3kDjD82/"
+      },
+      "carousel_error": "Application request limit reached (code 4/2207051)",
+      "published_at": "2026-10-17T02:23+09:00"
     }
   ]
 }
