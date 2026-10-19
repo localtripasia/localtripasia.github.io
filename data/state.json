@@ -838,7 +838,7 @@
     },
     {
       "number": 16,
-      "date": "2026-10-19",
+      "date": "2026-10-20",
       "source": "route",
       "key": "route-busan-fukuoka-ferry",
       "title": "Busan ↔ Fukuoka: the 3-hour ferry",
@@ -882,8 +882,19 @@
         "https://www.kobee.co.kr/",
         "https://www.jrbeetle.com/"
       ],
-      "status": "failed",
-      "error": "Application request limit reached (code 4/2207051)"
+      "status": "published",
+      "reel": {
+        "mode": "auto",
+        "video": "reels/016.mp4",
+        "cover": "reels/016.jpg",
+        "seconds": 16.95,
+        "track": "departure-morning",
+        "status": "published",
+        "media_id": "18113233352159294",
+        "permalink": "https://www.instagram.com/reel/Der_Uacir70/"
+      },
+      "carousel_error": "Application request limit reached (code 4/2207051)",
+      "published_at": "2026-10-20T04:18+09:00"
     }
   ]
 }
