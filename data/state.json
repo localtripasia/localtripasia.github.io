@@ -895,6 +895,66 @@
       },
       "carousel_error": "Application request limit reached (code 4/2207051)",
       "published_at": "2026-10-20T04:18+09:00"
+    },
+    {
+      "number": 17,
+      "date": "2026-10-21",
+      "source": "hood",
+      "key": "hood-seoul-seongsu",
+      "title": "Seongsu",
+      "folder": "017",
+      "slides": 10,
+      "caption": "Seongsu, Seoul: what it is like and what to do\n\n✓ Have coffee or bread in a converted 1970s factory cafe (Onion Seongsu)\n✓ Photograph the red-brick Seongsu Yeonbang complex\n✓ Walk Handmade Shoe Street, then Seoul Forest\n\nFull guide + links in bio →\n\n#ad Contains affiliate links — we may earn a small commission at no extra cost to you.\n\nPhotos: Korea Tourism Organization (KOGL Type 1)\n\n#travelkorea #traveljapan #koreatraveltips #japantraveltips #asiatravel #wheretostay #hoteltips #budgettravel",
+      "hook": "Seongsu, Seoul: what it is like and what to do",
+      "bullets": [
+        "Have coffee or bread in a converted 1970s factory cafe (Onion Seongsu)",
+        "Photograph the red-brick Seongsu Yeonbang complex",
+        "Walk Handmade Shoe Street, then Seoul Forest"
+      ],
+      "buttons": [
+        {
+          "label": "Agoda",
+          "url": "https://www.agoda.com/",
+          "class": ""
+        },
+        {
+          "label": "Trip.com",
+          "url": "https://www.trip.com/hotels/?Allianceid=10791404&SID=332513490&trip_sub1=&trip_sub3=D20019365",
+          "class": "teal"
+        }
+      ],
+      "article_blocks": [
+        [
+          "The vibe",
+          "A former factory district (3,000+ factories once) now full of cafes, design shops and pop-ups in old brick buildings. Often called the Brooklyn of Seoul."
+        ],
+        [
+          "Do this",
+          [
+            "Have coffee or bread in a converted 1970s factory cafe (Onion Seongsu)",
+            "Photograph the red-brick Seongsu Yeonbang complex",
+            "Walk Handmade Shoe Street, then Seoul Forest"
+          ]
+        ],
+        [
+          "Getting there",
+          "Seongsu Station (Line 2)"
+        ],
+        [
+          "Good to know",
+          "Go on a weekday to avoid the crowds. Spring and autumn are the most pleasant seasons."
+        ],
+        [
+          "Photo",
+          "Photos: Korea Tourism Organization (KOGL Type 1) — https://www.data.go.kr/data/15101914/openapi.do"
+        ]
+      ],
+      "sources": [
+        "https://english.visitseoul.net/editorspicks/Seongsu-dong/ENNg9y9rs",
+        "https://www.seoultourism.org/seoul-neighborhoods-guide/"
+      ],
+      "status": "failed",
+      "error": "Application request limit reached (code 4/2207051)"
     }
   ]
 }

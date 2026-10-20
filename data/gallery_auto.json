@@ -66,5 +66,73 @@
       "ai_checked": true,
       "category": "landmark or building exterior"
     }
+  ],
+  "seoul-seongsu": [
+    {
+      "key": "seoul-seongsu",
+      "file": "gallery-seoul-seongsu-1.jpg",
+      "credit": "Photo: Korea Tourism Organization (KOGL Type 1)",
+      "source": "https://www.data.go.kr/data/15101914/openapi.do",
+      "license": "kogl-1",
+      "title": "서울야경",
+      "content_id": "1527484",
+      "ai_checked": true,
+      "category": "park/nature/skyline"
+    },
+    {
+      "key": "seoul-seongsu",
+      "file": "gallery-seoul-seongsu-2.jpg",
+      "credit": "Photo: Korea Tourism Organization (KOGL Type 1)",
+      "source": "https://www.data.go.kr/data/15101914/openapi.do",
+      "license": "kogl-1",
+      "title": "김성수선생 옛집",
+      "content_id": "1005783",
+      "ai_checked": false,
+      "category": ""
+    },
+    {
+      "key": "seoul-seongsu",
+      "file": "gallery-seoul-seongsu-3.jpg",
+      "credit": "Photo: Korea Tourism Organization (KOGL Type 1)",
+      "source": "https://www.data.go.kr/data/15101914/openapi.do",
+      "license": "kogl-1",
+      "title": "북촌한옥마을",
+      "content_id": "1005854",
+      "ai_checked": false,
+      "category": ""
+    },
+    {
+      "key": "seoul-seongsu",
+      "file": "gallery-seoul-seongsu-4.jpg",
+      "credit": "Photo: Korea Tourism Organization (KOGL Type 1)",
+      "source": "https://www.data.go.kr/data/15101914/openapi.do",
+      "license": "kogl-1",
+      "title": "북촌한옥마을",
+      "content_id": "1005888",
+      "ai_checked": false,
+      "category": ""
+    },
+    {
+      "key": "seoul-seongsu",
+      "file": "gallery-seoul-seongsu-5.jpg",
+      "credit": "Photo: Korea Tourism Organization (KOGL Type 1)",
+      "source": "https://www.data.go.kr/data/15101914/openapi.do",
+      "license": "kogl-1",
+      "title": "북촌한옥마을",
+      "content_id": "1005909",
+      "ai_checked": false,
+      "category": ""
+    },
+    {
+      "key": "seoul-seongsu",
+      "file": "gallery-seoul-seongsu-6.jpg",
+      "credit": "Photo: Korea Tourism Organization (KOGL Type 1)",
+      "source": "https://www.data.go.kr/data/15101914/openapi.do",
+      "license": "kogl-1",
+      "title": "고려대학교",
+      "content_id": "1485218",
+      "ai_checked": false,
+      "category": ""
+    }
   ]
 }
