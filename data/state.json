@@ -898,7 +898,7 @@
     },
     {
       "number": 17,
-      "date": "2026-10-21",
+      "date": "2026-10-22",
       "source": "hood",
       "key": "hood-seoul-seongsu",
       "title": "Seongsu",
@@ -953,8 +953,19 @@
         "https://english.visitseoul.net/editorspicks/Seongsu-dong/ENNg9y9rs",
         "https://www.seoultourism.org/seoul-neighborhoods-guide/"
       ],
-      "status": "failed",
-      "error": "Application request limit reached (code 4/2207051)"
+      "status": "published",
+      "reel": {
+        "mode": "auto",
+        "video": "reels/017.mp4",
+        "cover": "reels/017.jpg",
+        "seconds": 30.05,
+        "track": "ferry-crossing",
+        "status": "published",
+        "media_id": "18111310280182306",
+        "permalink": "https://www.instagram.com/reel/DexAMWAkoiT/"
+      },
+      "carousel_error": "Application request limit reached (code 4/2207051)",
+      "published_at": "2026-10-22T03:02+09:00"
     }
   ]
 }
