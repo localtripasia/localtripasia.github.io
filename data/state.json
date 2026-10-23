@@ -969,7 +969,7 @@
     },
     {
       "number": 18,
-      "date": "2026-10-23",
+      "date": "2026-10-24",
       "source": "city101",
       "key": "city101-seoul",
       "title": "Seoul",
@@ -1032,8 +1032,19 @@
         "https://english.visitkorea.or.kr/",
         "https://www.data.go.kr/data/15101753/openapi.do"
       ],
-      "status": "failed",
-      "error": "Application request limit reached (code 4/2207051)"
+      "status": "published",
+      "reel": {
+        "mode": "auto",
+        "video": "reels/018.mp4",
+        "cover": "reels/018.jpg",
+        "seconds": 28.2,
+        "track": "local-market",
+        "status": "published",
+        "media_id": "17908686840590912",
+        "permalink": "https://www.instagram.com/reel/De2IzRRDCGH/"
+      },
+      "carousel_error": "Application request limit reached (code 4/2207051)",
+      "published_at": "2026-10-24T02:53+09:00"
     }
   ]
 }
