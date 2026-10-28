@@ -1090,7 +1090,7 @@
     },
     {
       "number": 20,
-      "date": "2026-10-28",
+      "date": "2026-10-29",
       "source": "city101",
       "key": "city101-tokyo",
       "title": "Tokyo",
@@ -1153,8 +1153,20 @@
         "https://www.japan.travel/en/",
         "https://www.e-stat.go.jp/en"
       ],
-      "status": "failed",
-      "error": "Application request limit reached (code 4/2207051)"
+      "status": "published",
+      "reel": {
+        "mode": "auto",
+        "video": "reels/020.mp4",
+        "cover": "reels/020.jpg",
+        "seconds": 28.2,
+        "track": "departure-morning",
+        "status": "published",
+        "media_id": "17922796188448768",
+        "permalink": "https://www.instagram.com/reel/DfDHUFfiEdq/"
+      },
+      "ig_media_id": "18001710297040045",
+      "permalink": "https://www.instagram.com/p/DfDHccPiUfm/",
+      "published_at": "2026-10-29T03:50+09:00"
     }
   ]
 }
