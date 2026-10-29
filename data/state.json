@@ -1167,6 +1167,64 @@
       "ig_media_id": "18001710297040045",
       "permalink": "https://www.instagram.com/p/DfDHccPiUfm/",
       "published_at": "2026-10-29T03:50+09:00"
+    },
+    {
+      "number": 21,
+      "date": "2026-10-30",
+      "source": "hood",
+      "key": "hood-seoul-euljiro",
+      "title": "Euljiro",
+      "folder": "021",
+      "slides": 5,
+      "caption": "Euljiro, Seoul: what it is like and what to do\n\n✓ Drink in Nogari Alley's open-air beer spots\n✓ Try a craft workshop (metal lettering jewelry, custom perfume)\n✓ Look for the neon signs around Neon Alley\n\nFull guide + links in bio →\n\n#ad Contains affiliate links — we may earn a small commission at no extra cost to you.\n\n#travelkorea #traveljapan #koreatraveltips #japantraveltips #asiatravel #wheretostay #hoteltips #budgettravel",
+      "hook": "Euljiro, Seoul: what it is like and what to do",
+      "bullets": [
+        "Drink in Nogari Alley's open-air beer spots",
+        "Try a craft workshop (metal lettering jewelry, custom perfume)",
+        "Look for the neon signs around Neon Alley"
+      ],
+      "buttons": [
+        {
+          "label": "Agoda",
+          "url": "https://www.agoda.com/",
+          "class": ""
+        },
+        {
+          "label": "Trip.com",
+          "url": "https://www.trip.com/hotels/?Allianceid=10791404&SID=332513490&trip_sub1=&trip_sub3=D20019365",
+          "class": "teal"
+        }
+      ],
+      "article_blocks": [
+        [
+          "The vibe",
+          "Hardware shops and print workshops by day, craft-beer bars and neon alleys by night. A treasure-hunt district with two very different faces."
+        ],
+        [
+          "Do this",
+          [
+            "Drink in Nogari Alley's open-air beer spots",
+            "Try a craft workshop (metal lettering jewelry, custom perfume)",
+            "Look for the neon signs around Neon Alley"
+          ]
+        ],
+        [
+          "Getting there",
+          "Euljiro 3(sam)-ga Station (Lines 2 and 3), Exits 1, 3, 8 or 11"
+        ],
+        [
+          "Good to know",
+          "Book workshops at least 3 days ahead. Wear comfortable shoes: it is a walking district."
+        ]
+      ],
+      "sources": [
+        "https://english.visitseoul.net/editorspicks/An-A-to-Z-of-Euljiro-Days-that-Build-Nights-that-Spill/ENN0zl5gc",
+        "https://www.seoultourism.org/seoul-neighborhoods-guide/"
+      ],
+      "status": "published",
+      "ig_media_id": "18127726247304261",
+      "permalink": "https://www.instagram.com/p/DfFs-Hmj7sq/",
+      "published_at": "2026-10-30T03:57+09:00"
     }
   ]
 }
