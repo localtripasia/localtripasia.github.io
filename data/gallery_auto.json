@@ -134,5 +134,51 @@
       "ai_checked": false,
       "category": ""
     }
+  ],
+  "seoul-ikseon-dong": [
+    {
+      "key": "seoul-ikseon-dong",
+      "file": "gallery-seoul-ikseon-dong-1.jpg",
+      "credit": "Photo: Korea Tourism Organization (KOGL Type 1)",
+      "source": "https://www.data.go.kr/data/15101914/openapi.do",
+      "license": "kogl-1",
+      "title": "익선동 한옥거리",
+      "content_id": "2550438",
+      "ai_checked": true,
+      "category": "street scene"
+    },
+    {
+      "key": "seoul-ikseon-dong",
+      "file": "gallery-seoul-ikseon-dong-2.jpg",
+      "credit": "Photo: Korea Tourism Organization (KOGL Type 1)",
+      "source": "https://www.data.go.kr/data/15101914/openapi.do",
+      "license": "kogl-1",
+      "title": "익선동 한옥거리",
+      "content_id": "2550439",
+      "ai_checked": true,
+      "category": "restaurant/cafe"
+    },
+    {
+      "key": "seoul-ikseon-dong",
+      "file": "gallery-seoul-ikseon-dong-3.jpg",
+      "credit": "Photo: Korea Tourism Organization (KOGL Type 1)",
+      "source": "https://www.data.go.kr/data/15101914/openapi.do",
+      "license": "kogl-1",
+      "title": "익선동 한옥거리",
+      "content_id": "2550440",
+      "ai_checked": true,
+      "category": "interior"
+    },
+    {
+      "key": "seoul-ikseon-dong",
+      "file": "gallery-seoul-ikseon-dong-4.jpg",
+      "credit": "Photo: Korea Tourism Organization (KOGL Type 1)",
+      "source": "https://www.data.go.kr/data/15101914/openapi.do",
+      "license": "kogl-1",
+      "title": "익선동 한옥거리",
+      "content_id": "2550442",
+      "ai_checked": true,
+      "category": "shopping/storefronts"
+    }
   ]
 }

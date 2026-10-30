@@ -1225,6 +1225,78 @@
       "ig_media_id": "18127726247304261",
       "permalink": "https://www.instagram.com/p/DfFs-Hmj7sq/",
       "published_at": "2026-10-30T03:57+09:00"
+    },
+    {
+      "number": 22,
+      "date": "2026-10-31",
+      "source": "hood",
+      "key": "hood-seoul-ikseon-dong",
+      "title": "Ikseon-dong",
+      "folder": "022",
+      "slides": 8,
+      "caption": "Ikseon-dong, Seoul: what it is like and what to do\n\n✓ Wander the grid of small alleys on foot\n✓ Have a drink at the rooftop cafe in Nagwonjang, a former inn\n✓ Try evening street food at the pojangmacha tents\n\nFull guide + links in bio →\n\n#ad Contains affiliate links — we may earn a small commission at no extra cost to you.\n\nPhotos: Korea Tourism Organization (KOGL Type 1)\n\n#travelkorea #traveljapan #koreatraveltips #japantraveltips #asiatravel #wheretostay #hoteltips #budgettravel",
+      "hook": "Ikseon-dong, Seoul: what it is like and what to do",
+      "bullets": [
+        "Wander the grid of small alleys on foot",
+        "Have a drink at the rooftop cafe in Nagwonjang, a former inn",
+        "Try evening street food at the pojangmacha tents"
+      ],
+      "buttons": [
+        {
+          "label": "Agoda",
+          "url": "https://www.agoda.com/",
+          "class": ""
+        },
+        {
+          "label": "Trip.com",
+          "url": "https://www.trip.com/hotels/?Allianceid=10791404&SID=332513490&trip_sub1=&trip_sub3=D20019365",
+          "class": "teal"
+        }
+      ],
+      "article_blocks": [
+        [
+          "The vibe",
+          "A hanok village of narrow alleys from the early 1900s, now filled with cafes, boutiques and wine bars in restored traditional houses."
+        ],
+        [
+          "Do this",
+          [
+            "Wander the grid of small alleys on foot",
+            "Have a drink at the rooftop cafe in Nagwonjang, a former inn",
+            "Try evening street food at the pojangmacha tents"
+          ]
+        ],
+        [
+          "Getting there",
+          "Jongno 3(sam)-ga Station (Lines 1, 3 and 5), Exit 3 or 6"
+        ],
+        [
+          "Good to know",
+          "Weekdays are calmer. Autumn (September to October) is the official guide's pick for weather."
+        ],
+        [
+          "Photo",
+          "Photos: Korea Tourism Organization (KOGL Type 1) — https://www.data.go.kr/data/15101914/openapi.do"
+        ]
+      ],
+      "sources": [
+        "https://english.visitseoul.net/editorspicks/Ikseon-dong-Where-Tradition-Meets-Trend-in-the-Heart-of-Seoul/ENNmc5wkd",
+        "https://www.seoultourism.org/seoul-neighborhoods-guide/"
+      ],
+      "status": "published",
+      "reel": {
+        "mode": "auto",
+        "video": "reels/022.mp4",
+        "cover": "reels/022.jpg",
+        "seconds": 26.15,
+        "track": "local-market",
+        "status": "published",
+        "media_id": "17915791941510847",
+        "permalink": "https://www.instagram.com/reel/DfIPmSADL-9/"
+      },
+      "ig_media_id": "18082534217375207",
+      "permalink": "https://www.instagram.com/p/DfIPwUXGBlN/",
+      "published_at": "2026-10-31T03:39+09:00"
     }
   ]
 }
