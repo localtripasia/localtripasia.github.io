@@ -1511,6 +1511,67 @@
       "ig_media_id": "18127450810683515",
       "permalink": "https://www.instagram.com/p/DfSswc2FPP0/",
       "published_at": "2026-11-04T05:05+09:00"
+    },
+    {
+      "number": 27,
+      "date": "2026-11-05",
+      "source": "route",
+      "key": "route-busan-fukuoka-ferry",
+      "title": "Busan ↔ Fukuoka: the 3-hour ferry",
+      "folder": "027",
+      "slides": 4,
+      "caption": "Busan ↔ Fukuoka: the 3-hour ferry\n\n✓ Busan — 2 nights (Haeundae or Nampo-dong)\n✓ Ferry crossing — same-day, ~3–3.5 hours\n✓ Fukuoka — 2 nights (Hakata or Tenjin)\n\nFull guide + links in bio →\n\n#ad Contains affiliate links — we may earn a small commission at no extra cost to you.\n\n#travelkorea #traveljapan #koreatraveltips #japantraveltips #asiatravel #travelitinerary #koreajapan",
+      "hook": "Busan ↔ Fukuoka: the 3-hour ferry",
+      "bullets": [
+        "Busan — 2 nights (Haeundae or Nampo-dong)",
+        "Ferry crossing — same-day, ~3–3.5 hours",
+        "Fukuoka — 2 nights (Hakata or Tenjin)"
+      ],
+      "buttons": [
+        {
+          "label": "Klook",
+          "url": "https://www.klook.com/",
+          "class": "teal"
+        },
+        {
+          "label": "Agoda",
+          "url": "https://www.agoda.com/",
+          "class": ""
+        }
+      ],
+      "article_blocks": [
+        [
+          "The route",
+          "5 days"
+        ],
+        [
+          "Stop by stop",
+          [
+            "Busan — 2 nights (Haeundae or Nampo-dong)",
+            "Ferry crossing — same-day, ~3–3.5 hours",
+            "Fukuoka — 2 nights (Hakata or Tenjin)",
+            "Optional day trip — Yanagawa or Dazaifu from Fukuoka"
+          ]
+        ]
+      ],
+      "sources": [
+        "https://www.kobee.co.kr/",
+        "https://www.jrbeetle.com/"
+      ],
+      "status": "published",
+      "reel": {
+        "mode": "auto",
+        "video": "reels/027.mp4",
+        "cover": "reels/027.jpg",
+        "seconds": 16.95,
+        "track": "night-train",
+        "status": "published",
+        "media_id": "18117768085824894",
+        "permalink": "https://www.instagram.com/reel/DfVTweFEWPg/"
+      },
+      "ig_media_id": "18123698755967357",
+      "permalink": "https://www.instagram.com/p/DfVT3KGH9jp/",
+      "published_at": "2026-11-05T05:25+09:00"
     }
   ]
 }
