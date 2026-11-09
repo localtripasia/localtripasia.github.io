@@ -1753,6 +1753,78 @@
       "ig_media_id": "17923885044450426",
       "permalink": "https://www.instagram.com/p/DffYoxVGlRv/",
       "published_at": "2026-11-09T03:19+09:00"
+    },
+    {
+      "number": 32,
+      "date": "2026-11-10",
+      "source": "hood",
+      "key": "hood-seoul-jamsil",
+      "title": "Jamsil",
+      "folder": "032",
+      "slides": 8,
+      "caption": "Jamsil, Seoul: what it is like and what to do\n\n✓ Walk around Seokchon Lake\n✓ Visit Lotte World Tower and its observation deck\n✓ Spend a slow afternoon at Olympic Park\n\nFull guide + links in bio →\n\n#ad Contains affiliate links — we may earn a small commission at no extra cost to you.\n\nPhotos: Korea Tourism Organization (KOGL Type 1)\n\n#travelkorea #traveljapan #koreatraveltips #japantraveltips #asiatravel #wheretostay #hoteltips #budgettravel",
+      "hook": "Jamsil, Seoul: what it is like and what to do",
+      "bullets": [
+        "Walk around Seokchon Lake",
+        "Visit Lotte World Tower and its observation deck",
+        "Spend a slow afternoon at Olympic Park"
+      ],
+      "buttons": [
+        {
+          "label": "Agoda",
+          "url": "https://www.agoda.com/",
+          "class": ""
+        },
+        {
+          "label": "Trip.com",
+          "url": "https://www.trip.com/hotels/?Allianceid=10791404&SID=332513490&trip_sub1=&trip_sub3=D20019365",
+          "class": "teal"
+        }
+      ],
+      "article_blocks": [
+        [
+          "The vibe",
+          "A modern district on what used to be an island in the Han River. Home to Lotte World and Lotte World Tower, with lakeside and park walks close by."
+        ],
+        [
+          "Do this",
+          [
+            "Walk around Seokchon Lake",
+            "Visit Lotte World Tower and its observation deck",
+            "Spend a slow afternoon at Olympic Park"
+          ]
+        ],
+        [
+          "Getting there",
+          "Jamsil Station (Line 2), Exit 3 is the guided walking-tour meeting point"
+        ],
+        [
+          "Good to know",
+          "Good for families and rainy days. The area is less atmospheric than the old-town districts."
+        ],
+        [
+          "Photo",
+          "Photos: Korea Tourism Organization (KOGL Type 1) — https://www.data.go.kr/data/15101914/openapi.do"
+        ]
+      ],
+      "sources": [
+        "https://english.visitseoul.net/walking-tour/JamsilTour/ENN91jofy",
+        "https://www.seoultourism.org/seoul-neighborhoods-guide/"
+      ],
+      "status": "published",
+      "reel": {
+        "mode": "auto",
+        "video": "reels/032.mp4",
+        "cover": "reels/032.jpg",
+        "seconds": 26.15,
+        "track": "departure-morning",
+        "status": "published",
+        "media_id": "18182864191429049",
+        "permalink": "https://www.instagram.com/reel/Dfid9PPkQXC/"
+      },
+      "ig_media_id": "17916112611503192",
+      "permalink": "https://www.instagram.com/p/DfieE69CXEk/",
+      "published_at": "2026-11-10T08:05+09:00"
     }
   ]
 }

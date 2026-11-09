@@ -180,5 +180,51 @@
       "ai_checked": true,
       "category": "shopping/storefronts"
     }
+  ],
+  "seoul-jamsil": [
+    {
+      "key": "seoul-jamsil",
+      "file": "gallery-seoul-jamsil-1.jpg",
+      "credit": "Photo: Korea Tourism Organization (KOGL Type 1)",
+      "source": "https://www.data.go.kr/data/15101914/openapi.do",
+      "license": "kogl-1",
+      "title": "롯데월드타워",
+      "content_id": "1983798",
+      "ai_checked": true,
+      "category": "landmark or building exterior"
+    },
+    {
+      "key": "seoul-jamsil",
+      "file": "gallery-seoul-jamsil-2.jpg",
+      "credit": "Photo: Korea Tourism Organization (KOGL Type 1)",
+      "source": "https://www.data.go.kr/data/15101914/openapi.do",
+      "license": "kogl-1",
+      "title": "구름좋은날",
+      "content_id": "3043126",
+      "ai_checked": true,
+      "category": "park/nature/skyline"
+    },
+    {
+      "key": "seoul-jamsil",
+      "file": "gallery-seoul-jamsil-3.jpg",
+      "credit": "Photo: Korea Tourism Organization (KOGL Type 1)",
+      "source": "https://www.data.go.kr/data/15101914/openapi.do",
+      "license": "kogl-1",
+      "title": "롯데월드몰",
+      "content_id": "1998888",
+      "ai_checked": true,
+      "category": "interior"
+    },
+    {
+      "key": "seoul-jamsil",
+      "file": "gallery-seoul-jamsil-4.jpg",
+      "credit": "Photo: Korea Tourism Organization (KOGL Type 1)",
+      "source": "https://www.data.go.kr/data/15101914/openapi.do",
+      "license": "kogl-1",
+      "title": "롯데월드몰",
+      "content_id": "1998895",
+      "ai_checked": true,
+      "category": "shopping/storefronts"
+    }
   ]
 }
