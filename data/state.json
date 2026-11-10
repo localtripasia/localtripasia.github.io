@@ -1825,6 +1825,76 @@
       "ig_media_id": "17916112611503192",
       "permalink": "https://www.instagram.com/p/DfieE69CXEk/",
       "published_at": "2026-11-10T08:05+09:00"
+    },
+    {
+      "number": 33,
+      "date": "2026-11-11",
+      "source": "city101",
+      "key": "city101-seoul",
+      "title": "Seoul",
+      "folder": "033",
+      "slides": 7,
+      "caption": "Seoul: your first 48 hours\n\n✓ Walk Bukchon Hanok Village early, before the tour groups arrive\n✓ Eat your way through Gwangjang Market's street-food stalls\n✓ Ride the cable car or hike up to N Seoul Tower for a skyline view\n\nFull guide + links in bio →\n\n#ad Contains affiliate links — we may earn a small commission at no extra cost to you.\n\nPhoto: Korea Tourism Organization (KOGL Type 1)\n\n#travelkorea #traveljapan #koreatraveltips #japantraveltips #asiatravel",
+      "hook": "Seoul: your first 48 hours",
+      "bullets": [
+        "Walk Bukchon Hanok Village early, before the tour groups arrive",
+        "Eat your way through Gwangjang Market's street-food stalls",
+        "Ride the cable car or hike up to N Seoul Tower for a skyline view"
+      ],
+      "buttons": [
+        {
+          "label": "Agoda",
+          "url": "https://www.agoda.com/",
+          "class": ""
+        },
+        {
+          "label": "Trip.com",
+          "url": "https://www.trip.com/hotels/?Allianceid=10791404&SID=332513490&trip_sub1=&trip_sub3=D20019365",
+          "class": "teal"
+        }
+      ],
+      "article_blocks": [
+        [
+          "Why go",
+          "Korea's capital and the country's main international gateway — most first-time visitors start here, and it's the easiest base for day trips."
+        ],
+        [
+          "When to go",
+          "Spring (Apr) and autumn (Oct–Nov) have the mildest, driest weather. Summer (Jul–Aug) is hot and humid with a monsoon season; winter (Dec–Feb) is cold and dry."
+        ],
+        [
+          "Getting there",
+          "Incheon Airport (ICN) or Gimpo (GMP). From ICN, the AREX express train reaches Seoul Station in about 45 minutes."
+        ],
+        [
+          "Do this",
+          [
+            "Walk Bukchon Hanok Village early, before the tour groups arrive",
+            "Eat your way through Gwangjang Market's street-food stalls",
+            "Ride the cable car or hike up to N Seoul Tower for a skyline view"
+          ]
+        ],
+        [
+          "Where to stay",
+          [
+            "Budget: A guesthouse near Dongdaemun or Sinchon — close to subway lines, easy for a first trip",
+            "Mid: A mid-range hotel in Myeongdong or Jongno — walkable to major sights",
+            "Splurge: A hotel in Gangnam or near Han River — for river or skyline views"
+          ]
+        ],
+        [
+          "Photo",
+          "Photo: Korea Tourism Organization (KOGL Type 1) — https://www.data.go.kr/data/15101914/openapi.do"
+        ]
+      ],
+      "sources": [
+        "https://english.visitkorea.or.kr/",
+        "https://www.data.go.kr/data/15101753/openapi.do"
+      ],
+      "status": "published",
+      "ig_media_id": "17915143680551254",
+      "permalink": "https://www.instagram.com/p/DfkwyvyiaDL/",
+      "published_at": "2026-11-11T05:27+09:00"
     }
   ]
 }
