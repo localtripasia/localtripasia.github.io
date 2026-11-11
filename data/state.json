@@ -1895,6 +1895,76 @@
       "ig_media_id": "17915143680551254",
       "permalink": "https://www.instagram.com/p/DfkwyvyiaDL/",
       "published_at": "2026-11-11T05:27+09:00"
+    },
+    {
+      "number": 34,
+      "date": "2026-11-12",
+      "source": "hotel",
+      "key": "hotel-tokyo",
+      "title": "Tokyo",
+      "folder": "034",
+      "slides": 3,
+      "caption": "Where to stay in Tokyo, by budget\n\n✓ Budget: A capsule or business hotel near Ueno or Asakusa\n✓ Mid: A hotel in Shinjuku or Shibuya\n✓ Splurge: A hotel overlooking Tokyo Bay or Shinjuku's skyline\n\nFull guide + links in bio →\n\n#ad Contains affiliate links — we may earn a small commission at no extra cost to you.\n\nPhoto: David Kernan / Wikimedia Commons (CC BY 4.0)\n\n#travelkorea #traveljapan #koreatraveltips #japantraveltips #asiatravel #wheretostay #hoteltips #budgettravel",
+      "hook": "Where to stay in Tokyo, by budget",
+      "bullets": [
+        "Budget: A capsule or business hotel near Ueno or Asakusa",
+        "Mid: A hotel in Shinjuku or Shibuya",
+        "Splurge: A hotel overlooking Tokyo Bay or Shinjuku's skyline"
+      ],
+      "buttons": [
+        {
+          "label": "Agoda",
+          "url": "https://www.agoda.com/",
+          "class": ""
+        },
+        {
+          "label": "Trip.com",
+          "url": "https://www.trip.com/hotels/?Allianceid=10791404&SID=332513490&trip_sub1=&trip_sub3=D20019365",
+          "class": "teal"
+        }
+      ],
+      "article_blocks": [
+        [
+          "Budget",
+          [
+            "A capsule or business hotel near Ueno or Asakusa — close to the Narita Express / Skyliner"
+          ]
+        ],
+        [
+          "Mid-range",
+          [
+            "A hotel in Shinjuku or Shibuya — central, well connected by train"
+          ]
+        ],
+        [
+          "Splurge",
+          [
+            "A hotel overlooking Tokyo Bay or Shinjuku's skyline — for a view room"
+          ]
+        ],
+        [
+          "Photo",
+          "Photo: David Kernan / Wikimedia Commons (CC BY 4.0) — https://commons.wikimedia.org/wiki/File:Minato_City,_Tokyo,_Japan.jpg"
+        ]
+      ],
+      "sources": [
+        "https://www.japan.travel/en/",
+        "https://www.e-stat.go.jp/en"
+      ],
+      "status": "published",
+      "reel": {
+        "mode": "auto",
+        "video": "reels/034.mp4",
+        "cover": "reels/034.jpg",
+        "seconds": 13.2,
+        "track": "local-market",
+        "status": "published",
+        "media_id": "18154002616556115",
+        "permalink": "https://www.instagram.com/reel/DfnTqYcEmsV/"
+      },
+      "ig_media_id": "17965158630231973",
+      "permalink": "https://www.instagram.com/p/DfnTzYJH_Qm/",
+      "published_at": "2026-11-12T05:11+09:00"
     }
   ]
 }
