@@ -20,5 +20,16 @@
     "content_id": "commons-142191115",
     "ai_checked": true,
     "category": "park/nature/skyline"
+  },
+  "seoul-yeonnam": {
+    "key": "seoul-yeonnam",
+    "file": "auto-seoul-yeonnam.jpg",
+    "credit": "Photo: Korea Tourism Organization (KOGL Type 1)",
+    "source": "https://www.data.go.kr/data/15101914/openapi.do",
+    "license": "kogl-1",
+    "title": "연남동 경의선숲길",
+    "content_id": "2553211",
+    "ai_checked": true,
+    "category": "park/nature/skyline"
   }
 }

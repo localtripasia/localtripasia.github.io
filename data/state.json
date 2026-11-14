@@ -2084,6 +2084,68 @@
       "ig_media_id": "17874244224647112",
       "permalink": "https://www.instagram.com/p/DfsfjkijyBc/",
       "published_at": "2026-11-14T05:30+09:00"
+    },
+    {
+      "number": 37,
+      "date": "2026-11-15",
+      "source": "hood",
+      "key": "hood-seoul-yeonnam",
+      "title": "Yeonnam",
+      "folder": "037",
+      "slides": 5,
+      "caption": "Yeonnam, Seoul: what it is like and what to do\n\n✓ Stroll Gyeongui Line Forest Park (Yeontral Park)\n✓ Brunch at a local cafe on a slow morning\n✓ Browse independent bookshops, then Mangwon Market by the river\n\nFull guide + links in bio →\n\n#ad Contains affiliate links — we may earn a small commission at no extra cost to you.\n\nPhoto: Korea Tourism Organization (KOGL Type 1)\n\n#travelkorea #traveljapan #koreatraveltips #japantraveltips #asiatravel #wheretostay #hoteltips #budgettravel",
+      "hook": "Yeonnam, Seoul: what it is like and what to do",
+      "bullets": [
+        "Stroll Gyeongui Line Forest Park (Yeontral Park)",
+        "Brunch at a local cafe on a slow morning",
+        "Browse independent bookshops, then Mangwon Market by the river"
+      ],
+      "buttons": [
+        {
+          "label": "Agoda",
+          "url": "https://www.agoda.com/",
+          "class": ""
+        },
+        {
+          "label": "Trip.com",
+          "url": "https://www.trip.com/hotels/?Allianceid=10791404&SID=332513490&trip_sub1=&trip_sub3=D20019365",
+          "class": "teal"
+        }
+      ],
+      "article_blocks": [
+        [
+          "The vibe",
+          "Hongdae's creative energy at a lower volume. A linear park built over an old rail line runs through it, with brunch spots, indie bookshops and cafes."
+        ],
+        [
+          "Do this",
+          [
+            "Stroll Gyeongui Line Forest Park (Yeontral Park)",
+            "Brunch at a local cafe on a slow morning",
+            "Browse independent bookshops, then Mangwon Market by the river"
+          ]
+        ],
+        [
+          "Getting there",
+          "Hongik University Station (Line 2) is the closest big station, then walk"
+        ],
+        [
+          "Good to know",
+          "Good for a quieter stay near Hongdae, with good morning walks."
+        ],
+        [
+          "Photo",
+          "Photo: Korea Tourism Organization (KOGL Type 1) — https://www.data.go.kr/data/15101914/openapi.do"
+        ]
+      ],
+      "sources": [
+        "https://english.visitkorea.or.kr/svc/contents/contentsView.do?vcontsId=14663",
+        "https://www.seoultourism.org/seoul-neighborhoods-guide/"
+      ],
+      "status": "published",
+      "ig_media_id": "18090110468288797",
+      "permalink": "https://www.instagram.com/p/Dfu4lXtlVAm/",
+      "published_at": "2026-11-15T03:47+09:00"
     }
   ]
 }
