@@ -226,5 +226,62 @@
       "ai_checked": true,
       "category": "shopping/storefronts"
     }
+  ],
+  "seoul-itaewon": [
+    {
+      "key": "seoul-itaewon",
+      "file": "gallery-seoul-itaewon-1.jpg",
+      "credit": "Photo: Korea Tourism Organization (KOGL Type 1)",
+      "source": "https://www.data.go.kr/data/15101914/openapi.do",
+      "license": "kogl-1",
+      "title": "이태원거리",
+      "content_id": "1857347",
+      "ai_checked": true,
+      "category": "restaurant/cafe"
+    },
+    {
+      "key": "seoul-itaewon",
+      "file": "gallery-seoul-itaewon-2.jpg",
+      "credit": "Photo: Korea Tourism Organization (KOGL Type 1)",
+      "source": "https://www.data.go.kr/data/15101914/openapi.do",
+      "license": "kogl-1",
+      "title": "이태원거리",
+      "content_id": "1857348",
+      "ai_checked": true,
+      "category": "shopping/storefronts"
+    },
+    {
+      "key": "seoul-itaewon",
+      "file": "gallery-seoul-itaewon-3.jpg",
+      "credit": "Photo: Korea Tourism Organization (KOGL Type 1)",
+      "source": "https://www.data.go.kr/data/15101914/openapi.do",
+      "license": "kogl-1",
+      "title": "이태원거리",
+      "content_id": "1857357",
+      "ai_checked": true,
+      "category": "street scene"
+    },
+    {
+      "key": "seoul-itaewon",
+      "file": "gallery-seoul-itaewon-4.jpg",
+      "credit": "Photo: Korea Tourism Organization (KOGL Type 1)",
+      "source": "https://www.data.go.kr/data/15101914/openapi.do",
+      "license": "kogl-1",
+      "title": "이태원거리",
+      "content_id": "1857361",
+      "ai_checked": true,
+      "category": "landmark or building exterior"
+    },
+    {
+      "key": "seoul-itaewon",
+      "file": "gallery-seoul-itaewon-5.jpg",
+      "credit": "Photo: Korea Tourism Organization (KOGL Type 1)",
+      "source": "https://www.data.go.kr/data/15101914/openapi.do",
+      "license": "kogl-1",
+      "title": "이태원거리",
+      "content_id": "1983708",
+      "ai_checked": true,
+      "category": "park/nature/skyline"
+    }
   ]
 }

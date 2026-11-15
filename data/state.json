@@ -2146,6 +2146,68 @@
       "ig_media_id": "18090110468288797",
       "permalink": "https://www.instagram.com/p/Dfu4lXtlVAm/",
       "published_at": "2026-11-15T03:47+09:00"
+    },
+    {
+      "number": 38,
+      "date": "2026-11-16",
+      "source": "hood",
+      "key": "hood-seoul-itaewon",
+      "title": "Itaewon",
+      "folder": "038",
+      "slides": 9,
+      "caption": "Itaewon, Seoul: what it is like and what to do\n\n✓ Eat your way down World Food Street (about 40 international restaurants)\n✓ Browse Antique Furniture Street near the Hamilton Hotel\n✓ Come in October for the Itaewon Global Village Festival\n\nFull guide + links in bio →\n\n#ad Contains affiliate links — we may earn a small commission at no extra cost to you.\n\nPhotos: Korea Tourism Organization (KOGL Type 1)\n\n#travelkorea #traveljapan #koreatraveltips #japantraveltips #asiatravel #wheretostay #hoteltips #budgettravel",
+      "hook": "Itaewon, Seoul: what it is like and what to do",
+      "bullets": [
+        "Eat your way down World Food Street (about 40 international restaurants)",
+        "Browse Antique Furniture Street near the Hamilton Hotel",
+        "Come in October for the Itaewon Global Village Festival"
+      ],
+      "buttons": [
+        {
+          "label": "Agoda",
+          "url": "https://www.agoda.com/",
+          "class": ""
+        },
+        {
+          "label": "Trip.com",
+          "url": "https://www.trip.com/hotels/?Allianceid=10791404&SID=332513490&trip_sub1=&trip_sub3=D20019365",
+          "class": "teal"
+        }
+      ],
+      "article_blocks": [
+        [
+          "The vibe",
+          "Korea's first special tourist zone (1997) and Seoul's most international neighborhood. World food, antique furniture shops and a big foreign-resident community."
+        ],
+        [
+          "Do this",
+          [
+            "Eat your way down World Food Street (about 40 international restaurants)",
+            "Browse Antique Furniture Street near the Hamilton Hotel",
+            "Come in October for the Itaewon Global Village Festival"
+          ]
+        ],
+        [
+          "Getting there",
+          "Itaewon Station (Line 6)"
+        ],
+        [
+          "Good to know",
+          "Quieter and more polished up the hill in Hannam-dong."
+        ],
+        [
+          "Photo",
+          "Photos: Korea Tourism Organization (KOGL Type 1) — https://www.data.go.kr/data/15101914/openapi.do"
+        ]
+      ],
+      "sources": [
+        "https://english.visitkorea.or.kr/svc/whereToGo/locIntrdn/rgnContentsView.do?vcontsId=111543",
+        "https://www.seoultourism.org/seoul-neighborhoods-guide/"
+      ],
+      "status": "published",
+      "ig_media_id": "17885995503526312",
+      "permalink": "https://www.instagram.com/p/DfxhlxjGgv1/",
+      "published_at": "2026-11-16T04:24+09:00"
     }
   ]
 }
