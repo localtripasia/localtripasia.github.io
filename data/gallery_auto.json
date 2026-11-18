@@ -283,5 +283,51 @@
       "ai_checked": true,
       "category": "park/nature/skyline"
     }
+  ],
+  "tokyo-shibuya": [
+    {
+      "key": "tokyo-shibuya",
+      "file": "gallery-tokyo-shibuya-1.jpg",
+      "credit": "Photo: Wikimedia Commons contributor / Wikimedia Commons (CC BY 2.0)",
+      "source": "https://commons.wikimedia.org/wiki/File:Basketball_street,_Shibuya,_Tokyo.jpg",
+      "license": "cc-by",
+      "title": "Basketball street, Shibuya, Tokyo",
+      "content_id": "commons-76086877",
+      "ai_checked": true,
+      "category": "street scene"
+    },
+    {
+      "key": "tokyo-shibuya",
+      "file": "gallery-tokyo-shibuya-2.jpg",
+      "credit": "Photo: Syced / Wikimedia Commons (CC0)",
+      "source": "https://commons.wikimedia.org/wiki/File:Buildings_at_night_around_Shibuya_2.jpg",
+      "license": "cc0",
+      "title": "Buildings at night around Shibuya 2",
+      "content_id": "commons-122552630",
+      "ai_checked": true,
+      "category": "landmark or building exterior"
+    },
+    {
+      "key": "tokyo-shibuya",
+      "file": "gallery-tokyo-shibuya-3.jpg",
+      "credit": "Photo: Syced / Wikimedia Commons (CC0)",
+      "source": "https://commons.wikimedia.org/wiki/File:Night_view_of_Shibuya,_Tokyo,_November_2026.jpg",
+      "license": "cc0",
+      "title": "Night view of Shibuya, Tokyo, November 2026",
+      "content_id": "commons-203144571",
+      "ai_checked": true,
+      "category": "night lights/decorations"
+    },
+    {
+      "key": "tokyo-shibuya",
+      "file": "gallery-tokyo-shibuya-4.jpg",
+      "credit": "Photo: Wikimedia Commons contributor / Wikimedia Commons (CC BY 4.0)",
+      "source": "https://commons.wikimedia.org/wiki/File:SHIBUYA-SKY_Tokyo_095.jpg",
+      "license": "cc-by",
+      "title": "SHIBUYA-SKY Tokyo 095",
+      "content_id": "commons-122412678",
+      "ai_checked": true,
+      "category": "park/nature/skyline"
+    }
   ]
 }

@@ -2339,6 +2339,78 @@
       "ig_media_id": "18131474734853500",
       "permalink": "https://www.instagram.com/p/Df27K5Xkux-/",
       "published_at": "2026-11-18T06:44+09:00"
+    },
+    {
+      "number": 41,
+      "date": "2026-11-19",
+      "source": "hood",
+      "key": "hood-tokyo-shibuya",
+      "title": "Shibuya",
+      "folder": "041",
+      "slides": 8,
+      "caption": "Shibuya, Tokyo: what it is like and what to do\n\n✓ Watch the Scramble Crossing, then see it from above at Shibuya Sky\n✓ Meet at the Hachiko statue (go early for a clear photo)\n✓ Stroll Center-Gai for cheap food, karaoke and glowing signs after dark\n\nFull guide + links in bio →\n\n#ad Contains affiliate links — we may earn a small commission at no extra cost to you.\n\nPhotos: Korea Tourism Organization (KOGL Type 1)\n\n#travelkorea #traveljapan #koreatraveltips #japantraveltips #asiatravel #wheretostay #hoteltips #budgettravel",
+      "hook": "Shibuya, Tokyo: what it is like and what to do",
+      "bullets": [
+        "Watch the Scramble Crossing, then see it from above at Shibuya Sky",
+        "Meet at the Hachiko statue (go early for a clear photo)",
+        "Stroll Center-Gai for cheap food, karaoke and glowing signs after dark"
+      ],
+      "buttons": [
+        {
+          "label": "Agoda",
+          "url": "https://www.agoda.com/",
+          "class": ""
+        },
+        {
+          "label": "Trip.com",
+          "url": "https://www.trip.com/hotels/?Allianceid=10791404&SID=332513490&trip_sub1=&trip_sub3=D20019365",
+          "class": "teal"
+        }
+      ],
+      "article_blocks": [
+        [
+          "The vibe",
+          "A neon-lit district built around the world-famous scramble crossing. Busy day and night, with cheap fashion, bars and clubs, and quieter cafes on the side streets."
+        ],
+        [
+          "Do this",
+          [
+            "Watch the Scramble Crossing, then see it from above at Shibuya Sky",
+            "Meet at the Hachiko statue (go early for a clear photo)",
+            "Stroll Center-Gai for cheap food, karaoke and glowing signs after dark"
+          ]
+        ],
+        [
+          "Getting there",
+          "Shibuya Station (many lines; some Narita Express trains stop here). Follow the 'Hachiko' exit signs to the crossing"
+        ],
+        [
+          "Good to know",
+          "The station is a maze, so allow extra time for transfers. The walkway toward Shibuya Mark City gives a calmer view of the crossing."
+        ],
+        [
+          "Photo",
+          "Photos: Korea Tourism Organization (KOGL Type 1) — https://www.data.go.kr/data/15101914/openapi.do"
+        ]
+      ],
+      "sources": [
+        "https://www.gotokyo.org/en/story/walks-and-tours/shibuya/index.html",
+        "https://www.gotokyo.org/en/spot/1749/index.html"
+      ],
+      "status": "published",
+      "reel": {
+        "mode": "auto",
+        "video": "reels/041.mp4",
+        "cover": "reels/041.jpg",
+        "seconds": 26.15,
+        "track": "ferry-crossing",
+        "status": "published",
+        "media_id": "18399322270207131",
+        "permalink": "https://www.instagram.com/reel/Df5dskcmQrz/"
+      },
+      "ig_media_id": "18148884571579290",
+      "permalink": "https://www.instagram.com/p/Df5d1XdmD4T/",
+      "published_at": "2026-11-19T06:25+09:00"
     }
   ]
 }
