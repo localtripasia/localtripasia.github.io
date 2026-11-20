@@ -329,5 +329,73 @@
       "ai_checked": true,
       "category": "park/nature/skyline"
     }
+  ],
+  "tokyo-asakusa": [
+    {
+      "key": "tokyo-asakusa",
+      "file": "gallery-tokyo-asakusa-1.jpg",
+      "credit": "Photo: Jakub Hałun / Wikimedia Commons (CC BY 4.0)",
+      "source": "https://commons.wikimedia.org/wiki/File:Asakusa_Panda_Bar_NinNin,_Asakusa,_Tokyo,_20240824_1342_5698.jpg",
+      "license": "cc-by",
+      "title": "Asakusa Panda Bar NinNin, Asakusa, Tokyo, 20240824 1342 5698",
+      "content_id": "commons-171449091",
+      "ai_checked": true,
+      "category": "street food"
+    },
+    {
+      "key": "tokyo-asakusa",
+      "file": "gallery-tokyo-asakusa-2.jpg",
+      "credit": "Photo: Jorge Cortell / Wikimedia Commons (CC BY 3.0)",
+      "source": "https://commons.wikimedia.org/wiki/File:500px_photo_(11778881).jpeg",
+      "license": "cc-by",
+      "title": "500px photo (11778881)",
+      "content_id": "commons-71288210",
+      "ai_checked": true,
+      "category": "shopping/storefronts"
+    },
+    {
+      "key": "tokyo-asakusa",
+      "file": "gallery-tokyo-asakusa-3.jpg",
+      "credit": "Photo: Stephen Kelly from San Francisco, CA,... / Wikimedia Commons (CC BY 2.0)",
+      "source": "https://commons.wikimedia.org/wiki/File:Asakusa_Night_Scene_(53417130430).jpg",
+      "license": "cc-by",
+      "title": "Asakusa Night Scene (53417130430)",
+      "content_id": "commons-143774905",
+      "ai_checked": true,
+      "category": "street scene"
+    },
+    {
+      "key": "tokyo-asakusa",
+      "file": "gallery-tokyo-asakusa-4.jpg",
+      "credit": "Photo: DimiTalen / Wikimedia Commons (CC0)",
+      "source": "https://commons.wikimedia.org/wiki/File:Five-storied_pagoda_and_Sens%C5%8D-ji_H%C5%8Dz%C5%8Dmon_at_night,_Asakusa,_Tokyo,_2016.jpg",
+      "license": "cc0",
+      "title": "Five-storied pagoda and Sensō-ji Hōzōmon at night, Asakusa, Tokyo, 2016",
+      "content_id": "commons-141690092",
+      "ai_checked": true,
+      "category": "landmark or building exterior"
+    },
+    {
+      "key": "tokyo-asakusa",
+      "file": "gallery-tokyo-asakusa-5.jpg",
+      "credit": "Photo: Kobayashi Kiyochika / Wikimedia Commons (Public domain)",
+      "source": "https://commons.wikimedia.org/wiki/File:Kobayashi_Kiyochika_(1881)_Year-end_Market_at_Sens%C5%8Dji_temple.jpg",
+      "license": "cc0",
+      "title": "Kobayashi Kiyochika (1881) Year-end Market at Sensōji temple",
+      "content_id": "commons-38768398",
+      "ai_checked": true,
+      "category": "event/crowd"
+    },
+    {
+      "key": "tokyo-asakusa",
+      "file": "gallery-tokyo-asakusa-6.jpg",
+      "credit": "Photo: Maya-Anaïs Yataghène from Paris, France / Wikimedia Commons (CC BY 2.0)",
+      "source": "https://commons.wikimedia.org/wiki/File:Japan_-_Tokyo_(Asakusa)_(10005265814).jpg",
+      "license": "cc-by",
+      "title": "Japan - Tokyo (Asakusa) (10005265814)",
+      "content_id": "commons-45021206",
+      "ai_checked": true,
+      "category": "interior"
+    }
   ]
 }
